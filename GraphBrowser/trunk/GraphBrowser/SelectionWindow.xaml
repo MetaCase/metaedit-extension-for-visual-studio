@@ -1,0 +1,21 @@
+﻿<Window x:Class="MetaCase.GraphBrowser.SelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="" Height="500" Width="200" ResizeMode="CanMinimize" Topmost="True" Icon="Resources/metaedit_logo.png" Background="#F0F0F0" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" Name="HeaderText" VerticalAlignment="Top" Background="#F0F0F0" TextWrapping="WrapWithOverflow" />
+        <ListBox Grid.Row="1" Name="ItemsListBox" Margin="5" />
+        <StackPanel Name="ButtonPanel" Orientation="Vertical" Grid.Row="2" VerticalAlignment="Center" Margin="5">
+            <!--<Button Name="SelectAllButton" HorizontalAlignment="Center" Margin="2" Width="65" Height="25" Click="SelectAllButton_Click">Select All</Button> -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="SelectButton" Margin="5" Width="65" Height="25" Click="SelectButton_Click">OK</Button>
+                <Button Name="CancelButton" Margin="5" Width="65" Height="25" Click="CancelButton_Click">Cancel</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
