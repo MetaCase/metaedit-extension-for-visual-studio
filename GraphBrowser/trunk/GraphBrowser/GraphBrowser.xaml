@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="MetaCase.GraphBrowser.GraphBrowser"
+             xmlns:local="clr-namespace:MetaCase.GraphBrowser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.10.0"
+             mc:Ignorable="d" Name="MEGraphBrowser"
+             Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}" d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <HierarchicalDataTemplate x:Key="graphTemplate" DataType="{x:Type local:GraphViewModel}" ItemsSource="{Binding children}">
+            <StackPanel Orientation="Horizontal" >
+                <Image Source="Resources/graph_icon.png" Height="16" Width="16" SnapsToDevicePixels="True" Margin="0,0,2,0" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                <TextBlock Text="{Binding Name}" Padding="2" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <Style x:Key="ToolBarButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Source="{Binding Path=(local:ToolBarButton.Image),
+                            RelativeSource={RelativeSource FindAncestor,
+                            AncestorType={x:Type Button}}}" 
+                            Margin="2" Height="16" Width="16" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.2" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Yellow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal"  Background="#BCC7D8">
+            <Button Name="ButtonRunAutobuild" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/run_generator_icon_2.png"
+                    ToolTip="Run autobuild for the selected graph"
+                    BorderThickness="0"  Click="ButtonRunAutobuild_Click" />
+            <Button Name="ButtonGenerateFromList" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/select_generator_to_run_icon.png"
+                    ToolTip="Select the generator you want to run for the selected graph"
+                    BorderThickness="0" Margin="2" Click="ButtonGenerate_Click" />
+            <Separator Margin="2">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            <Button Name="ButtonOpenInMetaEdit" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/open_graph_in_metaedit_icon.png" 
+                    ToolTip="Open selected graph in MetaEdit+"
+                    BorderThickness="0" Margin="2" Click="ButtonOpen_Click" />
+            <Button Name="ButtonCreateGraph" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/create_graph_icon.png"
+                    ToolTip="Create a new graph"
+                    BorderThickness="0" Margin="2" Click="ButtonCreateGraph_Click" />
+            <Separator Margin="2">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            <Button Name="ButtonUpdateList" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/update_graph_list_icon.png"
+                    ToolTip="Update the Graph View"
+                    BorderThickness="0" Margin="2" Click="ButtonUpdate_Click" />
+            <Button Name="ButtonOpenSettings" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/settings_icon.png"
+                    ToolTip="Open the launch parameter window"
+                    BorderThickness="0" Margin="2" Click="ButtonSettings_Click" />
+            <!--<Separator Margin="2">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            <Button Name="ButtonEditProperties" Style="{DynamicResource ToolBarButton}"
+                    local:ToolBarButton.Image="Resources/edit_properties_icon.png"
+                    ToolTip="Edit graph properties"
+                    BorderThickness="0" Margin="2" Click="ButtonEditProperties_Click" />-->
+        </StackPanel>
+        <Grid Grid.Row="1" >
+            <Grid Name="GraphView" >
+                <TreeView TreeViewItem.PreviewMouseDoubleClick="TreeViewItem_PreviewMouseDoubleClick" Margin="10,10,12,12" Name="treeView1" ItemTemplate="{StaticResource graphTemplate}" SelectedItemChanged="treeView1_SelectedItemChanged"  >
+                    <TreeView.Resources>
+                        <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFD9F4FF" Offset="0"/>
+                            <GradientStop Color="#FF9BDDFB" Offset="1"/>
+                        </LinearGradientBrush>
+                        <LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFEEEDED" Offset="0"/>
+                            <GradientStop Color="#FFDDDDDD" Offset="1"/>
+                        </LinearGradientBrush>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
+                        
+                        <ContextMenu x:Key="45Menu" StaysOpen="True">
+                            <MenuItem Header="Open Graph in MetaEdit+" Click="ButtonOpen_Click"  >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/open_graph_in_metaedit_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Run Autobuild" Click="ButtonRunAutobuild_Click">
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/run_generator_icon_2.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                        <ContextMenu x:Key="50Menu" StaysOpen="True" HasDropShadow="True">
+                            <MenuItem Header="Run Autobuild" Click="ButtonRunAutobuild_Click">
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/run_generator_icon_2.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Select Generator to Run" Click="ButtonGenerate_Click" >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/select_generator_to_run_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Open Graph in MetaEdit+" Click="ButtonOpen_Click"  >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/open_graph_in_metaedit_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Create a New Graph" Click="ButtonCreateGraph_Click" >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/create_graph_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Edit Graph Properties" Click="ButtonEditProperties_Click" >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/edit_properties_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </TreeView.Resources>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="BorderBrush" Value="#adc6e5"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="IsSelectionActive" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="LightGray"/>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                            <Style.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="2"/>
+                                </Style>
+                            </Style.Resources>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+            </Grid>
+            <Grid Name="ErrorView" Background="#31000000">
+                <StackPanel Margin="10,10,12,12" Name="stackPanel1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <TextBlock FontSize="18" Margin="5" Padding="10">No API connection found.</TextBlock>
+                    <Button Name="ButtonStartMetaEdit" Width="100" Height="30" Margin="5" Click="ButtonStartMetaEdit_Click">Start MetaEdit+</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,59 @@
+﻿<Window x:Class="MetaCase.GraphBrowser.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MetaEdit+ Launch Parameters" Height="276" Width="629" ResizeMode="NoResize" Topmost="False" WindowStyle="SingleBorderWindow" Icon="Resources/metaedit_logo.png" IsEnabled="True" WindowStartupLocation="CenterScreen" Background="#F0F0F0">
+        <Grid Height="222" Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Name="ProgramPathPanel" Orientation="Horizontal" >
+            <Label Name="ProgramLabel" Width="180" >MetaEdit+ Program Path:</Label>
+            <Image Name="ProgramVerifierImage" Width="16" Height="16" />
+            <TextBox Name="ProgramTextBox" Width="365" Height="25" TextChanged="ProgramTextBox_TextChanged" Margin="3,0,3,0" />
+            <Button Name="ProgramSearchButton" Width="35" Height="20" VerticalAlignment="Center" Click="ProgramSearchButton_Click">...</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Name="WorkingDirPanel" Orientation="Horizontal">
+            <Label Name="WorkingDirLabel" Width="180" >MetaEdit+ Working Directory:</Label>
+            <Image Name="WorkingDirVerifierImage"  Width="16" Height="16" />
+            <TextBox Name="WorkingDirTextBox"  Width="365" TextChanged="WorkingDirTextBox_TextChanged" Margin="3,0,3,0" />
+            <Button Name="WorkingDirSearchButton" Width="35" Height="20" VerticalAlignment="Center" Click="WorkingDirSearchButton_Click">...</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Name="DatabasePanel" Orientation="Horizontal" Height="25">
+            <Label Name="DatabaseLabel" Width="180" >Database Name:</Label>
+            <Image Name="DatabaseVerifierImage"  Width="16" Height="16" />
+            <TextBox Name="DatabaseTextBox" Width="405" TextChanged="DatabaseTextBox_TextChanged" Margin="3,0,3,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="3" Name="UsernamePanel" Orientation="Horizontal" >
+            <Label Name="UsernameLabel" Width="180" >Username:</Label>
+            <Image Name="UsernameVerifierImage"  Width="16" Height="16" />
+            <TextBox Name="UsernameTextBox" Width="405" TextChanged="UsernameTextBox_TextChanged" Margin="3,0,3,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="4" Name="PasswordPanel" Orientation="Horizontal" >
+            <Label Name="PasswordLabel" Width="180" >Password:</Label>
+            <Image Name="PasswordVerifierImage"  Width="16" Height="16" />
+            <PasswordBox Name="PasswordTextBox" Width="405" PasswordChanged="PasswordTextBox_PasswordChanged" Margin="3,0,3,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="5" Name="ProjectsPanel" Orientation="Horizontal" >
+            <Label Name="ProjectsLabel" Width="180" >Projects:</Label>
+            <Image Name="ProjectsVerifierImage"  Width="16" Height="16" />
+            <TextBox Name="ProjectsTextBox" Width="365" TextChanged="ProjectsTextBox_TextChanged" Margin="3,0,3,0" />
+            <Button Name="ProjectsSearchButton" Width="35" Height="20" VerticalAlignment="Center" Click="ProjectsSearchButton_Click">...</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Name="PortPanel" Orientation="Horizontal" >
+            <Label Name="PortLabel" Width="180" >Port:</Label>
+            <Image Name="PortVerifierImage"  Width="16" Height="16" />
+            <TextBox Name="PortTextBox" Width="405" TextChanged="PortTextBox_TextChanged" Margin="3,0,3,0" />
+        </StackPanel>
+        <StackPanel Grid.Row="7" Name="ButtonPanel" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button Name="SaveButton" Content="_Save" Width="60" Height="26" Margin="5" Click="SaveButton_Click" />
+            <Button Name="CancelButton" Content="Cancel" Width="60" Height="26" Margin="5" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
