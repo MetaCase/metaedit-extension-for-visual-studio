@@ -216,6 +216,7 @@
     </Content>
     <Content Include="metaedit_logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Resource Include="Resources\error_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
