@@ -87,7 +87,7 @@
         </StackPanel>
         <Grid Grid.Row="1" >
             <Grid Name="GraphView" >
-                <TreeView TreeViewItem.PreviewMouseDoubleClick="TreeViewItem_PreviewMouseDoubleClick" Margin="10,10,12,12" Name="treeView1" ItemTemplate="{StaticResource graphTemplate}" SelectedItemChanged="treeView1_SelectedItemChanged"  >
+                <TreeView Margin="10,10,12,12" Name="treeView1" ItemTemplate="{StaticResource graphTemplate}" SelectedItemChanged="treeView1_SelectedItemChanged" PreviewMouseDoubleClick="treeView1_PreviewMouseDoubleClick" PreviewMouseLeftButtonDown="treeView1_PreviewMouseLeftButtonDown">
                     <TreeView.Resources>
                         <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
                             <GradientStop Color="#FFD9F4FF" Offset="0"/>

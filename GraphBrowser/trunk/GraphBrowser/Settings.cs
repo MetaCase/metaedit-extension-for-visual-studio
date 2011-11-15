@@ -53,7 +53,7 @@ namespace MetaCase.GraphBrowser
         /// Checck ig mer file exists in file system.
         /// </summary>
         /// <returns>True if mer file exists</returns>
-        private bool CheckIfMerExists()
+        public bool CheckIfMerExists()
         {
             return File.Exists(this.merFilePath);
         }

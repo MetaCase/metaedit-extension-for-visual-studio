@@ -38,6 +38,15 @@ namespace MetaCase.GraphBrowser
 
         }
 
+        private bool IsCtrlPressed
+        {
+            get
+            {
+                return Keyboard.IsKeyDown(Key.LeftCtrl)
+                    || Keyboard.IsKeyDown(Key.RightCtrl);
+            }
+        }
+
         public GraphBrowser()
         {
             InitializeComponent();
@@ -83,7 +92,7 @@ namespace MetaCase.GraphBrowser
 
         private void UpdateGraphView()
         {
-            Launcher.initializeAPI();
+            Launcher.initializeAPI(false);
             this.treeView1.ItemsSource = null;
             this.initializeTreeView();
             this.setView();
@@ -214,10 +223,27 @@ namespace MetaCase.GraphBrowser
             SetToolBarButtonsEnabled();
         }
 
-        private void TreeViewItem_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void treeView1_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ButtonOpen_Click(sender, e);
             e.Handled = true;
+        }
+
+        private void treeView1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsCtrlPressed)
+            {
+                var tv = sender as TreeView;
+
+                if (tv != null)
+                {
+                    // set the last tree view item selected variable which may be used elsewhere as there is no other way I have found to obtain the TreeViewItem container (may be null)
+                    TreeViewItem item = (TreeViewItem)(treeView1.ItemContainerGenerator.ContainerFromIndex(treeView1.Items.CurrentPosition));
+                    item.IsSelected = false;
+
+                    tv.Focus();
+                }
+            }
         }
     }
 }

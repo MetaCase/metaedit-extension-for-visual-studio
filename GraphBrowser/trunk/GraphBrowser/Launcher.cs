@@ -62,7 +62,16 @@ namespace MetaCase.GraphBrowser
          */
         public static bool DoInitialLaunch()
         {
-            return initializeAPI();
+            if (Settings.GetSettings().CheckIfMerExists() || IsApiOK())
+            {
+                return initializeAPI(true);
+            }
+            else
+            {
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.Show();
+            }
+            return IsApiOK();
         }
 
         /**
@@ -70,15 +79,15 @@ namespace MetaCase.GraphBrowser
          * if MetaEdit+ should be launched. 
          * @return true if ME+ launched successfully else false.
          */
-        public static Boolean initializeAPI()
+        public static Boolean initializeAPI(Boolean poll)
         {
             if (!IsApiOK())
             {
                 int maxWaitMs = 500;
                 if (launchMetaEdit())
                 {
-                    maxWaitMs = 2500;
-                    poll(maxWaitMs);
+                    if (poll) maxWaitMs = 2500;
+                    Poll(maxWaitMs);
                 }
             }
             return isInitialized;
@@ -88,7 +97,7 @@ namespace MetaCase.GraphBrowser
          * Polls MetaEdit+ until connection is OK or the time is up.
          * @param maxWaitMs maximum wait time in milliseconds.
          */
-        public static void poll(int maxWaitMs)
+        public static void Poll(int maxWaitMs)
         {
             int totalWaitMs = 0;
             int waitMs = 500;
@@ -142,11 +151,11 @@ namespace MetaCase.GraphBrowser
             {
                 needStopAPI = true;
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo stratInfo = new System.Diagnostics.ProcessStartInfo();
-                stratInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                stratInfo.FileName = settings.ProgramDir;
-                stratInfo.Arguments = arguments;
-                process.StartInfo = stratInfo;
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                startInfo.FileName = settings.ProgramDir;
+                startInfo.Arguments = arguments;
+                process.StartInfo = startInfo;
                 process.Start();
 
                 return true;

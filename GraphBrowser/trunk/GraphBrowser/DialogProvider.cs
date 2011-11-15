@@ -34,13 +34,5 @@ namespace MetaCase.GraphBrowser
             }
             return false;
 	    }
-	
-	    /**
-	     * Opens settings dialog.
-	     * @param initialLaunch true if dialog is opened at plug-in start. Else false.
-	     */
-	    public static void ShowSettingsDialog(Boolean initialLaunch){
-            //SettingsDialog.createAndShowGUI(initialLaunch);
-	    }
     }
 }
