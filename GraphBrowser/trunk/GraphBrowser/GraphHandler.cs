@@ -81,19 +81,32 @@ namespace MetaCase.GraphBrowser
             // if path is null or does not exist return.
             if (!File.Exists(path.ToString())) return list.ToArray();
             // Read the file and display it line by line.
-            System.IO.StreamReader file = new System.IO.StreamReader(path.ToString());
-            while ((line = file.ReadLine()) != null)
+            using (StreamReader reader = new StreamReader(path.ToString()))
             {
-	    		if (line.Contains("[" + section + "]")) {
-                    while (!(line = file.ReadLine()).StartsWith("["))
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Contains("[" + section + "]"))
                     {
-	    				if (line.Length > 1) {
-	    					if (section == "areas") list.Add(ParseProjectFromLine(line));
-	    					if (section == "users") list.Add(ParseNameAndPasswordFromLine(line));
-	    			    }
-	    		    }  
-	    	    }
-	    	}
+                        while (!(line = reader.ReadLine()).StartsWith("["))
+                        {
+                            if (line.Length > 1)
+                            {
+                                switch (section)
+                                {
+                                    case "areas":
+                                        list.Add(ParseProjectFromLine(line));
+                                        break;
+                                    case "users":
+                                        list.Add(ParseNameAndPasswordFromLine(line));
+                                        break;
+                                }
+                                //if (section == "areas") list.Add(ParseProjectFromLine(line));
+                                //if (section == "users") list.Add(ParseNameAndPasswordFromLine(line));
+                            }
+                        }
+                    }
+                }
+            }
             list.RemoveAll(item => item == null);
 		    return list.ToArray();
 	    }

@@ -16,7 +16,6 @@ namespace MetaCase.GraphBrowser
         /// <param name="iniPath">Full path to INI file.</param>
         public IniParser(String iniPath)
         {
-            TextReader iniFile = null;
             String strLine = null;
             String[] keyPair = null;
 
@@ -24,26 +23,17 @@ namespace MetaCase.GraphBrowser
 
             if (File.Exists(iniPath))
             {
-                try
+                using (StreamReader reader = new StreamReader(iniPath))
                 {
-                    iniFile = new StreamReader(iniPath);
-                    strLine = iniFile.ReadLine();
-                    while (strLine != null)
+                    while ((strLine = reader.ReadLine()) != null)
                     {
                         strLine = strLine.Trim();
                         if (strLine != "" && !strLine.StartsWith("#"))
                         {
                             keyPair = strLine.Split(new char[] { '=' }, 2);
                             values.Add(keyPair[0], keyPair[1]);
-                            
                         }
-                        strLine = iniFile.ReadLine();
                     }
-                }
-                finally
-                {
-                    if (iniFile != null)
-                        iniFile.Close();
                 }
             }
         }

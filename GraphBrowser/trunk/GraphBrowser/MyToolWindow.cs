@@ -7,6 +7,7 @@ using System.Windows;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
+using EnvDTE80;
 
 namespace MetaCase.GraphBrowser
 {
@@ -36,7 +37,7 @@ namespace MetaCase.GraphBrowser
             // while the Index is the offset in the bitmap strip. Each image in
             // the strip being 16x16.
              this.BitmapResourceID = 11;
-             this.BitmapIndex = 0;
+             this.BitmapIndex = 1;
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on 

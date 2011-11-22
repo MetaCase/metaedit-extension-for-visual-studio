@@ -70,14 +70,18 @@ namespace MetaCase.GraphBrowser
             this.setView();
         }
 
+        private void setView()
+        {
+            this.setView(this.IsAPI());
+        }
+
         /// <summary>
         /// Sets the view according to the API connection.
         /// </summary>
-        private void setView()
+        private void setView(bool _api)
         {
-            bool api = this.IsAPI();
-            GraphView.Visibility = api ? Visibility.Visible : Visibility.Collapsed;
-            ErrorView.Visibility = !api ? Visibility.Visible : Visibility.Collapsed;
+            GraphView.Visibility = _api ? Visibility.Visible : Visibility.Collapsed;
+            ErrorView.Visibility = !_api ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private bool IsAPI()
@@ -107,7 +111,6 @@ namespace MetaCase.GraphBrowser
             bool _isAPI = this.IsAPI();
             bool _isSelection = (treeView1.SelectedItem != null);
 
-            
             ButtonGenerateFromList.IsEnabled = (_isAPI && _isSelection && _is50);
             ButtonRunAutobuild.IsEnabled = (_isAPI && _isSelection);
             ButtonOpenInMetaEdit.IsEnabled = (_isAPI && _isSelection);
@@ -115,54 +118,91 @@ namespace MetaCase.GraphBrowser
             //ButtonEditProperties.IsEnabled = (_is50 && _isAPI && _isSelection);
             ButtonUpdateList.IsEnabled = (true);
             ButtonOpenSettings.IsEnabled = (true);
-	    
+
+            this.setView(_isAPI);
+        }
+
+        private void correctErrorSituation()
+        {
+            if (this.IsAPI())
+            {
+                
+                this.initializeTreeView();
+            }
+            this.setView();
         }
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (treeView1.SelectedItem == null) return;
-            GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
-            MetaEditAPIPortTypeClient port = Launcher.Port;
-            port.open(gvm.getGraph().ToMEOop());
+            try
+            {
+                if (treeView1.SelectedItem == null) return;
+                GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
+                MetaEditAPIPortTypeClient port = Launcher.Port;
+                port.open(gvm.getGraph().ToMEOop());
+            }
+            catch (Exception err)
+            {
+                DialogProvider.ShowMessageDialog("API error: " + err.Message, "API error");
+                this.correctErrorSituation();
+            }
+            
         }
 
         private void ButtonRunAutobuild_Click(object sender, RoutedEventArgs e)
         {
-            GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
-            if (gvm == null) return;
-            gvm.getGraph().RunGenerator("Autobuild", true);
+            try
+            {
+                GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
+                if (gvm == null) return;
+                gvm.getGraph().RunGenerator("Autobuild", true);
+            }
+            catch (Exception err)
+            {
+                DialogProvider.ShowMessageDialog("API error: " + err.Message, "API error");
+                this.correctErrorSituation();
+            }
+            
         }
 
         private void ButtonGenerate_Click(object sender, RoutedEventArgs e)
         {
-            GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
-            if (gvm == null) return;
-            Settings s = Settings.GetSettings();
-            if (s.is50)
+            try
             {
-                String[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
-                List<String> generatorList = new List<string>();
-                foreach (String _generator in _generators)
+                GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
+                if (gvm == null) return;
+                Settings s = Settings.GetSettings();
+                if (s.is50)
                 {
-                    if (!_generator.StartsWith("_") && !_generator.StartsWith("!"))
+                    String[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
+                    List<String> generatorList = new List<string>();
+                    foreach (String _generator in _generators)
                     {
-                        generatorList.Add(_generator);
+                        if (!_generator.StartsWith("_") && !_generator.StartsWith("!"))
+                        {
+                            generatorList.Add(_generator);
+                        }
+                    }
+                    SelectionWindow sw = new SelectionWindow(generatorList, "Choose the generator you want to run for the graph", false, false);
+                    sw.Height = 300;
+                    sw.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    sw.ShowDialog();
+                    String generator = "";
+                    if (sw.SelectedItems.Count > 0)
+                    {
+                        generator = sw.SelectedItems[0];
+                        if (generator.Length > 0) gvm.getGraph().RunGenerator(generator, false);
                     }
                 }
-                SelectionWindow sw = new SelectionWindow(generatorList, "Choose the generator you want to run for the graph", false, false);
-                sw.Height = 300;
-                sw.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                sw.ShowDialog();
-                String generator = "";
-                if (sw.SelectedItems.Count > 0)
+                else
                 {
-                    generator = sw.SelectedItems[0];
-                    if (generator.Length > 0) gvm.getGraph().RunGenerator(generator, false);
+                    gvm.getGraph().RunGenerator("Autobuild", true);
                 }
             }
-            else
+            catch (Exception err)
             {
-                gvm.getGraph().RunGenerator("Autobuild", true);
+                DialogProvider.ShowMessageDialog("API error: " + err.Message, "API error");
+                this.correctErrorSituation();
             }
         }
 
@@ -220,7 +260,7 @@ namespace MetaCase.GraphBrowser
 
         private void treeView1_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            SetToolBarButtonsEnabled();
+           // SetToolBarButtonsEnabled();
         }
 
         private void treeView1_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
