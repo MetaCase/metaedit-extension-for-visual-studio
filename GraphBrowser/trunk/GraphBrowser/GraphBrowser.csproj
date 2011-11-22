@@ -194,15 +194,22 @@
   <ItemGroup>
     <Resource Include="Resources\select_generator_to_run_icon.png" />
     <Resource Include="Resources\301.bmp" />
-    <Resource Include="Resources\ButtonImages.bmp" />
-    <Content Include="visual_studio_addin.PNG">
+    <Content Include="PLUS20.ICO">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Resources\question_icon.png" />
-    <Resource Include="Resources\run_generator_icon_2.png">
+    <Content Include="visual_studio_2.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="visual_studio_3.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="visual_studio_addin.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\question_icon.png" />
+    <Resource Include="Resources\run_generator_icon_2.png" />
     <Resource Include="Resources\settings_icon.png" />
     <Resource Include="Resources\update_graph_list_icon.png" />
     <Content Include="LICENSE.TXT">
@@ -211,7 +218,6 @@
     </Content>
     <Content Include="metaedit_logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Resource Include="Resources\error_icon.png" />
     <Resource Include="Resources\graph_icon.png" />
