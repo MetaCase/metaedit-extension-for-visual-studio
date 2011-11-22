@@ -11,28 +11,37 @@ namespace MetaCase.GraphBrowser
     class Importer
     {
         /// <summary>
-        /// Imports solution and opens it. 
+        /// Imports solution, opens, builds and runs it. 
         /// </summary>
         public static void ImportProject(String applicationName)
         {
-            EnvDTE.DTE dte = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-            //Get visual studio version e.g. dte.FullName;
-            String slnPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + ".sln";
-            String prjPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
-            
-            Engine engine = new Engine();
-            
-            // Build a project file
-            bool success = engine.BuildProjectFile(prjPath);
-
-            if (success)
+            try
             {
-                String exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
-                + "\\bin\\Debug\\" + applicationName + ".exe";
-                System.Diagnostics.Process.Start(exe);
+                EnvDTE.DTE dte = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+                //Get visual studio version e.g. dte.FullName;
+                String slnPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + ".sln";
+                String prjPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
+
+                Engine engine = new Engine();
+
+                // Build a project file
+                bool success = engine.BuildProjectFile(prjPath);
+
+                // Run if build succeeded
+                if (success)
+                {
+                    String exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
+                    + "\\bin\\Debug\\" + applicationName + ".exe";
+                    System.Diagnostics.Process.Start(exe);
+                }
+                // Open the solution in Visual Studio
+                dte.Solution.Open(slnPath);
             }
-            dte.Solution.Open(slnPath);
-            
+            catch (Exception e)
+            {
+                Console.Error.Write(e.StackTrace);
+                DialogProvider.ShowMessageDialog("Error: " + e.Message, "Error on generated solution handling");
+            }
         }
 
         /// <summary>

@@ -193,23 +193,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\select_generator_to_run_icon.png" />
-    <None Include="Resources\301.bmp" />
+    <Resource Include="Resources\301.bmp" />
+    <Resource Include="Resources\ButtonImages.bmp" />
     <Content Include="visual_studio_addin.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Resources\question_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\question_icon.png" />
     <Resource Include="Resources\run_generator_icon_2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\settings_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\update_graph_list_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\settings_icon.png" />
+    <Resource Include="Resources\update_graph_list_icon.png" />
     <Content Include="LICENSE.TXT">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -218,30 +213,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Resources\error_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\graph_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\metaedit_logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\ok_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\open_graph_in_metaedit_icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\error_icon.png" />
+    <Resource Include="Resources\graph_icon.png" />
+    <Resource Include="Resources\metaedit_logo.png" />
+    <Resource Include="Resources\ok_icon.png" />
+    <Resource Include="Resources\open_graph_in_metaedit_icon.png" />
     <Resource Include="Resources\create_graph_icon.png" />
     <Resource Include="Resources\edit_properties_icon.png" />
-    <Content Include="Resources\metaedit_logo.bmp">
+    <Resource Include="Resources\metaedit_logo.bmp" />
+    <Resource Include="Resources\Package.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Resources\Package.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="GraphBrowser.xaml">
