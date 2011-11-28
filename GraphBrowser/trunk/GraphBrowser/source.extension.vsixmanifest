@@ -8,7 +8,7 @@
     <Locale>1033</Locale>
     <MoreInfoUrl>http://www.metacase.com</MoreInfoUrl>
     <License>LICENSE.TXT</License>
-    <Icon>PLUS20.ICO</Icon>
+    <Icon>plus50.ico</Icon>
     <PreviewImage>visual_studio_3.PNG</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>

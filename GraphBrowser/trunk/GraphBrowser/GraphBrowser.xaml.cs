@@ -50,6 +50,7 @@ namespace MetaCase.GraphBrowser
         public GraphBrowser()
         {
             InitializeComponent();
+            Launcher.connectionAlive = true;
             this.initializeTreeView();
             Settings s = Settings.GetSettings();
             setView();
@@ -66,8 +67,10 @@ namespace MetaCase.GraphBrowser
             root.populate(gs, new List<Graph>()); 
             treeView1.ItemsSource = root.getChildren();
             treeView1.ContextMenu = Settings.GetSettings().is50 ? treeView1.Resources["50Menu"] as System.Windows.Controls.ContextMenu : treeView1.Resources["45Menu"] as System.Windows.Controls.ContextMenu;
-            this.SetToolBarButtonsEnabled();
-            this.setView();
+
+            bool _api = this.IsAPI();
+            this.SetToolBarButtonsEnabled(_api);
+            this.setView(_api);
         }
 
         private void setView()
@@ -96,9 +99,10 @@ namespace MetaCase.GraphBrowser
 
         private void UpdateGraphView()
         {
-            Launcher.initializeAPI(false);
-            this.treeView1.ItemsSource = null;
-            this.initializeTreeView();
+            if (Launcher.initializeAPI(false)) {
+                this.treeView1.ItemsSource = null;
+                this.initializeTreeView();
+            }
             this.setView();
         }
 
@@ -107,8 +111,13 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         private void SetToolBarButtonsEnabled()
         {
+            SetToolBarButtonsEnabled(this.IsAPI());
+        }
+
+        private void SetToolBarButtonsEnabled(bool _api)
+        {
             bool _is50 = this.Is50();
-            bool _isAPI = this.IsAPI();
+            bool _isAPI = _api;
             bool _isSelection = (treeView1.SelectedItem != null);
 
             ButtonGenerateFromList.IsEnabled = (_isAPI && _isSelection && _is50);
@@ -118,18 +127,16 @@ namespace MetaCase.GraphBrowser
             //ButtonEditProperties.IsEnabled = (_is50 && _isAPI && _isSelection);
             ButtonUpdateList.IsEnabled = (true);
             ButtonOpenSettings.IsEnabled = (true);
-
-            this.setView(_isAPI);
         }
 
         private void correctErrorSituation()
         {
-            if (this.IsAPI())
+            bool _api = this.IsAPI();
+            if (_api)
             {
-                
                 this.initializeTreeView();
             }
-            this.setView();
+            this.setView(_api);
         }
 
         private void ButtonOpen_Click(object sender, RoutedEventArgs e)
@@ -209,6 +216,7 @@ namespace MetaCase.GraphBrowser
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
             this.Cursor = Cursors.Wait;
+            Launcher.connectionAlive = true;
             this.initializeTreeView();
             this.setView();
             this.Cursor = Cursors.Arrow;
@@ -245,6 +253,7 @@ namespace MetaCase.GraphBrowser
 
         private void ButtonStartMetaEdit_Click(object sender, RoutedEventArgs e)
         {
+            Launcher.connectionAlive = true;
             bool runUpdate = false;
             if (IsAPI())
             {
