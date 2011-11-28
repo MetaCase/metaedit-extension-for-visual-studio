@@ -10,17 +10,17 @@ namespace MetaCase.GraphBrowser
 {
     public class Settings
     {
-        public String ProgramDir { get; set; }
-        public String WorkingDir { get; set; }
-        public String Database   { get; set; }
-        public String Username   { get; set; }
-        public String Password   { get; set; }
-        public String[] Projects { get; set; }
-        public String Host       { get; set; }
-        public int Port          { get; set; }
-        public bool Logging      { get; set; }
-        public bool is50         { get; set; }
-        public bool Initialized  { get; set; }
+        public String ProgramPath   { get; set; }
+        public String WorkingDir    { get; set; }
+        public String Database      { get; set; }
+        public String Username      { get; set; }
+        public String Password      { get; set; }
+        public String[] Projects    { get; set; }
+        public String Host          { get; set; }
+        public int Port             { get; set; }
+        public bool Logging         { get; set; }
+        public bool is50            { get; set; }
+        public bool Initialized     { get; set; }
         private String merFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\default.mer"; //OK?
         public static Settings singleton;
         
@@ -64,7 +64,7 @@ namespace MetaCase.GraphBrowser
         private void ReadFromConfigFile()
         {
             IniParser reader = new IniParser(merFilePath);
-            this.ProgramDir = reader.GetSetting("programDir");
+            this.ProgramPath = reader.GetSetting("programPath");
             this.WorkingDir = reader.GetSetting("workingDir");
             this.Database = reader.GetSetting("database");
             this.Username = reader.GetSetting("username");
@@ -76,7 +76,7 @@ namespace MetaCase.GraphBrowser
             this.Port = tempPort;
             this.Logging = reader.GetSetting("logging").Equals("true");
 
-            if (this.ProgramDir.Contains("50")) this.is50 = true;
+            if (this.ProgramPath.Contains("50")) this.is50 = true;
             else this.is50 = false;
         }
 
@@ -87,7 +87,7 @@ namespace MetaCase.GraphBrowser
         {
             IniParser writer = new IniParser(merFilePath);
 
-            writer.AddSetting("programDir", this.ProgramDir);
+            writer.AddSetting("programPath", this.ProgramPath);
             writer.AddSetting("workingDir", this.WorkingDir);
             writer.AddSetting("database", this.Database);
             writer.AddSetting("username", this.Username);
@@ -105,7 +105,7 @@ namespace MetaCase.GraphBrowser
             writer.AddSetting("logging", this.Logging.ToString());
             writer.SaveSettings();
 
-            if (this.ProgramDir.Contains("50")) this.is50 = true;
+            if (this.ProgramPath.Contains("50")) this.is50 = true;
             else this.is50 = false;
         }
 
@@ -119,34 +119,34 @@ namespace MetaCase.GraphBrowser
 		    this.Host = "localhost";
 		    this.Logging = false;
 		
-		    String tempProgramDir = "";
+		    String tempProgramPath = "";
 		
 		    IDictionary variables = System.Environment.GetEnvironmentVariables();  
 		    // Search for Program File (x86) folder from env. varible.
-            if (variables.Contains("ProgramFiles(x86)")) tempProgramDir = "C:\\Program Files (x86)";
-            else tempProgramDir = "C:\\Program Files";
+            if (variables.Contains("ProgramFiles(x86)")) tempProgramPath = "C:\\Program Files (x86)";
+            else tempProgramPath = "C:\\Program Files";
 	        
 	        this.WorkingDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "\\MetaEdit+ 5.0";
 
-            this.ProgramDir = tempProgramDir + "\\MetaEdit+ 5.0\\mep50.exe";
+            this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0\\mep50.exe";
 
-	        if (!File.Exists(this.ProgramDir)) {
+	        if (!File.Exists(this.ProgramPath)) {
 	    	    // Try with MetaEdit+ 5.0 evaluation version.
-                this.ProgramDir = tempProgramDir + "\\MetaEdit+ 5.0\\mep50eval.exe";
+                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0\\mep50eval.exe";
 	        }
 
-            if (!File.Exists(this.ProgramDir))
+            if (!File.Exists(this.ProgramPath))
             {
 	    	    // Try with MetaEdit+ 4.5
-                this.ProgramDir = tempProgramDir + "\\MetaEdit+ 4.5\\mep45.exe"; 
+                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 4.5\\mep45.exe"; 
 	    	    // No MetaEdit+ 5.0 found, make the working directory for version 4.5
                 this.WorkingDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "\\MetaEdit+ 4.5";
 	        }
 	    
 	        // if no mep45.exe found it MUST be the evaluation version ;)
-            if (!File.Exists(this.ProgramDir))
+            if (!File.Exists(this.ProgramPath))
             {
-                this.ProgramDir = tempProgramDir + "\\MetaEdit+ 4.5 Evaluation\\mep45eval.exe";
+                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 4.5 Evaluation\\mep45eval.exe";
 	        }
 	    }
     }

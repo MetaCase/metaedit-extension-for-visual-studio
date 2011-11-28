@@ -45,7 +45,7 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="m">The MEOop object</param>
         /// <returns>Graph object</returns>
-        public static Graph MEOopToGraph(MEOop m) 
+        public static Graph MEOopToGraph(MetaEditAPI.MEOop m) 
         {
             Hashtable graphTable = (Hashtable) ProjectTable[m.areaID];
 		    Graph graph = null;
@@ -54,10 +54,10 @@ namespace MetaCase.GraphBrowser
                 graphTable = new Hashtable();
                 ProjectTable.Add(m.areaID, graphTable);
             }
-			graph = (Graph) graphTable[m.objectID];	
-            MetaEditAPIPortTypeClient port = Launcher.Port;
+			graph = (Graph) graphTable[m.objectID];
+            MetaEditAPI.MetaEditAPI port = Launcher.Port;
 
-            METype _graphType = port.type(m);
+            MetaEditAPI.METype _graphType = port.type(m);
             String _typeName;
             if (GetTypeNameTable().ContainsKey(_graphType.name))
             {
@@ -103,8 +103,9 @@ namespace MetaCase.GraphBrowser
         /// Creates MEOop from Graph
         /// </summary>
         /// <returns>created MEOop</returns>
-	    public MEOop ToMEOop() {
-            MEOop m = new MEOop();
+        public MetaEditAPI.MEOop ToMEOop()
+        {
+            MetaEditAPI.MEOop m = new MetaEditAPI.MEOop();
             m.areaID = this.AreaID;
             m.objectID = this.ObjectID;
             return m;
@@ -114,8 +115,9 @@ namespace MetaCase.GraphBrowser
 	    /// Gets the MeType of Graph
 	    /// </summary>
 	    /// <returns>METype</returns>
-	    public METype GetMEType() {
-		    METype type = new METype();
+        public MetaEditAPI.METype GetMEType()
+        {
+            MetaEditAPI.METype type = new MetaEditAPI.METype();
 		    type.name = this.Type;
 		    return type;
 	    }
@@ -156,7 +158,7 @@ namespace MetaCase.GraphBrowser
 	    */
 	    public void RunGenerator(String generator, bool autobuild) {
             this.WritePluginIniFile();
-            MetaEditAPIPortTypeClient port = Launcher.Port;
+            MetaEditAPI.MetaEditAPI port = Launcher.Port;
             
             // Run generator
             if (autobuild) this.RunAutobuild(port);
@@ -170,8 +172,9 @@ namespace MetaCase.GraphBrowser
 	    /**
 	     * Runs Autobuild generator for selected graph. This method is used for MetaEdit+ 4.5 API.
 	     */
-	    public void RunAutobuild(MetaEditAPIPortTypeClient port) {
-		    MENull meNull = new MENull();
+        public void RunAutobuild(MetaEditAPI.MetaEditAPI port)
+        {
+            MetaEditAPI.MENull meNull = new MetaEditAPI.MENull();
 		    try {
 			    port.forName(meNull, this.Name, this.TypeName, "Autobuild");
 		    } catch (Exception e) { 
@@ -179,7 +182,7 @@ namespace MetaCase.GraphBrowser
 		    }
 	    }
 
-        public void RunGenerator(MetaEditAPIPortType port, String generator)
+        public void RunGenerator(MetaEditAPI.MetaEditAPI port, String generator)
         {
             port.forGraphRun(this.ToMEOop(), generator);
         }
@@ -219,10 +222,11 @@ namespace MetaCase.GraphBrowser
 	     * @param done - Array of graphs that are initialized.
 	     * @throws Exception
 	     */
-	    public void InitChildren(MetaEditAPIPortTypeClient port, List<Graph> done) {
+        public void InitChildren(MetaEditAPI.MetaEditAPI port, List<Graph> done)
+        {
 		    if (done.Contains(this)) return;
 		    done.Add(this);
-		    MEOop[] subgraphOops = null;
+            MetaEditAPI.MEOop[] subgraphOops = null;
 		    subgraphOops = port.subgraphs(this.ToMEOop());
 		    // Set the subgraph items to be children of this graph.
 		    if (subgraphOops.Length > 0 && subgraphOops != null) {

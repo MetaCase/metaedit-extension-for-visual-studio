@@ -26,6 +26,7 @@
     <CopyVsixExtensionLocation>C:\Users\olli\Documents\Visual Studio 2010\Projects\GraphBrowser</CopyVsixExtensionLocation>
     <PlatformTarget>x86</PlatformTarget>
     <RegisterForComInterop>false</RegisterForComInterop>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,10 +39,6 @@
     <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetaEditAPI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8cb5872711a919da, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MetaEditAPI.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Engine" />
     <Reference Include="Microsoft.CSharp" />
@@ -142,7 +139,7 @@
     <Compile Include="Guids.cs" />
     <Compile Include="PasswordVerifier.cs" />
     <Compile Include="PortVerifier.cs" />
-    <Compile Include="ProgramDirVerifier.cs" />
+    <Compile Include="ProgramPathVerifier.cs" />
     <Compile Include="ProjectsVerifier.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -198,15 +195,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="visual_studio_2.PNG">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="visual_studio_3.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="visual_studio_addin.PNG">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\question_icon.png" />
     <Resource Include="Resources\run_generator_icon_2.png" />
@@ -244,6 +235,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaEditAPI\MetaEditAPI.csproj">
+      <Project>{3E5B62E6-348C-49FC-90E3-C0145F00721E}</Project>
+      <Name>MetaEditAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

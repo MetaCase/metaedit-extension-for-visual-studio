@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Documents;
 using System.IO;
+using MetaEditAPI;
 
 namespace MetaCase.GraphBrowser
 {
@@ -15,12 +16,12 @@ namespace MetaCase.GraphBrowser
 	     * @throws RemoteException 
 	     */
 	    public static Graph [] Init() {
-            MetaEditAPIPortTypeClient port = Launcher.Port;
-		    METype graphType = new METype();
+            MetaEditAPI.MetaEditAPI port = Launcher.Port;
+            METype graphType = new MetaEditAPI.METype();
 		    graphType.name = "Graph";
 		    List<Graph> graphs = new List<Graph>();
 		    List<Graph> topLevelGraphs = new List<Graph>();
-		    MEOop [] meOops = new MEOop[0];
+            MetaEditAPI.MEOop[] meOops = new MetaEditAPI.MEOop[0];
 		    if (!Launcher.IsApiOK()) return topLevelGraphs.ToArray();
 		    try {
                 meOops = port.allSimilarInstances(graphType);
