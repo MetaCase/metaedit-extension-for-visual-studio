@@ -138,7 +138,7 @@ namespace MetaCase.GraphBrowser
             {
                 if (treeView1.SelectedItem == null) return;
                 GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
-                MetaEditAPIPortTypeClient port = Launcher.Port;
+                MetaEditAPI.MetaEditAPI port = Launcher.Port;
                 port.open(gvm.getGraph().ToMEOop());
             }
             catch (Exception err)
@@ -183,7 +183,7 @@ namespace MetaCase.GraphBrowser
                             generatorList.Add(_generator);
                         }
                     }
-                    SelectionWindow sw = new SelectionWindow(generatorList, "Choose the generator you want to run for the graph", false, false);
+                    SelectionWindow sw = new SelectionWindow(generatorList, "Select the generator to run", false, false);
                     sw.Height = 300;
                     sw.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     sw.ShowDialog();
@@ -260,7 +260,7 @@ namespace MetaCase.GraphBrowser
 
         private void treeView1_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-           // SetToolBarButtonsEnabled();
+           SetToolBarButtonsEnabled();
         }
 
         private void treeView1_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)

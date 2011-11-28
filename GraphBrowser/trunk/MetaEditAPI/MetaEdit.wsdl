@@ -1,0 +1,2939 @@
+<?xml version="1.0"?>
+<definitions name="MetaEditAPI"
+			xmlns="http://schemas.xmlsoap.org/wsdl/" 
+			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+			xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 	
+			xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 	
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:typens="http://metacase.com/type"
+			xmlns:wsdlns="http://metacase.com/wsdl/"
+			targetNamespace="http://metacase.com/wsdl/">
+	<types>
+		<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://metacase.com/type">
+			<xsd:complexType name="MEOop">
+				<xsd:all>
+					<xsd:element name="areaID" type="xsd:int" />
+					<xsd:element name="objectID" type="xsd:int" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="MEAny">
+				<xsd:all>
+					<xsd:element name="meType" type="xsd:string" />
+					<xsd:element name="meValue" type="xsd:string" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="METype">
+				<xsd:all>
+					<xsd:element name="name" type="xsd:string" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Text">
+				<xsd:all>
+					<xsd:element name="string" type="xsd:string" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="MENull" />
+			<xsd:complexType name="MEOopArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:MEOop[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="MEAnyArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:MEAny[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="METypeArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:METype[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+		</xsd:schema>
+	</types>
+	<message name="allGoodInstancesRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="allGoodInstancesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="allSimilarInstancesRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="allSimilarInstancesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="subTypeNamedRequest">
+		<part name="receiver" type="typens:METype" />
+		<part name="subTypeNamed" type="xsd:string" />
+	</message>
+	<message name="subTypeNamedResponse">
+		<part name="result" type="typens:METype" />
+	</message>
+	<message name="findStringRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="findString" type="xsd:string" />
+	</message>
+	<message name="findStringResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="instancesNamedRequest">
+		<part name="receiver" type="typens:METype" />
+		<part name="instancesNamed" type="xsd:string" />
+		<part name="ofSubTypesNamed" type="xsd:string" />
+	</message>
+	<message name="instancesNamedResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="typeNameRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="typeNameResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="typeRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="typeResponse">
+		<part name="result" type="typens:METype" />
+	</message>
+	<message name="userPrintStringRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="userPrintStringResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="valueAtRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="valueAt" type="xsd:int" />
+	</message>
+	<message name="valueAtResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="setValueAtRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="valueAt" type="xsd:int" />
+		<part name="put" type="typens:MEAny" />
+	</message>
+	<message name="setValueAtResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="allPropertiesValuesRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="allPropertiesValuesResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="allPropertiesRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="allPropertiesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="allPropertiesWrappedRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="allPropertiesWrappedResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="instPropsRequest">
+		<part name="receiver" type="typens:METype" />
+		<part name="propColl" type="typens:MEAnyArray" />
+		<part name="valueColl" type="typens:MEAnyArray" />
+		<part name="np" type="typens:MEAny" />
+		<part name="inArea" type="typens:MEAny" />
+	</message>
+	<message name="instPropsResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="unsafeNewRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="unsafeNewResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="objectSetRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="objectSetResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="relationshipSetRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="relationshipSetResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="roleSetRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="roleSetResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="bindingSetRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="bindingSetResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="explodeGraphsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="explodeGraphsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="decompGraphsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="decompGraphsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="subgraphsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="subgraphsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="addExplodeRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addExplode" type="typens:MEOop" />
+		<part name="for" type="typens:MEOop" />
+	</message>
+	<message name="addExplodeResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="getExplodeGraphsForNPRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="getExplodeGraphsForNP" type="typens:MEOop" />
+	</message>
+	<message name="getExplodeGraphsForNPResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="removeExplodeRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="removeExplode" type="typens:MEOop" />
+		<part name="for" type="typens:MEOop" />
+	</message>
+	<message name="removeExplodeResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="decompGraphRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="decompGraphResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="setDecompGraphRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="decompGraph" type="typens:MEAny" />
+	</message>
+	<message name="setDecompGraphResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="objsForObjRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="objsForObj" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="objsForObjResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="objsForRelRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="objsForRel" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="objsForRelResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="objsForRoleRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="objsForRole" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="objsForRoleResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="relsForObjRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="relsForObj" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="relsForObjResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="relsForRoleRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="relsForRole" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="relsForRoleResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="rolesForObjRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="rolesForObj" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="rolesForObjResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="rolesForRelRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="rolesForRel" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="rolesForRelResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="rolesForRoleRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="rolesForRole" type="typens:MEOop" />
+		<part name="ofClass" type="typens:METype" />
+	</message>
+	<message name="rolesForRoleResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="openRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="openResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="animateRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="animate" type="typens:MEOop" />
+	</message>
+	<message name="animateResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="refreshRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="refreshResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="copiedObjectsRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="copiedObjectsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="deleteRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="deleteResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="addToGraphRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addToGraph" type="typens:MEOop" />
+	</message>
+	<message name="addToGraphResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="createBindingRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="relType" type="typens:METype" />
+		<part name="roleTypes" type="typens:METypeArray" />
+		<part name="objects" type="typens:MEOopArray" />
+	</message>
+	<message name="createBindingResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="relationshipRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="relationshipResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="rolesRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="rolesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="objectsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="objectsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="diagramsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="diagramsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="matricesRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="matricesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="tablesRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="tablesResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="newDiagramRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="newDiagramResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="newMatrixRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="newMatrixResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="newTableRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="newTableResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="instRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="instResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="repSetRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="repSetResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="reprGraphRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="reprGraphResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="removeRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="removeResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="timeStampRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="timeStampResponse">
+		<part name="result" type="xsd:dateTime" />
+	</message>
+	<message name="setTimeStampRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="timeStamp" type="xsd:dateTime" />
+	</message>
+	<message name="setTimeStampResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="objectReprsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="objectReprsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="bindingReprsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="bindingReprsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="gridRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="gridResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="setGridRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="grid" type="typens:MEAny" />
+	</message>
+	<message name="setGridResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="displayGridRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="displayGridResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="setDisplayGridRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="displayGrid" type="xsd:boolean" />
+	</message>
+	<message name="setDisplayGridResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="useGridRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="useGridResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="setUseGridRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="useGrid" type="xsd:boolean" />
+	</message>
+	<message name="setUseGridResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="placeRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="placeResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="setPlaceRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="place" type="typens:MEAny" />
+	</message>
+	<message name="setPlaceResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="scaleRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="scaleResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="setScaleRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="scale" type="typens:MEAny" />
+	</message>
+	<message name="setScaleResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="isStraightRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="isStraightResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="straightenRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="straightenResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="layoutRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="layoutRelationship" type="typens:METype" />
+		<part name="fromRole" type="typens:METype" />
+		<part name="toRole" type="typens:METype" />
+		<part name="direction" type="xsd:string" />
+		<part name="manhattan" type="xsd:boolean" />
+	</message>
+	<message name="layoutResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="addNewObjectRepForRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addNewObjectRepFor" type="typens:MEOop" />
+		<part name="beforeIndex" type="xsd:int" />
+		<part name="place" type="typens:MEAny" />
+	</message>
+	<message name="addNewObjectRepForResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="addNewBindingRepForRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addNewBindingRepFor" type="typens:MEOop" />
+		<part name="beforeIndex" type="xsd:int" />
+		<part name="place" type="typens:MEAny" />
+	</message>
+	<message name="addNewBindingRepForResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="connectionReprIdsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="connectionReprIdsResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="addPointRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addPoint" type="typens:MEAny" />
+		<part name="index" type="xsd:int" />
+		<part name="id" type="xsd:int" />
+	</message>
+	<message name="addPointResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="putPointAtIndexRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="at" type="xsd:int" />
+		<part name="putPoint" type="typens:MEAny" />
+		<part name="id" type="xsd:int" />
+	</message>
+	<message name="putPointAtIndexResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="breakpointsRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="breakpoints" type="typens:MEAnyArray" />
+		<part name="id" type="xsd:int" />
+	</message>
+	<message name="breakpointsResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="objTargetOffsetRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="objTargetOffset" type="typens:MEAny" />
+		<part name="id" type="xsd:int" />
+	</message>
+	<message name="objTargetOffsetResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="removePointRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="removePoint" type="typens:MEAny" />
+		<part name="id" type="xsd:int" />
+	</message>
+	<message name="removePointResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="hAxisRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="hAxisResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="vAxisRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="vAxisResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="bindSelectRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="bindSelectResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setBindSelectRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="bindSelect" type="xsd:string" />
+	</message>
+	<message name="setBindSelectResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="cellDisplayModeRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="cellDisplayModeResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setCellDisplayModeRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="cellDisplayMode" type="xsd:string" />
+	</message>
+	<message name="setCellDisplayModeResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="displayStringSelectorRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="displayStringSelectorResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setDisplayStringSelectorRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="displayStringSelector" type="xsd:string" />
+	</message>
+	<message name="setDisplayStringSelectorResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="axisDisplayModeRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="axisDisplayModeResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setAxisDisplayModeRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="axisDisplayMode" type="xsd:string" />
+	</message>
+	<message name="setAxisDisplayModeResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="showFirstRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="showFirstResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="setShowFirstRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="showFirst" type="xsd:boolean" />
+	</message>
+	<message name="setShowFirstResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="rowLabelsWidthRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="rowLabelsWidthResponse">
+		<part name="result" type="xsd:int" />
+	</message>
+	<message name="setRowLabelsWidthRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="rowLabelsWidth" type="xsd:int" />
+	</message>
+	<message name="setRowLabelsWidthResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="textStyleSymbolRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="textStyleSymbolResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setTextStyleSymbolRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="textStyleSymbol" type="xsd:string" />
+	</message>
+	<message name="setTextStyleSymbolResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="addNewAxisEltForRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addNewRepFor" type="typens:MEOop" />
+		<part name="toAxis" type="xsd:string" />
+		<part name="beforeIndex" type="xsd:int" />
+	</message>
+	<message name="addNewAxisEltForResponse">
+		<part name="result" type="typens:MEOop" />
+	</message>
+	<message name="getWidthRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="getWidthResponse">
+		<part name="result" type="xsd:int" />
+	</message>
+	<message name="setWidthRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="setWidth" type="xsd:int" />
+	</message>
+	<message name="setWidthResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="oTRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="oTResponse">
+		<part name="result" type="typens:METype" />
+	</message>
+	<message name="baseCollectionRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="baseCollectionResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="fontRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="fontResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="setFontRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="font" type="xsd:string" />
+	</message>
+	<message name="setFontResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="gxlWidthsRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="gxlWidthsResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="setGxlWidthsRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="gxlWidths" type="typens:MEAnyArray" />
+	</message>
+	<message name="setGxlWidthsResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="addNewTableEltForRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="addNewRepFor" type="typens:MEOop" />
+		<part name="beforeIndex" type="xsd:int" />
+	</message>
+	<message name="addNewTableEltForResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="waitForBindingCreationRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="waitForBindingCreation" type="xsd:int" />
+	</message>
+	<message name="waitForBindingCreationResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="waitForBindingFinalizationRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="waitForBindingFinalization" type="xsd:int" />
+		<part name="in" type="typens:MEOop" />
+	</message>
+	<message name="waitForBindingFinalizationResponse">
+		<part name="result" type="typens:MEAnyArray" />
+	</message>
+	<message name="openedGraphReprsRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="openedGraphReprsResponse">
+		<part name="result" type="typens:MEOopArray" />
+	</message>
+	<message name="animateAllRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="animateAll" type="typens:MEOopArray" />
+	</message>
+	<message name="animateAllResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="animateNoneRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="animateNoneResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="createGraphDialogRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="createGraphDialogResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="createFromPropertyDialogInAreaRequest">
+		<part name="receiver" type="typens:METype" />
+		<part name="createFromPropertyDialogInArea" type="xsd:int" />
+	</message>
+	<message name="createFromPropertyDialogInAreaResponse">
+		<part name="result" type="typens:MEAny" />
+	</message>
+	<message name="propertyDialogRequest">
+		<part name="receiver" type="typens:MEOop" />
+	</message>
+	<message name="propertyDialogResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="forGraphRunRequest">
+		<part name="receiver" type="typens:MEOop" />
+		<part name="forGraphRun" type="xsd:string" />
+	</message>
+	<message name="forGraphRunResponse">
+		<part name="result" type="xsd:boolean" />
+	</message>
+	<message name="generatorNamesRequest">
+		<part name="receiver" type="typens:METype" />
+	</message>
+	<message name="generatorNamesResponse">
+		<part name="result" type="xsd:string" />
+	</message>
+	<message name="currentDirRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="currentDir" type="xsd:string" />
+	</message>
+	<message name="currentDirResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="fileInPatchRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="fileInPatch" type="xsd:string" />
+	</message>
+	<message name="fileInPatchResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="fileInPatchesRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="fileInPatchesResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="abandonRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="abandonResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="commitRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="commitResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="condenseDatabaseRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="condenseDatabaseResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="createProjectRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="createProject" type="xsd:string" />
+	</message>
+	<message name="createProjectResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="documentRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="document" type="xsd:string" />
+		<part name="into" type="xsd:string" />
+	</message>
+	<message name="documentResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="forAllRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="forAll" type="xsd:string" />
+		<part name="run" type="xsd:string" />
+	</message>
+	<message name="forAllResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="forNameRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="forName" type="xsd:string" />
+		<part name="type" type="xsd:string" />
+		<part name="run" type="xsd:string" />
+	</message>
+	<message name="forNameResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="loginRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="loginResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="loginDBRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="loginDB" type="xsd:string" />
+		<part name="user" type="xsd:string" />
+		<part name="password" type="xsd:string" />
+	</message>
+	<message name="loginDBResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="loginNewDBRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="loginNewDB" type="xsd:string" />
+		<part name="dir" type="xsd:string" />
+		<part name="user" type="xsd:string" />
+		<part name="password" type="xsd:string" />
+	</message>
+	<message name="loginNewDBResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="logoutAndExitRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="logoutAndExitResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="maintainDatabaseRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="maintainDatabaseResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="openAllProjectsRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="openAllProjectsResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="quitRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="quitResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="saveWSDLRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="saveWSDL" type="xsd:string" />
+	</message>
+	<message name="saveWSDLResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="setProjectRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="setProject" type="xsd:string" />
+	</message>
+	<message name="setProjectResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="startAPIRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="startAPIResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="startAPIHostnameRequest">
+		<part name="receiver" type="typens:MENull" />
+		<part name="startAPIHostname" type="xsd:string" />
+		<part name="port" type="xsd:string" />
+		<part name="logEvents" type="xsd:string" />
+	</message>
+	<message name="startAPIHostnameResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<message name="stopAPIRequest">
+		<part name="receiver" type="typens:MENull" />
+	</message>
+	<message name="stopAPIResponse">
+		<part name="result" type="typens:MENull" />
+	</message>
+	<portType name="MetaEditAPIPortType">
+		<operation name="allGoodInstances">
+			<documentation>Returns a set of all instances of this Graph type in currently open projects.</documentation>
+			<input message="wsdlns:allGoodInstancesRequest" />
+			<output message="wsdlns:allGoodInstancesResponse" />
+		</operation>
+		<operation name="allSimilarInstances">
+			<documentation>Returns a set of all instances of this Graph type or its subtypes in currently open projects.</documentation>
+			<input message="wsdlns:allSimilarInstancesRequest" />
+			<output message="wsdlns:allSimilarInstancesResponse" />
+		</operation>
+		<operation name="subTypeNamed">
+			<documentation>Looks at subtypes of the METype receiver argument, and returns the METype of the first subtype whose name matches the wildcard string in the second argument. If none are found, returns the same METype as the receiver argument.</documentation>
+			<input message="wsdlns:subTypeNamedRequest" />
+			<output message="wsdlns:subTypeNamedResponse" />
+		</operation>
+		<operation name="findString">
+			<documentation>Returns the set of NonProperties from this Graph whose id property value matches the specified string, which can contain ? and * as wildcards. Case insensitive.</documentation>
+			<input message="wsdlns:findStringRequest" />
+			<output message="wsdlns:findStringResponse" />
+		</operation>
+		<operation name="instancesNamed">
+			<documentation>Returns a sorted collection of all loaded matching instances of matching types. Types may be the METype receiver argument or its subtypes. Matching is case insensitive with wildcards. Note that only graph instances in open projects are guaranteed to be loaded.</documentation>
+			<input message="wsdlns:instancesNamedRequest" />
+			<output message="wsdlns:instancesNamedResponse" />
+		</operation>
+		<operation name="typeName">
+			<documentation>Returns the user-visible string name of the receiver argument, an METype.</documentation>
+			<input message="wsdlns:typeNameRequest" />
+			<output message="wsdlns:typeNameResponse" />
+		</operation>
+		<operation name="type">
+			<documentation>Returns an METype, the type of the receiver argument. The receiver argument must be the MEOop of a GOPRR instance.</documentation>
+			<input message="wsdlns:typeRequest" />
+			<output message="wsdlns:typeResponse" />
+		</operation>
+		<operation name="userPrintString">
+			<documentation>Returns the simple string representation of the receiver argument, an MEOop representing any conceptual or representational element.</documentation>
+			<input message="wsdlns:userPrintStringRequest" />
+			<output message="wsdlns:userPrintStringResponse" />
+		</operation>
+		<operation name="valueAt">
+			<documentation>Returns an MEAny representing the nth property value of the receiver argument, a NonProperty MEOop. The second argument must be an integer, starting with 1 for the first property.</documentation>
+			<input message="wsdlns:valueAtRequest" />
+			<output message="wsdlns:valueAtResponse" />
+		</operation>
+		<operation name="setValueAt">
+			<documentation>Sets the value of the the nth property value of the receiver argument, a NonProperty MEOop. The second argument must be an integer, starting with 1 for the first property. The third argument is an MEAny containing the value for the property. Returns an MEAny containing the MEOop of the property that was changed, or an MEAny containing an MENull if unsuccessful (e.g. if the value is not of the right type or fails the property type's regular expression rule).</documentation>
+			<input message="wsdlns:setValueAtRequest" />
+			<output message="wsdlns:setValueAtResponse" />
+		</operation>
+		<operation name="allPropertiesValues">
+			<documentation>Returns an MEAnyArray of the values of the properties of the receiver argument, a NonProperty MEOop.</documentation>
+			<input message="wsdlns:allPropertiesValuesRequest" />
+			<output message="wsdlns:allPropertiesValuesResponse" />
+		</operation>
+		<operation name="allProperties">
+			<documentation>Returns an MEOopArray of the properties of the receiver argument, a NonProperty MEOop. (Note this returns the actual properties, not their values: if you want the values, use allPropertiesValues.) This can be useful when working with property sharing; note though that instProps requires an MEAnyArray, so each MEOop returned here would have to be wrapped in an MEAny. The method allPropertiesWrapped returns such an MEAnyArray. </documentation>
+			<input message="wsdlns:allPropertiesRequest" />
+			<output message="wsdlns:allPropertiesResponse" />
+		</operation>
+		<operation name="allPropertiesWrapped">
+			<documentation>Returns an MEAnyArray of the properties of the receiver argument, a NonProperty MEOop. (Note this returns the actual properties, not their values.) This is useful for setting up property sharing, since instProps requires an MEAnyArray of properties. To get just the properties as an MEOopArray, use allProperties. To get just their values, use allPropertiesValues. </documentation>
+			<input message="wsdlns:allPropertiesWrappedRequest" />
+			<output message="wsdlns:allPropertiesWrappedResponse" />
+		</operation>
+		<operation name="instProps">
+			<documentation>Creates or sets the properties of an instance of the METype argument, returning an MEAny with the MEOop of the instance, or MENull for an error. The first argument is the METype; propColl is an array of MEAnys, either MEOops of existing property instances or MENull to create a new property of the default type; valueColl is an array of MEAnys, the values of the properties; np is an MEAny, either the MEOop of an existing NonProperty of this type, or MENull to create a new one; inArea is an MEAny, either an integer corresponding to the project's area number, or MENull for the default (the same project as np if it exists already, else the current default project).</documentation>
+			<input message="wsdlns:instPropsRequest" />
+			<output message="wsdlns:instPropsResponse" />
+		</operation>
+		<operation name="unsafeNew">
+			<documentation>Create and return the MEOop of a new instance of the receiver argument, a NonProperty type METype. The result is created in the current default project. Properties are created with their default values, and the result is not checked against the metamodel rules.</documentation>
+			<input message="wsdlns:unsafeNewRequest" />
+			<output message="wsdlns:unsafeNewResponse" />
+		</operation>
+		<operation name="objectSet">
+			<documentation>Returns the set of all Objects in this Graph</documentation>
+			<input message="wsdlns:objectSetRequest" />
+			<output message="wsdlns:objectSetResponse" />
+		</operation>
+		<operation name="relationshipSet">
+			<documentation>Returns the set of all Relationships in this Graph.</documentation>
+			<input message="wsdlns:relationshipSetRequest" />
+			<output message="wsdlns:relationshipSetResponse" />
+		</operation>
+		<operation name="roleSet">
+			<documentation>Returns the set of all Roles in this Graph.</documentation>
+			<input message="wsdlns:roleSetRequest" />
+			<output message="wsdlns:roleSetResponse" />
+		</operation>
+		<operation name="bindingSet">
+			<documentation>Returns the set of all Binding MEOops in this Graph MEOop</documentation>
+			<input message="wsdlns:bindingSetRequest" />
+			<output message="wsdlns:bindingSetResponse" />
+		</operation>
+		<operation name="explodeGraphs">
+			<documentation>Returns the set of Graphs that are explosions of objects in the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:explodeGraphsRequest" />
+			<output message="wsdlns:explodeGraphsResponse" />
+		</operation>
+		<operation name="decompGraphs">
+			<documentation>Returns the set of Graphs that are decompositions of objects in the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:decompGraphsRequest" />
+			<output message="wsdlns:decompGraphsResponse" />
+		</operation>
+		<operation name="subgraphs">
+			<documentation>Returns the set of Graphs that are subgraphs (i.e. either explosions or decompositions) of the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:subgraphsRequest" />
+			<output message="wsdlns:subgraphsResponse" />
+		</operation>
+		<operation name="addExplode">
+			<documentation>In the receiver argument, a Graph MEOop, add a new explosion to the second argument, a Graph MEOop, for the final argument, an Object MEOop.</documentation>
+			<input message="wsdlns:addExplodeRequest" />
+			<output message="wsdlns:addExplodeResponse" />
+		</operation>
+		<operation name="getExplodeGraphsForNP">
+			<documentation>For this Graph and this NonProperty, returns the set of explosion subgraphs</documentation>
+			<input message="wsdlns:getExplodeGraphsForNPRequest" />
+			<output message="wsdlns:getExplodeGraphsForNPResponse" />
+		</operation>
+		<operation name="removeExplode">
+			<documentation>Removes the explosion link from the receiver argument, a Graph MEOop. The second argument is the target Graph MEOop of the explosion to remove. The third argument is the source Object, Role or Relationship MEOop of the explosion to remove. The result is the receiver Graph MEOop.</documentation>
+			<input message="wsdlns:removeExplodeRequest" />
+			<output message="wsdlns:removeExplodeResponse" />
+		</operation>
+		<operation name="decompGraph">
+			<documentation>Get the decomposition of the receiver argument, an Object MEOop. Returns an MEAny containing either a Graph MEOop or MENull.</documentation>
+			<input message="wsdlns:decompGraphRequest" />
+			<output message="wsdlns:decompGraphResponse" />
+		</operation>
+		<operation name="setDecompGraph">
+			<documentation>Set the decomposition of the receiver argument, an Object MEOop, to be the decompGraph argument, an MEAny containing either a Graph MEOop or MENull. Returns an MEAny containing either the receiver for success or MENull for failure.</documentation>
+			<input message="wsdlns:setDecompGraphRequest" />
+			<output message="wsdlns:setDecompGraphResponse" />
+		</operation>
+		<operation name="objsForObj">
+			<documentation>For this Graph and this Object, returns the set of Objects directly connected to it. The third argument restricts the type of the connected Objects: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:objsForObjRequest" />
+			<output message="wsdlns:objsForObjResponse" />
+		</operation>
+		<operation name="objsForRel">
+			<documentation>For this Graph and this Relationship, returns the set of Objects directly connected to it. The third argument restricts the type of the connected Objects: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:objsForRelRequest" />
+			<output message="wsdlns:objsForRelResponse" />
+		</operation>
+		<operation name="objsForRole">
+			<documentation>For this Graph and this Role, returns the set of Objects directly connected to it. The third argument restricts the type of the connected Objects: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:objsForRoleRequest" />
+			<output message="wsdlns:objsForRoleResponse" />
+		</operation>
+		<operation name="relsForObj">
+			<documentation>For this Graph and this Object, returns the set of Relationships directly connected to it. The third argument restricts the type of the connected Relationships: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:relsForObjRequest" />
+			<output message="wsdlns:relsForObjResponse" />
+		</operation>
+		<operation name="relsForRole">
+			<documentation>For this Graph and this Role, returns the set of Relationships directly connected to it. The third argument restricts the type of the connected Relationships: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:relsForRoleRequest" />
+			<output message="wsdlns:relsForRoleResponse" />
+		</operation>
+		<operation name="rolesForObj">
+			<documentation>For this Graph and this Object, returns the set of Roles directly connected to it. The third argument restricts the type of the connected Roles: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:rolesForObjRequest" />
+			<output message="wsdlns:rolesForObjResponse" />
+		</operation>
+		<operation name="rolesForRel">
+			<documentation>For this Graph and this Relationship, returns the set of Roles directly connected to it. The third argument restricts the type of the connected Roles: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:rolesForRelRequest" />
+			<output message="wsdlns:rolesForRelResponse" />
+		</operation>
+		<operation name="rolesForRole">
+			<documentation>For this Graph and this Roles, returns the set of Roles that belong to the same binding as the referred Role. The third argument restricts the type of the connected Roles: use NonProperty for no restriction.</documentation>
+			<input message="wsdlns:rolesForRoleRequest" />
+			<output message="wsdlns:rolesForRoleResponse" />
+		</operation>
+		<operation name="open">
+			<documentation>Opens the receiver argument in a graph representation. Will prompt with a list dialog in MetaEdit+ if there is more than one possibility.</documentation>
+			<input message="wsdlns:openRequest" />
+			<output message="wsdlns:openResponse" />
+		</operation>
+		<operation name="animate">
+			<documentation>Opens the specified graph and highlights the specified NonProperty. The receiver argument is the MEOop of the graph, the second is the MEOop of the NonProperty. This will never prompt.</documentation>
+			<input message="wsdlns:animateRequest" />
+			<output message="wsdlns:animateResponse" />
+		</operation>
+		<operation name="refresh">
+			<documentation>Refreshes the display of the receiver argument, which is an MEOop of any conceptual or representational instance.</documentation>
+			<input message="wsdlns:refreshRequest" />
+			<output message="wsdlns:refreshResponse" />
+		</operation>
+		<operation name="copiedObjects">
+			<documentation>Returns the MEOops of objects currently in the copy buffer. Bindings in the copy buffer are ignored. This is a useful way of allowing users to select an object in MetaEdit+, and have your application know which object was selected: rather than just selecting the object, they can select and copy it.</documentation>
+			<input message="wsdlns:copiedObjectsRequest" />
+			<output message="wsdlns:copiedObjectsResponse" />
+		</operation>
+		<operation name="delete">
+			<documentation>Delete the receiver argument, a Graph MEOop, and all its representations. Note this does not delete links from other graphs etc. to this graph.</documentation>
+			<input message="wsdlns:deleteRequest" />
+			<output message="wsdlns:deleteResponse" />
+		</operation>
+		<operation name="addToGraph">
+			<documentation>Adds the receiver argument, an Object MEOop, to the second argument, a Graph MEOop. No type checking is performed.</documentation>
+			<input message="wsdlns:addToGraphRequest" />
+			<output message="wsdlns:addToGraphResponse" />
+		</operation>
+		<operation name="createBinding">
+			<documentation>Creates a new binding into the receiver argument, a Graph MEOop. The second argument is the METype of the relationship to create. The third argument is an METypeArray of the types of Roles to create. The final argument is an MEOopArray of the existing Objects that this binding connects, in the same order as the third argument. The return value is the newly created binding MEOop.</documentation>
+			<input message="wsdlns:createBindingRequest" />
+			<output message="wsdlns:createBindingResponse" />
+		</operation>
+		<operation name="relationship">
+			<documentation>Returns the relationship MEOop of this binding MEOop</documentation>
+			<input message="wsdlns:relationshipRequest" />
+			<output message="wsdlns:relationshipResponse" />
+		</operation>
+		<operation name="roles">
+			<documentation>Returns an MEOopArray of the roles in this binding MEOop in order</documentation>
+			<input message="wsdlns:rolesRequest" />
+			<output message="wsdlns:rolesResponse" />
+		</operation>
+		<operation name="objects">
+			<documentation>Returns an MEOopArray of the objects in this binding MEOop in order</documentation>
+			<input message="wsdlns:objectsRequest" />
+			<output message="wsdlns:objectsResponse" />
+		</operation>
+		<operation name="diagrams">
+			<documentation>Returns an MEOopArray containing the set of diagram representations of the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:diagramsRequest" />
+			<output message="wsdlns:diagramsResponse" />
+		</operation>
+		<operation name="matrices">
+			<documentation>Returns an MEOopArray containing the set of matrix representations of the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:matricesRequest" />
+			<output message="wsdlns:matricesResponse" />
+		</operation>
+		<operation name="tables">
+			<documentation>Returns an MEOopArray containing the set of table representations of the receiver argument, a Graph MEOop.</documentation>
+			<input message="wsdlns:tablesRequest" />
+			<output message="wsdlns:tablesResponse" />
+		</operation>
+		<operation name="newDiagram">
+			<documentation>Creates a new diagram representation for the receiver argument, a Graph MEOop, and returns the MEOop for the new representation.</documentation>
+			<input message="wsdlns:newDiagramRequest" />
+			<output message="wsdlns:newDiagramResponse" />
+		</operation>
+		<operation name="newMatrix">
+			<documentation>Creates a new matrix representation for the receiver argument, a Graph MEOop, and returns the MEOop for the new representation.</documentation>
+			<input message="wsdlns:newMatrixRequest" />
+			<output message="wsdlns:newMatrixResponse" />
+		</operation>
+		<operation name="newTable">
+			<documentation>Creates a new table representation for the receiver argument, a Graph MEOop, and returns the MEOop for the new representation.</documentation>
+			<input message="wsdlns:newTableRequest" />
+			<output message="wsdlns:newTableResponse" />
+		</operation>
+		<operation name="inst">
+			<documentation>Returns the NonProperty MEOop represented by the receiver argument, an MEOop of a representation element.</documentation>
+			<input message="wsdlns:instRequest" />
+			<output message="wsdlns:instResponse" />
+		</operation>
+		<operation name="repSet">
+			<documentation>Returns an MEOopArray containing all representation elements of the receiver argument, a NonProperty MEOop.</documentation>
+			<input message="wsdlns:repSetRequest" />
+			<output message="wsdlns:repSetResponse" />
+		</operation>
+		<operation name="reprGraph">
+			<documentation>Returns the representation graph to which this representation element belongs. The receiver argument must be an MEOop of a representation element.</documentation>
+			<input message="wsdlns:reprGraphRequest" />
+			<output message="wsdlns:reprGraphResponse" />
+		</operation>
+		<operation name="remove">
+			<documentation>Removes the receiver argument, any representation MEOop. Returns the NonProperty MEOop the receiver used to represent.</documentation>
+			<input message="wsdlns:removeRequest" />
+			<output message="wsdlns:removeResponse" />
+		</operation>
+		<operation name="timeStamp">
+			<documentation>Returns the timestamp of the receiver argument, a representation graph MEOop.</documentation>
+			<input message="wsdlns:timeStampRequest" />
+			<output message="wsdlns:timeStampResponse" />
+		</operation>
+		<operation name="setTimeStamp">
+			<documentation>Sets the timestamp of the receiver argument, a representation graph MEOop.</documentation>
+			<input message="wsdlns:setTimeStampRequest" />
+			<output message="wsdlns:setTimeStampResponse" />
+		</operation>
+		<operation name="objectReprs">
+			<documentation>Returns an MEOopArray of the object representations in the receiver argument, a diagram MEOop. The result is in Z-order, backmost first.</documentation>
+			<input message="wsdlns:objectReprsRequest" />
+			<output message="wsdlns:objectReprsResponse" />
+		</operation>
+		<operation name="bindingReprs">
+			<documentation>Returns an MEOopArray of the binding representations in the receiver argument, a diagram MEOop. The result is in Z-order, backmost first.</documentation>
+			<input message="wsdlns:bindingReprsRequest" />
+			<output message="wsdlns:bindingReprsResponse" />
+		</operation>
+		<operation name="grid">
+			<documentation>Returns an MEAny containing a point specifying the size of the grid in the receiver argument, a diagram MEOop.</documentation>
+			<input message="wsdlns:gridRequest" />
+			<output message="wsdlns:gridResponse" />
+		</operation>
+		<operation name="setGrid">
+			<documentation>Sets the size of the grid in the receiver argument, a diagram MEOop. The value is an MEAny containing a point specifying the size of the grid.</documentation>
+			<input message="wsdlns:setGridRequest" />
+			<output message="wsdlns:setGridResponse" />
+		</operation>
+		<operation name="displayGrid">
+			<documentation>Returns a Boolean indicating whether the grid is displayed in the receiver argument, a diagram MEOop.</documentation>
+			<input message="wsdlns:displayGridRequest" />
+			<output message="wsdlns:displayGridResponse" />
+		</operation>
+		<operation name="setDisplayGrid">
+			<documentation>Sets a Boolean indicating whether the grid is displayed in the receiver argument, a diagram MEOop.</documentation>
+			<input message="wsdlns:setDisplayGridRequest" />
+			<output message="wsdlns:setDisplayGridResponse" />
+		</operation>
+		<operation name="useGrid">
+			<documentation>Returns a Boolean indicating whether Snap to Grid is on in the receiver argument, a diagram MEOop.</documentation>
+			<input message="wsdlns:useGridRequest" />
+			<output message="wsdlns:useGridResponse" />
+		</operation>
+		<operation name="setUseGrid">
+			<documentation>Sets a Boolean indicating whether Snap to Grid is on in the receiver argument, a diagram MEOop.</documentation>
+			<input message="wsdlns:setUseGridRequest" />
+			<output message="wsdlns:setUseGridResponse" />
+		</operation>
+		<operation name="place">
+			<documentation>Returns the position of the receiver, an MEOop for an object or binding representation in a diagram argument. The result returned is an MEAny containing a point, where 1 represents 1 pixel at 100% zoom.</documentation>
+			<input message="wsdlns:placeRequest" />
+			<output message="wsdlns:placeResponse" />
+		</operation>
+		<operation name="setPlace">
+			<documentation>Sets the position of the receiver argument, an MEOop for an object or binding representation in a diagram. The value is an MEAny containing a point, where 1 represents 1 pixel at 100% zoom.</documentation>
+			<input message="wsdlns:setPlaceRequest" />
+			<output message="wsdlns:setPlaceResponse" />
+		</operation>
+		<operation name="scale">
+			<documentation>Returns the scale of the receiver argument, an MEOop for an object or binding representation in a diagram. The result returned is an MEAny containing a point, where 1 represents 100%.</documentation>
+			<input message="wsdlns:scaleRequest" />
+			<output message="wsdlns:scaleResponse" />
+		</operation>
+		<operation name="setScale">
+			<documentation>Sets the scale of the receiver argument, an MEOop for an object or binding representation in a diagram. The value is an MEAny containing a point, where 1 represents 100%.</documentation>
+			<input message="wsdlns:setScaleRequest" />
+			<output message="wsdlns:setScaleResponse" />
+		</operation>
+		<operation name="isStraight">
+			<documentation>Returns a Boolean indicating whether the receiver argument, a diagram binding representation MEOop, is straight.</documentation>
+			<input message="wsdlns:isStraightRequest" />
+			<output message="wsdlns:isStraightResponse" />
+		</operation>
+		<operation name="straighten">
+			<documentation>Straightens the receiver argument, a diagram binding representation MEOop. The receiver must be a binary binding. All breakpoints and target point offsets are removed from all connection representations, and the relationship position is set to the midpoint of the role lines.</documentation>
+			<input message="wsdlns:straightenRequest" />
+			<output message="wsdlns:straightenResponse" />
+		</operation>
+		<operation name="layout">
+			<documentation>Creates a new diagram representation with automatic layout for the graph denoted by the first MEOop argument. The auto-layout algorithm assumes a directed acyclic graph (DAG) as its input and therefore the user must provide the API call with rules according to which the DAG is built. Therefore, the following argument, relationship, defines the relationship type which instances appear as edges in the DAG. The two following arguments, parentRole and childRole, define the directivity according to which the DAG is build. The fifth argument, direction, provides the information how the layout is distributed and can have either 'vertical' or 'horizontal' as values. The final argument, manhattan, toggles the usage of orthogonal or diagonal lines between DAG nodes.</documentation>
+			<input message="wsdlns:layoutRequest" />
+			<output message="wsdlns:layoutResponse" />
+		</operation>
+		<operation name="addNewObjectRepFor">
+			<documentation>Adds a new object representation to the receiver argument, a diagram MEOop. The second argument is the MEOop of the object to represent. The third argument is a 1-based integer before which to insert the new binding representation in the Z-ordered collection of binding representations: 1 is the backmost element. The fourth argument is an MEAny containing the point position of the new object representation. The return value is the MEOop of the new object representation.</documentation>
+			<input message="wsdlns:addNewObjectRepForRequest" />
+			<output message="wsdlns:addNewObjectRepForResponse" />
+		</operation>
+		<operation name="addNewBindingRepFor">
+			<documentation>Adds a new binding representation to the receiver argument, a diagram MEOop. The second argument is the MEOop of the binding to represent. The third argument is a 1-based integer before which to insert the new binding representation in the Z-ordered collection of binding representations: 1 is the backmost element. The fourth argument is an MEAny containg the point position of the relationship representation. The return value is the MEOop of the new binding representation.</documentation>
+			<input message="wsdlns:addNewBindingRepForRequest" />
+			<output message="wsdlns:addNewBindingRepForResponse" />
+		</operation>
+		<operation name="connectionReprIds">
+			<documentation>Returns an MEAnyArray containing the integer ids of the connections represented in the receiver argument, a diagram binding representation MEOop. </documentation>
+			<input message="wsdlns:connectionReprIdsRequest" />
+			<output message="wsdlns:connectionReprIdsResponse" />
+		</operation>
+		<operation name="addPoint">
+			<documentation>Adds a new breakpoint to a role representation in the receiver argument, a diagram binding representation MEOop. The second argument is an MEAny containing the breakpoint coordinate. The third argument is the 1-based integer index before which to insert the new breakpoint, counting from the object. The fourth argument is the integer id of the connection within this binding.</documentation>
+			<input message="wsdlns:addPointRequest" />
+			<output message="wsdlns:addPointResponse" />
+		</operation>
+		<operation name="putPointAtIndex">
+			<documentation>Moves the position of a breakpoint in a role representation in the receiver argument, a diagram binding representation MEOop. The second argument is the 1-based integer index of the breakpoint, counting from the object. The third argument is an MEAny containing the new coordinate for the breakpoint. The fourth argument is the integer id of the connection within this binding.</documentation>
+			<input message="wsdlns:putPointAtIndexRequest" />
+			<output message="wsdlns:putPointAtIndexResponse" />
+		</operation>
+		<operation name="breakpoints">
+			<documentation>Sets the breakpoints of a role representation in the receiver argument, a diagram binding representation MEOop. The second argument is an MEAnyArray containing the coordinates of the breakpoints. The third argument is the integer id of the connection within this binding.</documentation>
+			<input message="wsdlns:breakpointsRequest" />
+			<output message="wsdlns:breakpointsResponse" />
+		</operation>
+		<operation name="objTargetOffset">
+			<documentation>Sets the target point offset for a role representation in the receiver argument, a diagram binding representation MEOop. The second argument is an MEAny containing the offset coordinate. The third argument is the integer id of the connection within this binding.</documentation>
+			<input message="wsdlns:objTargetOffsetRequest" />
+			<output message="wsdlns:objTargetOffsetResponse" />
+		</operation>
+		<operation name="removePoint">
+			<documentation>Removes a breakpoint from a role representation in the receiver argument, a diagram binding representation MEOop. The second argument is an MEAny containing the breakpoint coordinate. The third argument is the integer id of the connection within this binding.</documentation>
+			<input message="wsdlns:removePointRequest" />
+			<output message="wsdlns:removePointResponse" />
+		</operation>
+		<operation name="hAxis">
+			<documentation>Returns an MEOopArray of the axis elements on the horizontal axis of the receiver argument, a matrix MEOop.</documentation>
+			<input message="wsdlns:hAxisRequest" />
+			<output message="wsdlns:hAxisResponse" />
+		</operation>
+		<operation name="vAxis">
+			<documentation>Returns an MEOopArray of the axis elements on the vertical axis of the receiver argument, a matrix MEOop.</documentation>
+			<input message="wsdlns:vAxisRequest" />
+			<output message="wsdlns:vAxisResponse" />
+		</operation>
+		<operation name="bindSelect">
+			<documentation>Returns the element to select from a binding for display in a cell of the receiver argument, a matrix MEOop. The result returned is a string corresponding to the choice in the View menu: firstRole for the Row Role, secondRole for the Column Role, and relationship for the Relationship.</documentation>
+			<input message="wsdlns:bindSelectRequest" />
+			<output message="wsdlns:bindSelectResponse" />
+		</operation>
+		<operation name="setBindSelect">
+			<documentation>Sets the element to select from a binding for display in a cell of the receiver argument, a matrix MEOop. The value is a string corresponding to the choice in the View menu: firstRole for the Row Role, secondRole for the Column Role, and relationship for the Relationship.</documentation>
+			<input message="wsdlns:setBindSelectRequest" />
+			<output message="wsdlns:setBindSelectResponse" />
+		</operation>
+		<operation name="cellDisplayMode">
+			<documentation>Returns the cell display mode of the receiver argument, a matrix MEOop. The result returned is a string corresponding to the choice in the Cell menu: displayText, displaySymbol, or displayTextAndSymbol.</documentation>
+			<input message="wsdlns:cellDisplayModeRequest" />
+			<output message="wsdlns:cellDisplayModeResponse" />
+		</operation>
+		<operation name="setCellDisplayMode">
+			<documentation>Sets the cell display mode of the receiver argument, a matrix MEOop. The value is a string corresponding to the choice in the Cell menu: displayText, displaySymbol, or displayTextAndSymbol.</documentation>
+			<input message="wsdlns:setCellDisplayModeRequest" />
+			<output message="wsdlns:setCellDisplayModeResponse" />
+		</operation>
+		<operation name="displayStringSelector">
+			<documentation>Returns the cell text display function of the receiver argument, a matrix MEOop. The result returned is a string corresponding to the choice in the Cell | Text Display dialog: userPrintStringWithType, userPrintString, typeName, letter, justX.</documentation>
+			<input message="wsdlns:displayStringSelectorRequest" />
+			<output message="wsdlns:displayStringSelectorResponse" />
+		</operation>
+		<operation name="setDisplayStringSelector">
+			<documentation>Sets the cell text display function of the receiver argument, a matrix MEOop. The value is a string corresponding to the choice in the Cell | Text Display dialog: userPrintStringWithType, userPrintString, typeName, letter, justX.</documentation>
+			<input message="wsdlns:setDisplayStringSelectorRequest" />
+			<output message="wsdlns:setDisplayStringSelectorResponse" />
+		</operation>
+		<operation name="axisDisplayMode">
+			<documentation>Returns the axis display mode of the receiver argument, a matrix MEOop. The result returned is a string corresponding to the choice in the Axis menu: axesDisplayText, axesDisplaySymbol, or axesDisplayTextAndSymbol.</documentation>
+			<input message="wsdlns:axisDisplayModeRequest" />
+			<output message="wsdlns:axisDisplayModeResponse" />
+		</operation>
+		<operation name="setAxisDisplayMode">
+			<documentation>Sets the axis display mode of the receiver argument, a matrix MEOop. The value is a string corresponding to the choice in the Axis menu: axesDisplayText, axesDisplaySymbol, or axesDisplayTextAndSymbol.</documentation>
+			<input message="wsdlns:setAxisDisplayModeRequest" />
+			<output message="wsdlns:setAxisDisplayModeResponse" />
+		</operation>
+		<operation name="showFirst">
+			<documentation>Returns whether the receiver argument, a matrix MEOop, only shows bindings in cells corresponding to the first role, i.e. whether the View | Directed? menu item is chosen.</documentation>
+			<input message="wsdlns:showFirstRequest" />
+			<output message="wsdlns:showFirstResponse" />
+		</operation>
+		<operation name="setShowFirst">
+			<documentation>Sets whether the receiver argument, a matrix MEOop, only shows bindings in cells corresponding to the first role, i.e. whether the View | Directed? menu item is chosen.</documentation>
+			<input message="wsdlns:setShowFirstRequest" />
+			<output message="wsdlns:setShowFirstResponse" />
+		</operation>
+		<operation name="rowLabelsWidth">
+			<documentation>Returns the width in pixels of the row labels in the receiver argument, a matrix MEOop.</documentation>
+			<input message="wsdlns:rowLabelsWidthRequest" />
+			<output message="wsdlns:rowLabelsWidthResponse" />
+		</operation>
+		<operation name="setRowLabelsWidth">
+			<documentation>Sets the width in pixels of the row labels in the receiver argument, a matrix MEOop.</documentation>
+			<input message="wsdlns:setRowLabelsWidthRequest" />
+			<output message="wsdlns:setRowLabelsWidthResponse" />
+		</operation>
+		<operation name="textStyleSymbol">
+			<documentation>Returns the text style used by the receiver argument, a matrix MEOop. The result returned is one of the styles shown in Format | Font...</documentation>
+			<input message="wsdlns:textStyleSymbolRequest" />
+			<output message="wsdlns:textStyleSymbolResponse" />
+		</operation>
+		<operation name="setTextStyleSymbol">
+			<documentation>Sets the text style used by the receiver argument, a matrix MEOop. The value is one of the styles shown in Format | Font...</documentation>
+			<input message="wsdlns:setTextStyleSymbolRequest" />
+			<output message="wsdlns:setTextStyleSymbolResponse" />
+		</operation>
+		<operation name="addNewAxisEltFor">
+			<documentation>Add to the receiver argument, a matrix MEOop, a new representation for the Object MEOop. The representation is added to the horizontal or vertical axis, depending on the toAxis argument, before the specified index (1-based). Returns the MEOop of the resulting axis element.</documentation>
+			<input message="wsdlns:addNewAxisEltForRequest" />
+			<output message="wsdlns:addNewAxisEltForResponse" />
+		</operation>
+		<operation name="getWidth">
+			<documentation>Returns the width in pixels of the receiver argument, a matrix axis element MEOop.</documentation>
+			<input message="wsdlns:getWidthRequest" />
+			<output message="wsdlns:getWidthResponse" />
+		</operation>
+		<operation name="setWidth">
+			<documentation>Sets the width in pixels of the receiver argument, a matrix axis element MEOop.</documentation>
+			<input message="wsdlns:setWidthRequest" />
+			<output message="wsdlns:setWidthResponse" />
+		</operation>
+		<operation name="oT">
+			<documentation>Returns the METype of the object type whose instances are shown in the receiver argument, a table MEOop.</documentation>
+			<input message="wsdlns:oTRequest" />
+			<output message="wsdlns:oTResponse" />
+		</operation>
+		<operation name="baseCollection">
+			<documentation>Returns an MEOopArray containing the object representations in the receiver, a table MEOop.</documentation>
+			<input message="wsdlns:baseCollectionRequest" />
+			<output message="wsdlns:baseCollectionResponse" />
+		</operation>
+		<operation name="font">
+			<documentation>Returns the text style used by the receiver argument, a table MEOop. The result returned is one of the styles shown in Format | Font...</documentation>
+			<input message="wsdlns:fontRequest" />
+			<output message="wsdlns:fontResponse" />
+		</operation>
+		<operation name="setFont">
+			<documentation>Sets the text style used by the receiver argument, a table MEOop. The value is one of the styles shown in Format | Font...</documentation>
+			<input message="wsdlns:setFontRequest" />
+			<output message="wsdlns:setFontResponse" />
+		</operation>
+		<operation name="gxlWidths">
+			<documentation>Returns an MEAnyArray containing the column widths in pixels in the receiver, a table MEOop. </documentation>
+			<input message="wsdlns:gxlWidthsRequest" />
+			<output message="wsdlns:gxlWidthsResponse" />
+		</operation>
+		<operation name="setGxlWidths">
+			<documentation>Sets the column widths in pixels of the receiver, a table MEOop. The value is an MEAnyArray containing either one MEAny integer, which will become the default width for all columns, or as many MEAny integers as there are properties in this table's object type.</documentation>
+			<input message="wsdlns:setGxlWidthsRequest" />
+			<output message="wsdlns:setGxlWidthsResponse" />
+		</operation>
+		<operation name="addNewTableEltFor">
+			<documentation>Adds a new object representation to the receiver argument, a table MEOop. The second argument is the MEOop of the object to represent. The third argument is a 1-based integer index of the row before which to insert the new object representation. The return value is the MEOop of the new object representation.</documentation>
+			<input message="wsdlns:addNewTableEltForRequest" />
+			<output message="wsdlns:addNewTableEltForResponse" />
+		</operation>
+		<operation name="waitForBindingCreation">
+			<documentation>Returns an MEAny array containing information about a binding creation that was started before the timeout, or an empty MEAny array if it times out. The 3-element array is: the graph representation (MEAny of MEOop), relationship type (MEAny of METype), and first object representation (MEAny of MEOop). </documentation>
+			<input message="wsdlns:waitForBindingCreationRequest" />
+			<output message="wsdlns:waitForBindingCreationResponse" />
+		</operation>
+		<operation name="waitForBindingFinalization">
+			<documentation>Returns an MEAny array: empty if it times out, containing the diagram and two MENulls if binding creation was cancelled (either during the duration of this call or before it, i.e. the diagram does not currently have an open editor in binding creation mode), or containing the diagram, new bindingRepr and binding</documentation>
+			<input message="wsdlns:waitForBindingFinalizationRequest" />
+			<output message="wsdlns:waitForBindingFinalizationResponse" />
+		</operation>
+		<operation name="openedGraphReprs">
+			<documentation>Return the MEOops of all representation graphs that are currently open in editors, uppermost first.</documentation>
+			<input message="wsdlns:openedGraphReprsRequest" />
+			<output message="wsdlns:openedGraphReprsResponse" />
+		</operation>
+		<operation name="animateAll">
+			<documentation>Opens the specified diagram and highlights the specified ObjectReprs. The receiver argument is the MEOop of the diagram, the second is the MEOopArray of the ObjectReprs. This will never prompt.</documentation>
+			<input message="wsdlns:animateAllRequest" />
+			<output message="wsdlns:animateAllResponse" />
+		</operation>
+		<operation name="animateNone">
+			<documentation>Turns off all highlighting in any editor open on the diagram. Does not open the diagram.</documentation>
+			<input message="wsdlns:animateNoneRequest" />
+			<output message="wsdlns:animateNoneResponse" />
+		</operation>
+		<operation name="createGraphDialog">
+			<documentation>Opens the Create Graph dialog, with the Graph type in the first argument as the initial selection (or none, if this is the Graph metatype). Creates the graph and returns an MEAny containing the new graph's MEOop, or MENull if creation was cancelled or unsuccessful. As the graph is new, it will have at most one representation, which can be found from its repSet.</documentation>
+			<input message="wsdlns:createGraphDialogRequest" />
+			<output message="wsdlns:createGraphDialogResponse" />
+		</operation>
+		<operation name="createFromPropertyDialogInArea">
+			<documentation>Opens a property dialog to create a new instance of the first argument, an METype. The project to store the new instance in is specified by the second argument, an integer. Valid numbers are 3 and above, and an existing instance's project/area number can be found from the areaID of its MEOop. Returns an MEAny, containing the MEOop of the new instance or an MENull if unsuccessful.</documentation>
+			<input message="wsdlns:createFromPropertyDialogInAreaRequest" />
+			<output message="wsdlns:createFromPropertyDialogInAreaResponse" />
+		</operation>
+		<operation name="propertyDialog">
+			<documentation>Opens a property dialog for the receiver argument, an MEOop of a NonProperty instance. Returns true if the edit is successful or false if the user cancels.</documentation>
+			<input message="wsdlns:propertyDialogRequest" />
+			<output message="wsdlns:propertyDialogResponse" />
+		</operation>
+		<operation name="forGraphRun">
+			<documentation>For the receiver argument, a Graph MEOop, run the generator named in the second argument, a string. Returns a boolean indicating whether the generation proceeded without fatal errors.</documentation>
+			<input message="wsdlns:forGraphRunRequest" />
+			<output message="wsdlns:forGraphRunResponse" />
+		</operation>
+		<operation name="generatorNames">
+			<documentation>Returns the names of the generators defined in the receiver argument, a Graph METype, one per line.</documentation>
+			<input message="wsdlns:generatorNamesRequest" />
+			<output message="wsdlns:generatorNamesResponse" />
+		</operation>
+		<operation name="currentDir">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:currentDirRequest" />
+			<output message="wsdlns:currentDirResponse" />
+		</operation>
+		<operation name="fileInPatch">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:fileInPatchRequest" />
+			<output message="wsdlns:fileInPatchResponse" />
+		</operation>
+		<operation name="fileInPatches">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:fileInPatchesRequest" />
+			<output message="wsdlns:fileInPatchesResponse" />
+		</operation>
+		<operation name="abandon">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:abandonRequest" />
+			<output message="wsdlns:abandonResponse" />
+		</operation>
+		<operation name="commit">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:commitRequest" />
+			<output message="wsdlns:commitResponse" />
+		</operation>
+		<operation name="condenseDatabase">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:condenseDatabaseRequest" />
+			<output message="wsdlns:condenseDatabaseResponse" />
+		</operation>
+		<operation name="createProject">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:createProjectRequest" />
+			<output message="wsdlns:createProjectResponse" />
+		</operation>
+		<operation name="document">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:documentRequest" />
+			<output message="wsdlns:documentResponse" />
+		</operation>
+		<operation name="forAll">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:forAllRequest" />
+			<output message="wsdlns:forAllResponse" />
+		</operation>
+		<operation name="forName">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:forNameRequest" />
+			<output message="wsdlns:forNameResponse" />
+		</operation>
+		<operation name="login">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:loginRequest" />
+			<output message="wsdlns:loginResponse" />
+		</operation>
+		<operation name="loginDB">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:loginDBRequest" />
+			<output message="wsdlns:loginDBResponse" />
+		</operation>
+		<operation name="loginNewDB">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:loginNewDBRequest" />
+			<output message="wsdlns:loginNewDBResponse" />
+		</operation>
+		<operation name="logoutAndExit">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:logoutAndExitRequest" />
+			<output message="wsdlns:logoutAndExitResponse" />
+		</operation>
+		<operation name="maintainDatabase">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:maintainDatabaseRequest" />
+			<output message="wsdlns:maintainDatabaseResponse" />
+		</operation>
+		<operation name="openAllProjects">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:openAllProjectsRequest" />
+			<output message="wsdlns:openAllProjectsResponse" />
+		</operation>
+		<operation name="quit">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:quitRequest" />
+			<output message="wsdlns:quitResponse" />
+		</operation>
+		<operation name="saveWSDL">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:saveWSDLRequest" />
+			<output message="wsdlns:saveWSDLResponse" />
+		</operation>
+		<operation name="setProject">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:setProjectRequest" />
+			<output message="wsdlns:setProjectResponse" />
+		</operation>
+		<operation name="startAPI">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:startAPIRequest" />
+			<output message="wsdlns:startAPIResponse" />
+		</operation>
+		<operation name="startAPIHostname">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:startAPIHostnameRequest" />
+			<output message="wsdlns:startAPIHostnameResponse" />
+		</operation>
+		<operation name="stopAPI">
+			<documentation>See the documentation for the corresponding command-line argument</documentation>
+			<input message="wsdlns:stopAPIRequest" />
+			<output message="wsdlns:stopAPIResponse" />
+		</operation>
+	</portType>
+	<binding name="MetaEditAPISoapBinding" type="wsdlns:MetaEditAPIPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="allGoodInstances" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.allGoodInstances" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="allSimilarInstances" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.allSimilarInstances" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="subTypeNamed" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.subTypeNamed" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="findString" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.findString" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="instancesNamed" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.instancesNamed" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="typeName" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.typeName" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="type" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.type" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="userPrintString" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.userPrintString" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="valueAt" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.valueAt" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setValueAt" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setValueAt" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="allPropertiesValues" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.allPropertiesValues" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="allProperties" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.allProperties" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="allPropertiesWrapped" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.allPropertiesWrapped" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="instProps" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.instProps" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="unsafeNew" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.unsafeNew" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objectSet" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objectSet" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="relationshipSet" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.relationshipSet" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="roleSet" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.roleSet" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="bindingSet" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.bindingSet" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="explodeGraphs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.explodeGraphs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="decompGraphs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.decompGraphs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="subgraphs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.subgraphs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addExplode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addExplode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="getExplodeGraphsForNP" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.getExplodeGraphsForNP" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="removeExplode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.removeExplode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="decompGraph" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.decompGraph" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setDecompGraph" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setDecompGraph" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objsForObj" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objsForObj" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objsForRel" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objsForRel" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objsForRole" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objsForRole" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="relsForObj" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.relsForObj" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="relsForRole" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.relsForRole" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="rolesForObj" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.rolesForObj" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="rolesForRel" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.rolesForRel" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="rolesForRole" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.rolesForRole" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="open" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.open" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="animate" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.animate" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="refresh" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.refresh" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="copiedObjects" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.copiedObjects" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="delete" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.delete" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addToGraph" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addToGraph" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="createBinding" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.createBinding" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="relationship" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.relationship" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="roles" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.roles" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objects" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objects" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="diagrams" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.diagrams" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="matrices" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.matrices" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="tables" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.tables" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="newDiagram" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.newDiagram" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="newMatrix" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.newMatrix" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="newTable" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.newTable" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="inst" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.inst" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="repSet" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.repSet" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="reprGraph" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.reprGraph" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="remove" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.remove" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="timeStamp" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.timeStamp" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setTimeStamp" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setTimeStamp" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objectReprs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objectReprs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="bindingReprs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.bindingReprs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="grid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.grid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setGrid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setGrid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="displayGrid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.displayGrid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setDisplayGrid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setDisplayGrid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="useGrid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.useGrid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setUseGrid" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setUseGrid" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="place" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.place" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setPlace" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setPlace" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="scale" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.scale" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setScale" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setScale" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="isStraight" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.isStraight" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="straighten" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.straighten" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="layout" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.layout" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addNewObjectRepFor" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addNewObjectRepFor" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addNewBindingRepFor" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addNewBindingRepFor" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="connectionReprIds" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.connectionReprIds" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addPoint" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addPoint" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="putPointAtIndex" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.putPointAtIndex" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="breakpoints" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.breakpoints" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="objTargetOffset" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.objTargetOffset" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="removePoint" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.removePoint" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="hAxis" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.hAxis" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="vAxis" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.vAxis" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="bindSelect" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.bindSelect" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setBindSelect" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setBindSelect" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="cellDisplayMode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.cellDisplayMode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setCellDisplayMode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setCellDisplayMode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="displayStringSelector" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.displayStringSelector" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setDisplayStringSelector" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setDisplayStringSelector" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="axisDisplayMode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.axisDisplayMode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setAxisDisplayMode" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setAxisDisplayMode" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="showFirst" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.showFirst" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setShowFirst" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setShowFirst" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="rowLabelsWidth" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.rowLabelsWidth" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setRowLabelsWidth" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setRowLabelsWidth" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="textStyleSymbol" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.textStyleSymbol" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setTextStyleSymbol" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setTextStyleSymbol" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addNewAxisEltFor" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addNewAxisEltFor" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="getWidth" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.getWidth" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setWidth" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setWidth" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="oT" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.oT" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="baseCollection" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.baseCollection" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="font" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.font" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setFont" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setFont" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="gxlWidths" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.gxlWidths" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setGxlWidths" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setGxlWidths" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="addNewTableEltFor" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.addNewTableEltFor" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="waitForBindingCreation" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.waitForBindingCreation" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="waitForBindingFinalization" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.waitForBindingFinalization" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="openedGraphReprs" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.openedGraphReprs" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="animateAll" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.animateAll" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="animateNone" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.animateNone" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="createGraphDialog" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.createGraphDialog" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="createFromPropertyDialogInArea" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.createFromPropertyDialogInArea" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="propertyDialog" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.propertyDialog" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="forGraphRun" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.forGraphRun" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="generatorNames" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.generatorNames" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="currentDir" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.currentDir" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="fileInPatch" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.fileInPatch" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="fileInPatches" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.fileInPatches" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="abandon" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.abandon" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="commit" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.commit" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="condenseDatabase" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.condenseDatabase" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="createProject" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.createProject" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="document" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.document" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="forAll" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.forAll" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="forName" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.forName" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="login" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.login" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="loginDB" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.loginDB" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="loginNewDB" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.loginNewDB" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="logoutAndExit" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.logoutAndExit" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="maintainDatabase" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.maintainDatabase" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="openAllProjects" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.openAllProjects" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="quit" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.quit" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="saveWSDL" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.saveWSDL" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="setProject" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.setProject" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="startAPI" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.startAPI" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="startAPIHostname" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.startAPIHostname" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="stopAPI" >
+			<soap:operation soapAction="http://metacase.com/MetaEditAPI.stopAPI" />
+			<input>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://metacase.com/wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+	</binding>
+	<service name="MetaEditAPI" >
+		<port name="MetaEditAPIPort" binding="wsdlns:MetaEditAPISoapBinding" >
+			<soap:address location="http://localhost:6390/MetaEditAPI" />
+		</port>
+	</service>
+</definitions>

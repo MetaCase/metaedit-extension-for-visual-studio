@@ -6,7 +6,7 @@ using System.IO;
 
 namespace MetaCase.GraphBrowser
 {
-    class ProgramDirVerifier : Verifier
+    class ProgramPathVerifier : Verifier
     {
         public int verify(string input)
         {

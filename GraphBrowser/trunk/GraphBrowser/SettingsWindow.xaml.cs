@@ -35,7 +35,7 @@ namespace MetaCase.GraphBrowser
         private void LoadSettings()
         {
             Settings s = Settings.GetSettings();
-            this.ProgramTextBox.Text = s.ProgramDir;
+            this.ProgramTextBox.Text = s.ProgramPath;
             this.WorkingDirTextBox.Text = s.WorkingDir;
             this.DatabaseTextBox.Text = s.Database;
             this.UsernameTextBox.Text = s.Username;
@@ -52,7 +52,7 @@ namespace MetaCase.GraphBrowser
         private void SaveSettings()
         {
             Settings s = Settings.GetSettings();
-            s.ProgramDir = this.ProgramTextBox.Text;
+            s.ProgramPath = this.ProgramTextBox.Text;
             s.WorkingDir = this.WorkingDirTextBox.Text;
             s.Database = this.DatabaseTextBox.Text;
             s.Username = this.UsernameTextBox.Text;
@@ -67,7 +67,7 @@ namespace MetaCase.GraphBrowser
         public bool VerifyAllFields()
         {
             bool allOk = true;
-            if (!VerifyField(new ProgramDirVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage)) allOk = false;
+            if (!VerifyField(new ProgramPathVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage)) allOk = false;
             if (!VerifyField(new WorkingDirVerifier(), WorkingDirTextBox.Text, ref WorkingDirVerifierImage)) allOk = false;
             if (!VerifyField(new DatabaseVerifier(WorkingDirTextBox.Text), DatabaseTextBox.Text, ref DatabaseVerifierImage)) allOk = false;
             if (!VerifyField(new UsernameVerifier(this.GetManagerAbPath(), WorkingDirTextBox.Text, DatabaseTextBox.Text), UsernameTextBox.Text, ref UsernameVerifierImage)) allOk = false;
@@ -168,7 +168,7 @@ namespace MetaCase.GraphBrowser
 
         private void ProgramTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            VerifyField(new ProgramDirVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage);
+            VerifyField(new ProgramPathVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage);
         }
 
         private void WorkingDirTextBox_TextChanged(object sender, TextChangedEventArgs e)

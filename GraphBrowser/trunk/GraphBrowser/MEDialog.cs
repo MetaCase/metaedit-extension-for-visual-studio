@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using MetaEditAPI;
 
 namespace MetaCase.GraphBrowser
 {
@@ -29,7 +30,7 @@ namespace MetaCase.GraphBrowser
 	     * Runs MetaEdit+ dialog.
 	     */
 	    public void Run() {
-	        MetaEditAPIPortType port = Launcher.Port;
+	        MetaEditAPI.MetaEditAPI port = Launcher.Port;
 	        switch (this.dialogType) {
 	    	    case CREATE_NEW_GRAPH:
 	    	        // Opens "Create Graph" dialog in MetaEdit+

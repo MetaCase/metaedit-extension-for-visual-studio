@@ -9,7 +9,7 @@ namespace MetaCase.GraphBrowser
 {
     public class Launcher
     {
-        private static MetaEditAPIPortTypeClient _port;
+        private static MetaEditAPI.MetaEditAPI _port;
         private static Boolean needStopAPI = false;
         private static Boolean isInitialized = false;
         public static Settings settings 
@@ -21,37 +21,13 @@ namespace MetaCase.GraphBrowser
         }
 
         // Read only property Port handles the connection to MetaEdit+.
-        public static MetaEditAPIPortTypeClient Port 
+        public static MetaEditAPI.MetaEditAPI Port 
         {
             get
             {
                 if (_port == null)
                 {
-                    // Create the binding.
-                    BasicHttpBinding _binding = new BasicHttpBinding();
-                    _binding.Name = "MetaEditAPISoapBinding";
-                    // Timespan for timeouts.
-                    TimeSpan TimeOutSpan = new TimeSpan(0,1,0);
-                    _binding.CloseTimeout = TimeOutSpan;
-                    _binding.OpenTimeout = TimeOutSpan;
-                    _binding.ReceiveTimeout = TimeOutSpan;
-                    _binding.SendTimeout = TimeOutSpan;
-                    _binding.AllowCookies = false;
-                    _binding.BypassProxyOnLocal = true;
-                    _binding.HostNameComparisonMode = HostNameComparisonMode.StrongWildcard;
-                    _binding.MaxBufferSize = 65536; 
-                    _binding.MaxBufferPoolSize = 524288;
-                    _binding.MaxReceivedMessageSize = 65536;
-                    _binding.MessageEncoding = WSMessageEncoding.Text;
-                    _binding.TextEncoding = Encoding.UTF8;
-                    _binding.TransferMode = TransferMode.Buffered;
-                    _binding.UseDefaultWebProxy = true;
-                    
-                    // Create the EndpointAddress
-                    EndpointAddress _address = new EndpointAddress("http://" + settings.Host + ":" + settings.Port + "/MetaEditAPI");
-                    // Connect to MetaEdit+
-                    _port = new MetaEditAPIPortTypeClient(_binding, _address);
-                    
+                    _port = new MetaEditAPI.MetaEditAPI("http://" + settings.Host + ":" + settings.Port + "/MetaEditAPI");
                 }              
                 return _port;
             }
@@ -115,7 +91,7 @@ namespace MetaCase.GraphBrowser
         public static Boolean IsApiOK()
         {
             String name;
-            METype metype = new METype();
+            MetaEditAPI.METype metype = new MetaEditAPI.METype();
             metype.name = "Graph";
             try
             {
@@ -153,7 +129,7 @@ namespace MetaCase.GraphBrowser
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
                 startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                startInfo.FileName = settings.ProgramDir;
+                startInfo.FileName = settings.ProgramPath;
                 startInfo.Arguments = arguments;
                 process.StartInfo = startInfo;
                 process.Start();
@@ -174,7 +150,7 @@ namespace MetaCase.GraphBrowser
         {
             if (needStopAPI)
             {
-                MENull menull = new MENull();
+                MetaEditAPI.MENull menull = new MetaEditAPI.MENull();
                 Port.stopAPI(menull);
                 needStopAPI = false;
             }
