@@ -55,7 +55,7 @@
 
       <Button guid="guidGraphBrowserCmdSet" id="cmdidGraphBrowser" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <Icon guid="guidImages" id="metaedit_logo" />
+        <Icon guid="guidImages" id="metaedit_logo_new" />
         <Strings>
           <CommandName>cmdidGraphBrowser</CommandName>
           <ButtonText>Graph Browser</ButtonText>
@@ -72,7 +72,7 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
             inside a button definition. An important aspect of this declaration is that the element id 
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\metaedit_logo.png" usedList="metaedit_logo"/>
+      <Bitmap guid="guidImages" href="Resources\16x16 8-bit.png" usedList="metaedit_logo_new"/>
 
     </Bitmaps>
  
@@ -96,7 +96,7 @@
     
     
     <GuidSymbol name="guidImages" value="{08713e24-6e4f-431b-b04e-ecddc5845aed}" >
-      <IDSymbol name="metaedit_logo" value="1" />
+      <IDSymbol name="metaedit_logo_new" value="1" />
     </GuidSymbol>
   </Symbols>
 

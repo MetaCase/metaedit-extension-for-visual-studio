@@ -134,6 +134,7 @@
     <Compile Include="Importer.cs" />
     <Compile Include="IniParser.cs" />
     <Compile Include="Launcher.cs" />
+    <Compile Include="MEAPI.cs" />
     <Compile Include="MEDialog.cs" />
     <Compile Include="MyToolWindow.cs" />
     <Compile Include="Guids.cs" />
@@ -190,11 +191,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\select_generator_to_run_icon.png" />
-    <Resource Include="Resources\301.bmp" />
-    <Content Include="PLUS20.ICO">
+    <Content Include="32x32 8-bit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Resources\16x16 32-bit.png" />
+    <Resource Include="Resources\16x16 8-bit.png" />
+    <Resource Include="Resources\32x32 32-bit.png" />
+    <Resource Include="Resources\plus50.ico" />
     <Content Include="visual_studio_3.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -207,20 +210,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="metaedit_logo.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\error_icon.png" />
     <Resource Include="Resources\graph_icon.png" />
-    <Resource Include="Resources\metaedit_logo.png" />
     <Resource Include="Resources\ok_icon.png" />
     <Resource Include="Resources\open_graph_in_metaedit_icon.png" />
     <Resource Include="Resources\create_graph_icon.png" />
     <Resource Include="Resources\edit_properties_icon.png" />
-    <Resource Include="Resources\metaedit_logo.bmp" />
-    <Resource Include="Resources\Package.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="GraphBrowser.xaml">
@@ -246,7 +241,8 @@
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>metaedit_logo.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />

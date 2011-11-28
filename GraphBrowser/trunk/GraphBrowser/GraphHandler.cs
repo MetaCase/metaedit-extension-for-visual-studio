@@ -10,11 +10,10 @@ namespace MetaCase.GraphBrowser
 {
     class GraphHandler
     {
-        /**
-	     * Initializes the graph view by getting the graphs from MetaEdit.
-	     * @return Array of graphs.
-	     * @throws RemoteException 
-	     */
+        ///<summary>
+        /// Initializes the graph view by getting the graphs from MetaEdit.
+        ///</summary>
+        ///<returns>Array of graphs.</returns>
 	    public static Graph [] Init() {
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
             METype graphType = new MetaEditAPI.METype();
@@ -68,13 +67,17 @@ namespace MetaCase.GraphBrowser
 		    }
 	    }
 
-	    /**
-	     * Reads usernames and passwords or projects from manager.ab file depending on the section parameter.
-	     * @param path to manager.ab file.
-	     * @param section if "areas" reads the project names. If "users" reads usernames and passwords and returns
-	     * them as single String separated with ';'. (eg. "root;root")
-	     * @return Array containing Strings.
-	     */
+        ///<summary>
+        ///Reads usernames and passwords or projects from manager.ab file depending on the section parameter.
+        ///</summary>
+        ///<param name="path">path to manager.ab file.</param>
+        ///<param name="section">
+        ///section if "areas" reads the project names. If "users" reads usernames and passwords and returns 
+        ///them as single String separated with ';'. (eg. "root;root")
+        ///</param>
+        ///<returns>
+        ///Array containing the strings.
+        ///</returns>
 	    public static String [] ReadFromManagerAb(String path, String section) {
 		    List<String> list = new List<String>();
 
@@ -112,11 +115,11 @@ namespace MetaCase.GraphBrowser
 		    return list.ToArray();
 	    }
 
-	    /**
-	     * Parses project name from manager.ab file line.
-	     * @param line read from manager.ab
-	     * @return project name.
-	     */
+        ///<summary>
+        ///Parses project name from manager.ab file line.
+        ///</summary>
+        ///<param name="line">line to read from manager.ab file</param>
+        ///<returns>Project name</returns>
 	    private static String ParseProjectFromLine(String line) {	
 		    String [] inValidProjects = {"Administration-Common", "Administration-System" };
             String project = line.Split(new Char[] { ';' })[1];
@@ -125,12 +128,12 @@ namespace MetaCase.GraphBrowser
 		    }
 		    return project;
 	    }
-	
-	    /**
-	     * Parses name and password from manager.ab file line
-	     * @param line read from manager.ab [users] section.
-	     * @return name and password (name;password)
-	     */
+
+        ///<summary>
+        ///Parses name and password from manager.ab file line
+        ///</summary>
+        ///<param name="line">line to read from manager.ab file [users] section.</param>
+        ///<returns>name and password in string.</returns>
 	    private static String ParseNameAndPasswordFromLine(String line) {
             String[] splitted = line.Split(new Char[] { ';' });
 		    return splitted[1] + ";" + splitted[2];

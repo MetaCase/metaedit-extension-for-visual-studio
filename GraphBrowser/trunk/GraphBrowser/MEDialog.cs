@@ -16,27 +16,27 @@ namespace MetaCase.GraphBrowser
 	    private int dialogType;
 	    private Graph selectedGraph;
 	
-	    /**
-	     * Constructor.
-	     * @param dialogType integer showing the dialog type. Use CREATE_NEW_GRAPH or EDIT_GRAPH_PROPERTIES
-	     * @param selectedGraph graph that is selected in the treeview or null.
-	     */
-	    public MEDialog(int dialogType, Graph selectedGraph) {
-	        this.dialogType = dialogType;
-	        this.selectedGraph = selectedGraph;
-	    }
+       ///<summary>
+       /// Constructor.
+       ///</summary>
+       ///<param name="dialogType">Dialog type. Use CREATE_NEW_GRAPH or EDIT_GRAPH_PROPERTIES</param>
+       ///<param name="selectedGraph">graph that is selected in the treeview or null</param>
+	   public MEDialog(int dialogType, Graph selectedGraph) {
+	       this.dialogType = dialogType;
+	       this.selectedGraph = selectedGraph;
+	   }
 	
-	    /**
-	     * Runs MetaEdit+ dialog.
-	     */
-	    public void Run() {
+	   ///<summary>
+       /// Runs MetaEdit+ dialog.
+       ///</summary>
+       public void Run() {
 	        MetaEditAPI.MetaEditAPI port = Launcher.Port;
 	        switch (this.dialogType) {
 	    	    case CREATE_NEW_GRAPH:
 	    	        // Opens "Create Graph" dialog in MetaEdit+
-	    	        METype m  = null;
+                    MetaEditAPI.METype m = null;
 	    	        if (selectedGraph == null) {
-	    		        m = new METype();
+	    		        m = new MetaEditAPI.METype();
 	    		        m.name = ("Graph");
 	    		    }
 	    		    else {

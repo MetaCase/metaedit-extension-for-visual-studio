@@ -8,21 +8,21 @@ namespace MetaCase.GraphBrowser
 {
     class DialogProvider
     {
-        /**
-	     * Simple information message dialog with OK button.
-	     * @param message the message in the window.
-	     * @param title the title for the dialog window.
-	     */
+        ///<summary>
+        ///Simple information message dialog with OK button.
+        /// </summary>
+        /// <param name="message">the message in the window.</param>
+        /// <param name="title">the title for the dialog window</param>
 	    public static void ShowMessageDialog(String message, String title){
             MessageBox.Show(message, title);
 	    }
 	
-	    /**
-	     * Message dialog to for asking questions from user. 
-	     * @param message the message in the window.
-	     * @param title the title for the dialog window.
-	     * @return true if <b>OK</b> clicked, false if <b>Cancel</b> cliked.
-	     */
+	    ///<summary>
+        ///Message dialog to for asking questions from user. 
+        /// </summary>
+        /// <param name="message">the message in the window</param>
+        /// <param name="title">the title for the dialog window</param>
+        /// <returns>true if OK clicked else false</returns>
 	    public static Boolean ShowYesNoMessageDialog(String message, String title){
             switch (MessageBox.Show(message,title, MessageBoxButtons.YesNo)) 
             {

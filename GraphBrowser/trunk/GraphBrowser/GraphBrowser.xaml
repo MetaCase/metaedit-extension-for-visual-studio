@@ -170,7 +170,12 @@
             <Grid Name="ErrorView" Background="#31000000">
                 <StackPanel Margin="10,10,12,12" Name="stackPanel1" VerticalAlignment="Center" HorizontalAlignment="Center" >
                     <TextBlock FontSize="18" Margin="5" Padding="10">No API connection found.</TextBlock>
-                    <Button Name="ButtonStartMetaEdit" Width="100" Height="30" Margin="5" Click="ButtonStartMetaEdit_Click">Start MetaEdit+</Button>
+                    <Button Name="ButtonStartMetaEdit" Width="120" Height="30" Margin="5" Click="ButtonStartMetaEdit_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/GraphBrowser;component/Resources/16x16%2032-bit.png" Width="16" Height="16" />
+                            <TextBlock Padding="5,0,0,0">Start MetaEdit+</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Grid>

@@ -143,7 +143,7 @@ namespace MetaCase.GraphBrowser
                 this.WorkingDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "\\MetaEdit+ 4.5";
 	        }
 	    
-	        // if no mep45.exe found it MUST be the evaluation version ;)
+	        // if no mep45.exe found it MUST be the 4.5 evaluation version ;)
             if (!File.Exists(this.ProgramPath))
             {
                 this.ProgramPath = tempProgramPath + "\\MetaEdit+ 4.5 Evaluation\\mep45eval.exe";

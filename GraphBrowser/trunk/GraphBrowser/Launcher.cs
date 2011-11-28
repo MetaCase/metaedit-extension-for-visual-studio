@@ -9,9 +9,10 @@ namespace MetaCase.GraphBrowser
 {
     public class Launcher
     {
-        private static MetaEditAPI.MetaEditAPI _port;
-        private static Boolean needStopAPI = false;
-        private static Boolean isInitialized = false;
+        private static MEAPI _port;
+        private static Boolean needStopAPI      = false;
+        private static Boolean isInitialized    = false;
+        public static bool connectionAlive      { get; set; }
         public static Settings settings 
         {
             get 
@@ -21,26 +22,27 @@ namespace MetaCase.GraphBrowser
         }
 
         // Read only property Port handles the connection to MetaEdit+.
-        public static MetaEditAPI.MetaEditAPI Port 
+        public static MEAPI Port 
         {
             get
             {
                 if (_port == null)
                 {
-                    _port = new MetaEditAPI.MetaEditAPI("http://" + settings.Host + ":" + settings.Port + "/MetaEditAPI");
+                    _port = new MEAPI("http://" + settings.Host + ":" + settings.Port + "/MetaEditAPI"); 
+                    //_port.SetTimeOut(100);
                 }              
                 return _port;
             }
         }
 
-        /**
-         * Launcher method for doing initialization launch.
-         */
+        ///<summary>
+        /// Launcher method for doing initialization launch.
+        ///</summary>
         public static bool DoInitialLaunch()
         {
             if (Settings.GetSettings().CheckIfMerExists() || IsApiOK())
             {
-                return initializeAPI(true);
+                return initializeAPI(false);
             }
             else
             {
@@ -50,11 +52,13 @@ namespace MetaCase.GraphBrowser
             return IsApiOK();
         }
 
-        /**
-         * Initializes API connection by checking if it's available and asking user
-         * if MetaEdit+ should be launched. 
-         * @return true if ME+ launched successfully else false.
-         */
+        ///<summary>
+        /// Initializes API connection by checking if it's available and asking user
+        /// if MetaEdit+ should be launched. 
+        ///</summary>
+        ///<returns>
+        /// true if ME+ launched successfully else false.
+        ///</returns>
         public static Boolean initializeAPI(Boolean poll)
         {
             if (!IsApiOK())
@@ -62,17 +66,20 @@ namespace MetaCase.GraphBrowser
                 int maxWaitMs = 500;
                 if (launchMetaEdit())
                 {
-                    if (poll) maxWaitMs = 2500;
-                    Poll(maxWaitMs);
+                    if (poll)
+                    {
+                        maxWaitMs = 2500;
+                        Poll(maxWaitMs);
+                    }
                 }
             }
             return isInitialized;
         }
 
-        /**
-         * Polls MetaEdit+ until connection is OK or the time is up.
-         * @param maxWaitMs maximum wait time in milliseconds.
-         */
+        /// <summary>
+        /// Polls MetaEdit+ until connection is OK or the time is up.
+        /// </summary>
+        /// <returns>maxWaitMs maximum wait time in milliseconds.</returns>
         public static void Poll(int maxWaitMs)
         {
             int totalWaitMs = 0;
@@ -83,22 +90,35 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-        /**
-         * Method for checking if API is running. 
-         * Simple calls MetaEdit+ and check if it answers.
-         * @return true if API is ok, otherwise false.
-         */
+        /// <summary>
+        /// Method for checking if API is running. 
+        /// Simply calls MetaEdit+ and check if it answers.
+        /// If no API is connected just return without checking anything until user clicks
+        /// "update" or "start metaedit+"
+        /// </summary>
+        /// <returns>true if API is ok, otherwise false.</returns>
         public static Boolean IsApiOK()
         {
+            // Return if known that there is no connection alive.
+            if (!connectionAlive) return connectionAlive;
+
             String name;
             MetaEditAPI.METype metype = new MetaEditAPI.METype();
             metype.name = "Graph";
             try
-            {
+            {            
                 name = Port.typeName(metype);
             }
-            catch (Exception)
+            catch (System.Net.WebException e)
             {
+                if (e.Status == System.Net.WebExceptionStatus.ConnectFailure)
+                {
+                    connectionAlive = false;
+                }
+                else if (e.Status == System.Net.WebExceptionStatus.Timeout)
+                {
+                    connectionAlive = true;
+                }
                 name = "";
             }
             isInitialized = name.Equals("Graph");
@@ -106,7 +126,7 @@ namespace MetaCase.GraphBrowser
         }
 
         /// <summary>
-        /// Lauches MetaEdit+ logs inn opens one or more projects and starts API.
+        /// Lauches MetaEdit+ logs in opens one or more projects and starts API.
         /// </summary>
         /// <returns>True if launching succeeded.</returns>
         public static Boolean launchMetaEdit()
@@ -143,9 +163,9 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-        /**
-         * Stops api.
-         */
+        /// <summary>
+        /// Stops API.
+        /// </summary>
         public static void stopApi()
         {
             if (needStopAPI)

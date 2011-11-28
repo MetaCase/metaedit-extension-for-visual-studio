@@ -308,11 +308,6 @@ namespace MetaEditAPI {
             this.Url = "http://localhost:6390/MetaEditAPI";
         }
 
-        // For setting up own URLs.
-        public MetaEditAPI(String Url) {
-            this.Url = Url;
-        }
-        
         /// <remarks/>
         public event allGoodInstancesCompletedEventHandler allGoodInstancesCompleted;
         
