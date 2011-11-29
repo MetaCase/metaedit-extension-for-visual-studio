@@ -191,8 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\select_generator_to_run_icon.png" />
-    <Content Include="32x32 8-bit.png">
+    <Content Include="plus50.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Resource Include="Resources\16x16 32-bit.png" />
     <Resource Include="Resources\16x16 8-bit.png" />

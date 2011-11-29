@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MetaCase.GraphBrowser.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MetaEdit+ Launch Parameters" Height="276" Width="629" ResizeMode="NoResize" Topmost="False" WindowStyle="SingleBorderWindow" Icon="Resources/metaedit_logo.png" IsEnabled="True" WindowStartupLocation="CenterScreen" Background="#F0F0F0">
+        Title="MetaEdit+ Launch Parameters" Height="276" Width="629" ResizeMode="NoResize" Topmost="False" WindowStyle="SingleBorderWindow" Icon="Resources/16x16 8-bit.png" IsEnabled="True" WindowStartupLocation="CenterScreen" Background="#F0F0F0">
         <Grid Height="222" Width="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
