@@ -154,6 +154,8 @@ namespace MetaCase.GraphBrowser
                 process.StartInfo = startInfo;
                 process.Start();
 
+                connectionAlive = true;
+
                 return true;
             }
             catch (Exception e)
