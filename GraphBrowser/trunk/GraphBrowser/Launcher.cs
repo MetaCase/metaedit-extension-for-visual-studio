@@ -42,7 +42,7 @@ namespace MetaCase.GraphBrowser
         {
             if (Settings.GetSettings().CheckIfMerExists() || IsApiOK())
             {
-                return initializeAPI(false);
+                return initializeAPI(true);
             }
             else
             {
@@ -84,6 +84,7 @@ namespace MetaCase.GraphBrowser
         {
             int totalWaitMs = 0;
             int waitMs = 500;
+            connectionAlive = true;
             while (!IsApiOK() && ((totalWaitMs += waitMs) <= maxWaitMs))
             {
                 Thread.Sleep(waitMs);
@@ -153,8 +154,6 @@ namespace MetaCase.GraphBrowser
                 startInfo.Arguments = arguments;
                 process.StartInfo = startInfo;
                 process.Start();
-
-                connectionAlive = true;
 
                 return true;
             }

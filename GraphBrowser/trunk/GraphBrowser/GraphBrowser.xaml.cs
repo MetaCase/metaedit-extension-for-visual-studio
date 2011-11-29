@@ -253,8 +253,7 @@ namespace MetaCase.GraphBrowser
 
         private void ButtonStartMetaEdit_Click(object sender, RoutedEventArgs e)
         {
-            Launcher.connectionAlive = true;
-            bool runUpdate = false;
+            bool runUpdate = true;
             if (IsAPI())
             {
                 DialogProvider.ShowMessageDialog("Found an existing API connection.", "API connection found.");
