@@ -10,7 +10,7 @@ namespace MetaCase.GraphBrowser
     {
         private Graph graph;
 		private GraphViewModel parent;
-        public String Name
+        public string Name
         {
             get { return this.ToString(); }
         }

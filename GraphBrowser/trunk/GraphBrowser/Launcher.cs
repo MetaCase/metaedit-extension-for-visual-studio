@@ -103,7 +103,7 @@ namespace MetaCase.GraphBrowser
             // Return if known that there is no connection alive.
             if (!connectionAlive) return connectionAlive;
 
-            String name;
+            string name;
             MetaEditAPI.METype metype = new MetaEditAPI.METype();
             metype.name = "Graph";
             try
@@ -133,10 +133,10 @@ namespace MetaCase.GraphBrowser
         public static Boolean launchMetaEdit()
         {
             // Create the arguments
-            String arguments = " currentDir: " + '"' + settings.WorkingDir + '"' + " " + "loginDB:user:password: " + settings.Database + " " +
+            string arguments = " currentDir: " + '"' + settings.WorkingDir + '"' + " " + "loginDB:user:password: " + settings.Database + " " +
             settings.Username + " " + settings.Password;
-            String[] projects = settings.Projects;
-			foreach (String project in projects) {
+            string[] projects = settings.Projects;
+			foreach (string project in projects) {
 				if (!project.Equals("")) {
                     arguments += " setProject: " + '"' + project + '"';
 				}

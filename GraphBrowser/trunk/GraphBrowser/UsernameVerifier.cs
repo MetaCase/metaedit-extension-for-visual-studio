@@ -7,9 +7,9 @@ namespace MetaCase.GraphBrowser
 {
     class UsernameVerifier : Verifier
     {
-        String managerAbPath;
-        String workDir;
-        String database;
+        string managerAbPath;
+        string workDir;
+        string database;
 
         public UsernameVerifier(string path, string workingDir, string db)
         {

@@ -7,7 +7,7 @@ namespace MetaCase.GraphBrowser
     public class IniParser
     {
         private Hashtable values = new Hashtable();
-        private String iniFilePath;
+        private string iniFilePath;
         public string key { get; set; }
 
         /// <summary>
