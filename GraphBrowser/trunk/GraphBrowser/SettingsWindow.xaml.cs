@@ -212,10 +212,10 @@ namespace MetaCase.GraphBrowser
 
         private void ProjectsSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectionWindow w = new SelectionWindow(new List<String>(GraphHandler.ReadFromManagerAb(managerAbPath, "areas")),"Select project(s) to open", true, true);
+            SelectionWindow w = new SelectionWindow(new List<string>(GraphHandler.ReadFromManagerAb(managerAbPath, "areas")),"Select project(s) to open", true, true);
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             w.ShowDialog();
-            String projects = "";
+            string projects = "";
             foreach (string project in w.SelectedItems)
             {
                 projects += project + ";";

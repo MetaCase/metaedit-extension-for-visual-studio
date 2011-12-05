@@ -182,7 +182,7 @@ namespace MetaCase.GraphBrowser
                 if (s.is50)
                 {
                     string[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
-                    List<String> generatorList = new List<string>();
+                    List<string> generatorList = new List<string>();
                     foreach (string _generator in _generators)
                     {
                         if (!_generator.StartsWith("_") && !_generator.StartsWith("!"))

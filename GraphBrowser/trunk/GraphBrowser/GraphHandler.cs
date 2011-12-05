@@ -73,13 +73,13 @@ namespace MetaCase.GraphBrowser
         ///<param name="path">path to manager.ab file.</param>
         ///<param name="section">
         ///section if "areas" reads the project names. If "users" reads usernames and passwords and returns 
-        ///them as single String separated with ';'. (eg. "root;root")
+        ///them as single string separated with ';'. (eg. "root;root")
         ///</param>
         ///<returns>
         ///Array containing the strings.
         ///</returns>
-	    public static String [] ReadFromManagerAb(String path, String section) {
-		    List<String> list = new List<String>();
+	    public static string [] ReadFromManagerAb(string path, string section) {
+		    List<string> list = new List<string>();
 
             string line;
             // if path is null or does not exist return.

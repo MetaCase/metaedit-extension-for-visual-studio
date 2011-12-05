@@ -29,7 +29,7 @@ namespace MetaCase.GraphBrowser
         /// <param name="Title">Title for the window.</param>
         /// <param name="CanSelectAll">Value for allowing the "select all" button.</param>
         /// <param name="MultiSelection">Value for allowing multiselection or not.</param>
-        public SelectionWindow(List<String> Items, String Title, bool CanSelectAll, bool MultiSelection)
+        public SelectionWindow(List<string> Items, string Title, bool CanSelectAll, bool MultiSelection)
         {
             InitializeComponent();
             this.HeaderText.Text = Title;
