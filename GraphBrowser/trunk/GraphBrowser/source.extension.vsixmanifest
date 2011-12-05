@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
   <Identifier Id="ef5741cb-f689-4ec5-9277-1178d6522749">
-    <Name>GraphBrowser</Name>
+    <Name>MetaEdit+ extension for Visual Studio</Name>
     <Author>MetaCase</Author>
     <Version>0.1.4</Version>
     <Description xml:space="preserve">MetaEdit+ Graph Browser that integrates MetaEdit+ and Visual Studio. Allows user to explore models and use basic MetaEdit+ commands in Visual Studio. Imports generated Visual Studio solution to Visual Studio.</Description>

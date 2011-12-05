@@ -12,7 +12,7 @@ namespace MetaCase.GraphBrowser
         {
             if (input != "" && Directory.Exists(input)) {
 				string[] files = Directory.GetFiles(input);
-				foreach(String file in files) {
+				foreach(string file in files) {
 					if (file.Contains("artbase.roo")) return 1;
 				}
 			}

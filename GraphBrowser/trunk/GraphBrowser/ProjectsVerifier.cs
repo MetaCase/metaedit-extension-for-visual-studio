@@ -7,11 +7,11 @@ namespace MetaCase.GraphBrowser
 {
     class ProjectsVerifier : Verifier
     {
-        String managerAbPath;
-        String database;
-        String workDir;
+        string managerAbPath;
+        string database;
+        string workDir;
 
-        public ProjectsVerifier(String managerAb, String Database, String WorkingDirPath)
+        public ProjectsVerifier(string managerAb, string Database, string WorkingDirPath)
         {
             this.managerAbPath = managerAb;
             this.database = Database;
@@ -26,10 +26,10 @@ namespace MetaCase.GraphBrowser
                 return 0;
             }
             if (input.Equals("")) return 0;
-            String[] projects = input.Split(new Char[] {';'});
-            String[] allProjects = GraphHandler.ReadFromManagerAb(managerAbPath, "areas");
-            List<String> projectsList = new List<String>(projects);
-            List<String> allProjectsList = new List<String>(allProjects);
+            string[] projects = input.Split(new Char[] {';'});
+            string[] allProjects = GraphHandler.ReadFromManagerAb(managerAbPath, "areas");
+            List<string> projectsList = new List<string>(projects);
+            List<string> allProjectsList = new List<string>(allProjects);
             if (projects.Length > 0)
             {
                 for (int i = projectsList.Count - 1; i >= 0; i--)

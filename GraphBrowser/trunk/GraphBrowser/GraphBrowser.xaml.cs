@@ -181,9 +181,9 @@ namespace MetaCase.GraphBrowser
                 Settings s = Settings.GetSettings();
                 if (s.is50)
                 {
-                    String[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
+                    string[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
                     List<String> generatorList = new List<string>();
-                    foreach (String _generator in _generators)
+                    foreach (string _generator in _generators)
                     {
                         if (!_generator.StartsWith("_") && !_generator.StartsWith("!"))
                         {
@@ -194,7 +194,7 @@ namespace MetaCase.GraphBrowser
                     sw.Height = 300;
                     sw.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     sw.ShowDialog();
-                    String generator = "";
+                    string generator = "";
                     if (sw.SelectedItems.Count > 0)
                     {
                         generator = sw.SelectedItems[0];

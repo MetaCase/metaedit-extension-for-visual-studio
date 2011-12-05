@@ -15,9 +15,9 @@ namespace MetaCase.GraphBrowser
         Graph[] children = new Graph[0];
         static Hashtable ProjectTable = new Hashtable();
         static Hashtable TypeNameTable = new Hashtable();
-        public String Name              { get; set; }
-        public String Type              { get; set; }
-        public String TypeName          { get; set; }
+        public string Name              { get; set; }
+        public string Type              { get; set; }
+        public string TypeName          { get; set; }
         public int AreaID               { get; set; }
         public int ObjectID             { get; set; }
         public bool isChild             { get; set; }
@@ -31,7 +31,7 @@ namespace MetaCase.GraphBrowser
         /// <param name="typeName">Internal name of the graph type</param>
         /// <param name="areaID">Graphs areaID</param>
         /// <param name="objectID">Graphs Object ID</param>
-       	public Graph(String name, String type, String typeName, int areaID, int objectID) 
+       	public Graph(string name, string type, string typeName, int areaID, int objectID) 
         {
 		    this.Name = name;
 		    this.Type = type;
@@ -58,10 +58,10 @@ namespace MetaCase.GraphBrowser
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
 
             MetaEditAPI.METype _graphType = port.type(m);
-            String _typeName;
+            string _typeName;
             if (GetTypeNameTable().ContainsKey(_graphType.name))
             {
-                _typeName = (String)GetTypeNameTable()[_graphType.name];
+                _typeName = (string)GetTypeNameTable()[_graphType.name];
             }
             else
             {
@@ -122,7 +122,7 @@ namespace MetaCase.GraphBrowser
 		    return type;
 	    }
 	
-	    public override String ToString() {
+	    public override string ToString() {
 		    return this.Name;
 	    }
 	
@@ -156,7 +156,7 @@ namespace MetaCase.GraphBrowser
 	    * to import project with same name as the graph to workspace. Used for MetaEdit+ 5.0 API
 	    * @param generator name of the generator to be run.
 	    */
-	    public void RunGenerator(String generator, bool autobuild) {
+	    public void RunGenerator(string generator, bool autobuild) {
             this.WritePluginIniFile();
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
             
@@ -182,7 +182,7 @@ namespace MetaCase.GraphBrowser
 		    }
 	    }
 
-        public void RunGenerator(MetaEditAPI.MetaEditAPI port, String generator)
+        public void RunGenerator(MetaEditAPI.MetaEditAPI port, string generator)
         {
             port.forGraphRun(this.ToMEOop(), generator);
         }
@@ -208,7 +208,7 @@ namespace MetaCase.GraphBrowser
             Importer.WritePluginIniFile(Settings.GetSettings().WorkingDir, this.ToString());
         }
 
-        private void RemoveIniFile(String path)
+        private void RemoveIniFile(string path)
         {
             IniParser h = new IniParser(path + "\\plugin.ini");
             if (h.GetSetting("runGenerated").Equals("true")) this.CompileAndExecute = true;

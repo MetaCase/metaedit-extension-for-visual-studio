@@ -7,10 +7,10 @@ namespace MetaCase.GraphBrowser
 {
     class PasswordVerifier : Verifier
     {
-        String username;
-        String managerAbPath;
+        string username;
+        string managerAbPath;
 
-        public PasswordVerifier(String managerAb, String username)
+        public PasswordVerifier(string managerAb, string username)
         {
             this.username = username;
             this.managerAbPath = managerAb;
@@ -18,16 +18,16 @@ namespace MetaCase.GraphBrowser
 
         public int verify(string input)
         {
-            String sysadmin = "sysadmin;109859928";
-			String user = "user;128988713";
-			String [] users = GraphHandler.ReadFromManagerAb(managerAbPath, "users");
+            string sysadmin = "sysadmin;109859928";
+			string user = "user;128988713";
+			string [] users = GraphHandler.ReadFromManagerAb(managerAbPath, "users");
 			if (username.Equals("user") && input.Equals("user")) {
-				foreach(String s in users) {
+				foreach(string s in users) {
 					if ( s.Equals(user)) return 1;
 				}
 			}
 			else if (username.Equals("sysadmin") && input.Equals("sysadmin")) {
-				foreach(String s in users) {
+				foreach(string s in users) {
 					if ( s.Equals(sysadmin)) return 1;
 				}
 			}

@@ -8,16 +8,16 @@ namespace MetaCase.GraphBrowser
     {
         private Hashtable values = new Hashtable();
         private String iniFilePath;
-        public String key { get; set; }
+        public string key { get; set; }
 
         /// <summary>
         /// Opens the INI file at the given path and enumerates the values in the IniParser.
         /// </summary>
         /// <param name="iniPath">Full path to INI file.</param>
-        public IniParser(String iniPath)
+        public IniParser(string iniPath)
         {
-            String strLine = null;
-            String[] keyPair = null;
+            string strLine = null;
+            string[] keyPair = null;
 
             iniFilePath = iniPath;
 
@@ -50,9 +50,9 @@ namespace MetaCase.GraphBrowser
         /// Returns the value for the given section, key pair.
         /// </summary>
         /// <param name="settingName">Key name.</param>
-        public String GetSetting(String settingName)
+        public string GetSetting(string settingName)
         {
-            return (String)values[settingName];
+            return (string)values[settingName];
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="settingName">Key name to add.</param>
         /// <param name="settingValue">Value of key.</param>
-        public void AddSetting(String settingName, String settingValue)
+        public void AddSetting(string settingName, string settingValue)
         {
             if (values.ContainsKey(settingName))
                 values.Remove(settingName);
@@ -73,7 +73,7 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="sectionName">Section to add under.</param>
         /// <param name="settingName">Key name to add.</param>
-        public void AddSetting(String settingName)
+        public void AddSetting(string settingName)
         {
             AddSetting(settingName, null);
         }
@@ -83,7 +83,7 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="sectionName">Section to add under.</param>
         /// <param name="settingName">Key name to add.</param>
-        public void DeleteSetting(String settingName)
+        public void DeleteSetting(string settingName)
         {
             if (values.ContainsKey(settingName))
                 values.Remove(settingName);
@@ -93,13 +93,13 @@ namespace MetaCase.GraphBrowser
         /// Save settings to new file.
         /// </summary>
         /// <param name="newFilePath">New file path.</param>
-        public void SaveSettings(String newFilePath)
+        public void SaveSettings(string newFilePath)
         {
-            String tmpValue = "";
-            String strToSave = "";
-            foreach (String key in values.Keys)
+            string tmpValue = "";
+            string strToSave = "";
+            foreach (string key in values.Keys)
             {
-                tmpValue = (String)values[key];
+                tmpValue = (string)values[key];
 
                 if (tmpValue != null)
                     tmpValue = "=" + tmpValue;

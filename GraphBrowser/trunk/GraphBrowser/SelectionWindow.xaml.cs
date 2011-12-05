@@ -19,7 +19,7 @@ namespace MetaCase.GraphBrowser
     /// </summary>
     public partial class SelectionWindow : Window
     {
-        public List<String> SelectedItems = new List<string>();
+        public List<string> SelectedItems = new List<string>();
         private Button SelectAllButton;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace MetaCase.GraphBrowser
         {
             InitializeComponent();
             this.HeaderText.Text = Title;
-            Items.Sort(delegate(String s1, String s2) { return s1.CompareTo(s2); });
+            Items.Sort(delegate(string s1, string s2) { return s1.CompareTo(s2); });
             this.ItemsListBox.ItemsSource = Items;
             if (CanSelectAll) //this.SelectAllButton.Visibility = System.Windows.Visibility.Hidden;
             {
@@ -58,7 +58,7 @@ namespace MetaCase.GraphBrowser
         private void SelectButton_Click(object sender, RoutedEventArgs e)
         {
             IList selectedItems = this.ItemsListBox.SelectedItems;
-            foreach (String Item in selectedItems)
+            foreach (string Item in selectedItems)
             {
                 this.SelectedItems.Add(Item);
             }

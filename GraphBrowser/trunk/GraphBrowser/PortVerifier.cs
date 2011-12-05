@@ -10,7 +10,7 @@ namespace MetaCase.GraphBrowser
         public int verify(string input)
         {
             int port = -1;
-            Int32.TryParse(input, out port);
+            int.TryParse(input, out port);
             if (0 <= port && port <= 1023)
             {
                 return 0;

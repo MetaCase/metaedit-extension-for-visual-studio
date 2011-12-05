@@ -7,6 +7,6 @@ namespace MetaCase.GraphBrowser
 {
     interface Verifier
     {
-        int verify(String input);
+        int verify(string input);
     }
 }

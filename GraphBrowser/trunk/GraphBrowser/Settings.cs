@@ -10,18 +10,19 @@ namespace MetaCase.GraphBrowser
 {
     public class Settings
     {
-        public String ProgramPath   { get; set; }
-        public String WorkingDir    { get; set; }
-        public String Database      { get; set; }
-        public String Username      { get; set; }
-        public String Password      { get; set; }
-        public String[] Projects    { get; set; }
-        public String Host          { get; set; }
+        public string ProgramPath   { get; set; }
+        public string WorkingDir    { get; set; }
+        public string Database      { get; set; }
+        public string Username      { get; set; }
+        public string Password      { get; set; }
+        public string[] Projects    { get; set; }
+        public string Host          { get; set; }
         public int Port             { get; set; }
         public bool Logging         { get; set; }
         public bool is50            { get; set; }
         public bool Initialized     { get; set; }
-        private String merFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\default.mer"; //OK?
+        private string merFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\default.mer"; //OK?
+        private static List<KeyValuePair<string, string>> UnknownIniKeys = new List<KeyValuePair<string, string>>();
         public static Settings singleton;
         
         public Settings()
@@ -63,21 +64,28 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         private void ReadFromConfigFile()
         {
-            IniParser reader = new IniParser(merFilePath);
-            this.ProgramPath = reader.GetSetting("programPath");
-            this.WorkingDir = reader.GetSetting("workingDir");
-            this.Database = reader.GetSetting("database");
-            this.Username = reader.GetSetting("username");
-            this.Password = reader.GetSetting("password");
-            this.Projects = reader.GetSetting("projects").Split(new Char[] { ';' });
-            this.Host = reader.GetSetting("hostname");
-            int tempPort;
-            Int32.TryParse(reader.GetSetting("port"), out tempPort);
-            this.Port = tempPort;
-            this.Logging = reader.GetSetting("logging").Equals("true");
+            try
+            {
+                IniParser reader = new IniParser(merFilePath);
+                this.ProgramPath = reader.GetSetting("programPath");
+                this.WorkingDir  = reader.GetSetting("workingDir");
+                this.Database    = reader.GetSetting("database");
+                this.Username    = reader.GetSetting("username");
+                this.Password    = reader.GetSetting("password");
+                this.Projects    = reader.GetSetting("projects").Split(new Char[] { ';' });
+                this.Host        = reader.GetSetting("hostname");
+                int tempPort;
+                int.TryParse(reader.GetSetting("port"), out tempPort);
+                this.Port        = tempPort;
+                this.Logging     = reader.GetSetting("logging").Equals("true");
 
-            if (this.ProgramPath.Contains("50")) this.is50 = true;
-            else this.is50 = false;
+                if (this.ProgramPath.Contains("50")) this.is50 = true;
+                else this.is50 = false;
+            }
+            catch (Exception ex)
+            {
+                DialogProvider.ShowMessageDialog("Error reading .mer file. " + ex.Message, "Error reading .mer file");
+            }
         }
 
         /// <summary>
@@ -85,28 +93,35 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         private void WriteToConfigFile()
         {
-            IniParser writer = new IniParser(merFilePath);
-
-            writer.AddSetting("programPath", this.ProgramPath);
-            writer.AddSetting("workingDir", this.WorkingDir);
-            writer.AddSetting("database", this.Database);
-            writer.AddSetting("username", this.Username);
-            writer.AddSetting("password", this.Password);
-            String projects = "";
-            foreach (String s in this.Projects)
+            try
             {
-                projects += ";" + s;
-            }
-            // Delete the first character which is the delimiter (';')
-            projects = projects.Substring(1, projects.Length-1);
-            writer.AddSetting("projects", projects);
-            writer.AddSetting("hostname", this.Host);
-            writer.AddSetting("port", this.Port.ToString());
-            writer.AddSetting("logging", this.Logging.ToString());
-            writer.SaveSettings();
+                IniParser writer = new IniParser(merFilePath);
 
-            if (this.ProgramPath.Contains("50")) this.is50 = true;
-            else this.is50 = false;
+                writer.AddSetting("programPath", this.ProgramPath);
+                writer.AddSetting("workingDir", this.WorkingDir);
+                writer.AddSetting("database", this.Database);
+                writer.AddSetting("username", this.Username);
+                writer.AddSetting("password", this.Password);
+                string projects = "";
+                foreach (string s in this.Projects)
+                {
+                    projects += ";" + s;
+                }
+                // Delete the first character which is the delimiter (';')
+                projects = projects.Substring(1, projects.Length - 1);
+                writer.AddSetting("projects", projects);
+                writer.AddSetting("hostname", this.Host);
+                writer.AddSetting("port", this.Port.ToString());
+                writer.AddSetting("logging", this.Logging.ToString());
+                writer.SaveSettings();
+
+                if (this.ProgramPath.Contains("50")) this.is50 = true;
+                else this.is50 = false;
+            }
+            catch (Exception ex)
+            {
+                DialogProvider.ShowMessageDialog("Error writing .mer file. " + ex.Message, "Error writing .mer file");
+            }
         }
 
        	public void CalculateValues() 
@@ -114,12 +129,12 @@ namespace MetaCase.GraphBrowser
 		    this.Database = "demo";
 		    this.Username = "user";
 		    this.Password = "user";
-		    this.Projects = new String [] { "Digital Watch" };
+		    this.Projects = new string [] { "Digital Watch" };
 		    this.Port = 6390;
 		    this.Host = "localhost";
 		    this.Logging = false;
 		
-		    String tempProgramPath = "";
+		    string tempProgramPath = "";
 		
 		    IDictionary variables = System.Environment.GetEnvironmentVariables();  
 		    // Search for Program File (x86) folder from env. varible.

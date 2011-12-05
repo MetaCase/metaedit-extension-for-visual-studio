@@ -5,19 +5,23 @@ using System.Text;
 
 namespace MetaCase.GraphBrowser
 {
+    /// <summary>
+    /// Subclass that enables to connect the MetaEdit+ API server with
+    /// Url parameter and setting timeout.
+    /// </summary>
     public class MEAPI : MetaEditAPI.MetaEditAPI
     {
         public MEAPI() 
             : base()
         { }
 
-        public MEAPI(String Url)
+        public MEAPI(string Url)
             : base()
         {
             this.Url = Url;
         }
 
-        public MEAPI(String Url, int _timeout) 
+        public MEAPI(string Url, int _timeout) 
             : base()
         {
             this.Url = Url;
@@ -27,18 +31,6 @@ namespace MetaCase.GraphBrowser
         public void _SetTimeOut(int _timeout)
         {
             this.Timeout = _timeout;
-        }
-
-        protected object[] Invoke2(string methodName, object[] parameters)
-        {
-            try
-            {
-                return base.Invoke(methodName, parameters);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
     }
 }
