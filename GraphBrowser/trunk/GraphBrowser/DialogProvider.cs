@@ -13,7 +13,7 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="message">the message in the window.</param>
         /// <param name="title">the title for the dialog window</param>
-	    public static void ShowMessageDialog(String message, String title){
+	    public static void ShowMessageDialog(string message, string title){
             MessageBox.Show(message, title);
 	    }
 	
@@ -23,7 +23,7 @@ namespace MetaCase.GraphBrowser
         /// <param name="message">the message in the window</param>
         /// <param name="title">the title for the dialog window</param>
         /// <returns>true if OK clicked else false</returns>
-	    public static Boolean ShowYesNoMessageDialog(String message, String title){
+	    public static Boolean ShowYesNoMessageDialog(string message, string title){
             switch (MessageBox.Show(message,title, MessageBoxButtons.YesNo)) 
             {
                 case DialogResult.Yes:

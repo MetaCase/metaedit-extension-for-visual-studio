@@ -30,7 +30,7 @@ namespace MetaCase.GraphBrowser
                 // Run if build succeeded
                 if (success)
                 {
-                    String exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
+                    string exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
                     + "\\bin\\Debug\\" + applicationName + ".exe";
                     System.Diagnostics.Process.Start(exe);
                 }
@@ -39,15 +39,14 @@ namespace MetaCase.GraphBrowser
             }
             catch (Exception e)
             {
-                Console.Error.Write(e.StackTrace);
-                DialogProvider.ShowMessageDialog("Error: " + e.Message, "Error on generated solution handling");
+                
             }
         }
 
         /// <summary>
         /// Writes ini file for MetaEdit+ generator.
         /// </summary>
-        public static void WritePluginIniFile(String path, String generatorName)
+        public static void WritePluginIniFile(string path, string generatorName)
         {
             IniParser ip = new IniParser(path + "//plugin.ini");
             ip.FlushValues();
@@ -62,7 +61,7 @@ namespace MetaCase.GraphBrowser
         /// Removes the plugin.ini file.
         /// </summary>
         /// <param name="path">Folder path that contains the file</param>
-        public static void RemoveIniFile(String path)
+        public static void RemoveIniFile(string path)
         {
             File.Delete(path + "//plugin.ini");
         }

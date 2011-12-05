@@ -11,13 +11,13 @@ namespace MetaCase.GraphBrowser
     /// </summary>
     class DatabaseVerifier : Verifier
     {
-        String workingDirPath;
+        string workingDirPath;
 
         /// <summary>
         /// Constuctor
         /// </summary>
         /// <param name="path">MetaEdit+ working directory path</param>
-        public DatabaseVerifier(String path)
+        public DatabaseVerifier(string path)
         {
 			this.workingDirPath = path;
 		}
@@ -35,7 +35,7 @@ namespace MetaCase.GraphBrowser
             if (Directory.Exists(workingDirPath + "\\" + input))
             {
                 string[] files = Directory.GetFiles(workingDirPath + "\\" + input);
-				foreach(String file in files) {
+				foreach(string file in files) {
 					if (file.Contains("manager.ab")) return 1;
 				}
 			}

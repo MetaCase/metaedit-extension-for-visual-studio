@@ -81,7 +81,7 @@ namespace MetaCase.GraphBrowser
 	    public static String [] ReadFromManagerAb(String path, String section) {
 		    List<String> list = new List<String>();
 
-            String line;
+            string line;
             // if path is null or does not exist return.
             if (!File.Exists(path.ToString())) return list.ToArray();
             // Read the file and display it line by line.
@@ -120,9 +120,9 @@ namespace MetaCase.GraphBrowser
         ///</summary>
         ///<param name="line">line to read from manager.ab file</param>
         ///<returns>Project name</returns>
-	    private static String ParseProjectFromLine(String line) {	
-		    String [] inValidProjects = {"Administration-Common", "Administration-System" };
-            String project = line.Split(new Char[] { ';' })[1];
+	    private static string ParseProjectFromLine(string line) {	
+		    string [] inValidProjects = {"Administration-Common", "Administration-System" };
+            string project = line.Split(new Char[] { ';' })[1];
 		    for (int i=0; i<inValidProjects.Length; i++) {
 			    if (project.Equals(inValidProjects[i])) return null;
 		    }
@@ -134,8 +134,8 @@ namespace MetaCase.GraphBrowser
         ///</summary>
         ///<param name="line">line to read from manager.ab file [users] section.</param>
         ///<returns>name and password in string.</returns>
-	    private static String ParseNameAndPasswordFromLine(String line) {
-            String[] splitted = line.Split(new Char[] { ';' });
+	    private static string ParseNameAndPasswordFromLine(string line) {
+            string[] splitted = line.Split(new Char[] { ';' });
 		    return splitted[1] + ";" + splitted[2];
 	    }
     }

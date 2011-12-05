@@ -11,7 +11,7 @@ namespace MetaCase.GraphBrowser
         String workDir;
         String database;
 
-        public UsernameVerifier(String path, String workingDir, String db)
+        public UsernameVerifier(string path, string workingDir, string db)
         {
             this.managerAbPath = path;
             this.workDir = workingDir;
@@ -22,8 +22,8 @@ namespace MetaCase.GraphBrowser
         {
             DatabaseVerifier v = new DatabaseVerifier(this.workDir);
             if (v.verify(this.database) <= 0) return 0;
-            String [] users = GraphHandler.ReadFromManagerAb(this.managerAbPath, "users");
-			foreach (String user in users) {
+            string [] users = GraphHandler.ReadFromManagerAb(this.managerAbPath, "users");
+			foreach (string user in users) {
                 if (input.Equals(user.Split(new Char[] { ';' })[0])) return 1;
 			}
 			return -1;

@@ -11,7 +11,7 @@ namespace MetaCase.GraphBrowser
     {
         private static MEAPI _port;
         private static Boolean needStopAPI      = false;
-        private static Boolean isInitialized    = false;
+        private static Boolean isInitialized    = false;        
         public static bool connectionAlive      { get; set; }
         public static Settings settings 
         {
@@ -57,7 +57,7 @@ namespace MetaCase.GraphBrowser
         /// if MetaEdit+ should be launched. 
         ///</summary>
         ///<returns>
-        /// true if ME+ launched successfully else false.
+        /// true if ME+ launched successfully.
         ///</returns>
         public static Boolean initializeAPI(Boolean poll)
         {

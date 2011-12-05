@@ -42,7 +42,7 @@ namespace MetaCase.GraphBrowser
 			return parent;
 		}
 
-        public override String ToString()
+        public override string ToString()
         {
             return this.graph.Name;
         }

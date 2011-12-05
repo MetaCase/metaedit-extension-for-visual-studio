@@ -20,7 +20,7 @@ namespace MetaCase.GraphBrowser
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private String managerAbPath;
+        private string managerAbPath;
 
         public SettingsWindow()
         {
@@ -40,8 +40,8 @@ namespace MetaCase.GraphBrowser
             this.DatabaseTextBox.Text = s.Database;
             this.UsernameTextBox.Text = s.Username;
             this.PasswordTextBox.Password = s.Password;
-            String projects = "";
-            foreach (String project in s.Projects)
+            string projects = "";
+            foreach (string project in s.Projects)
             {
                 projects += project + ";";
             }
@@ -59,7 +59,7 @@ namespace MetaCase.GraphBrowser
             s.Password = this.PasswordTextBox.Password;
             s.Projects = this.ProjectsTextBox.Text.Split(new Char[] { ';' });
             int port;
-            Int32.TryParse(this.PortTextBox.Text, out port);
+            int.TryParse(this.PortTextBox.Text, out port);
             s.Port = port;
             s.SaveSettings();
         }
@@ -124,7 +124,7 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-        private bool VerifyField(Verifier verifier, String input, ref Image iconImage)
+        private bool VerifyField(Verifier verifier, string input, ref Image iconImage)
         {
             int verified = verifier.verify(input);
             switch (verified)
@@ -142,7 +142,7 @@ namespace MetaCase.GraphBrowser
             return (verified > 0);
         }
 
-        public String GetManagerAbPath()
+        public string GetManagerAbPath()
         {
             SetManagerAbPath();
             return this.managerAbPath;
@@ -150,7 +150,7 @@ namespace MetaCase.GraphBrowser
 
         public void SetManagerAbPath()
         {
-            String path = WorkingDirTextBox.Text + "\\" + DatabaseTextBox.Text + "\\" + "manager.ab";
+            string path = WorkingDirTextBox.Text + "\\" + DatabaseTextBox.Text + "\\" + "manager.ab";
             if (File.Exists(path))
             {
                 SetManagerAbPath(path);
@@ -161,7 +161,7 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-        private void SetManagerAbPath(String managerAbPath)
+        private void SetManagerAbPath(string managerAbPath)
         {
             this.managerAbPath = managerAbPath;
         }
@@ -216,7 +216,7 @@ namespace MetaCase.GraphBrowser
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             w.ShowDialog();
             String projects = "";
-            foreach (String project in w.SelectedItems)
+            foreach (string project in w.SelectedItems)
             {
                 projects += project + ";";
             }
