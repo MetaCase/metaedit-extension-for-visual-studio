@@ -17,7 +17,7 @@ namespace MetaCase.GraphBrowser
         public IniParser(string iniPath)
         {
             string strLine = null;
-            string[] keyPair = null;
+            string[] keyPair = new String[2];
 
             iniFilePath = iniPath;
 
@@ -30,7 +30,15 @@ namespace MetaCase.GraphBrowser
                         strLine = strLine.Trim();
                         if (strLine != "" && !strLine.StartsWith("#"))
                         {
-                            keyPair = strLine.Split(new char[] { '=' }, 2);
+                            // in case of when the value is empty
+                            if (strLine.EndsWith("="))
+                            {
+                                keyPair[1] = null;
+                            }
+                            else
+                            {
+                                keyPair = strLine.Split(new char[] { '=' });
+                            }
                             values.Add(keyPair[0], keyPair[1]);
                         }
                     }
