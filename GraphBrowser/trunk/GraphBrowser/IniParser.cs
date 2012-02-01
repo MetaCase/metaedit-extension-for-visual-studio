@@ -37,7 +37,7 @@ namespace MetaCase.GraphBrowser
                             }
                             else
                             {
-                                keyPair = strLine.Split(new char[] { '=' });
+                                keyPair = strLine.Split(new char[] { '=' }, 2);
                             }
                             values.Add(keyPair[0], keyPair[1]);
                         }

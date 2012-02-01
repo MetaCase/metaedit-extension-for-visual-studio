@@ -46,7 +46,10 @@ namespace MetaCase.GraphBrowser
 	    	        break;
 	    	    case EDIT_GRAPH_PROPERTIES:
 	    	        // Opens "Properties" dialog for the selected graph in MetaEdit+
-	    	        port.propertyDialog(this.selectedGraph.ToMEOop());
+                    if (selectedGraph != null)
+                    {
+                        port.propertyDialog(this.selectedGraph.ToMEOop());
+                    }
 	    	        break;
 	        }
 	    }

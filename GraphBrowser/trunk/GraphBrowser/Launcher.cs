@@ -84,7 +84,7 @@ namespace MetaCase.GraphBrowser
         {
             int totalWaitMs = 0;
             int waitMs = 500;
-            connectionAlive = true;
+            // connectionAlive = true;
             while (!IsApiOK() && ((totalWaitMs += waitMs) <= maxWaitMs))
             {
                 Thread.Sleep(waitMs);
@@ -101,7 +101,7 @@ namespace MetaCase.GraphBrowser
         public static Boolean IsApiOK()
         {
             // Return if known that there is no connection alive.
-            if (!connectionAlive) return connectionAlive;
+            // if (!connectionAlive) return connectionAlive;
 
             string name;
             MetaEditAPI.METype metype = new MetaEditAPI.METype();
@@ -173,7 +173,7 @@ namespace MetaCase.GraphBrowser
             {
                 MetaEditAPI.MENull menull = new MetaEditAPI.MENull();
                 Port.stopAPI(menull);
-                needStopAPI = false;
+                needStopAPI = false; 
             }
         }   
     }
