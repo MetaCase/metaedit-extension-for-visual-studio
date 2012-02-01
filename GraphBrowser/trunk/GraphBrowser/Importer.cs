@@ -37,7 +37,7 @@ namespace MetaCase.GraphBrowser
                 // Open the solution in Visual Studio
                 dte.Solution.Open(slnPath);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
             }

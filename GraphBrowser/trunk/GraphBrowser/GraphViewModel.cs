@@ -10,6 +10,7 @@ namespace MetaCase.GraphBrowser
     {
         private Graph graph;
 		private GraphViewModel parent;
+        public bool IsNodeExpanded { get; set; }
         public string Name
         {
             get { return this.ToString(); }
@@ -44,7 +45,9 @@ namespace MetaCase.GraphBrowser
 
         public override string ToString()
         {
-            return this.graph.Name;
+            string line = this.graph.Name;
+            if (GraphBrowser.ShowGraphType) line += ": " + this.graph.TypeName;
+            return line;
         }
 
 		public Graph getGraph()

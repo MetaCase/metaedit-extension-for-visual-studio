@@ -38,6 +38,19 @@ namespace MetaCase.GraphBrowser
 
         }
 
+        private static bool pShowGraphType;
+        public static bool ShowGraphType 
+        {
+            get
+            { 
+                return pShowGraphType;
+            }
+            set
+            {
+                pShowGraphType = value;
+            }
+        }
+
         private bool IsCtrlPressed
         {
             get
@@ -62,12 +75,12 @@ namespace MetaCase.GraphBrowser
         public void initializeTreeView()
         {
             GraphViewModel root = new GraphViewModel();
+            root.IsNodeExpanded = true;
             Graph.ResetTypeNameTable();
             Graph[] gs = GraphHandler.Init();
             root.populate(gs, new List<Graph>()); 
             treeView1.ItemsSource = root.getChildren();
             treeView1.ContextMenu = Settings.GetSettings().is50 ? treeView1.Resources["50Menu"] as System.Windows.Controls.ContextMenu : treeView1.Resources["45Menu"] as System.Windows.Controls.ContextMenu;
-
             bool _api = this.IsAPI();
             this.SetToolBarButtonsEnabled(_api);
             this.setView(_api);
@@ -244,8 +257,17 @@ namespace MetaCase.GraphBrowser
         /// <param name="DialogType"></param>
         private void StartMEDialog(int DialogType)
         {
-            GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
-            MEDialog dialog = new MEDialog(DialogType, gvm.getGraph());
+            GraphViewModel gvm = null;
+            MEDialog dialog = null;
+            if (treeView1.SelectedItem != null)
+            {
+                gvm = (GraphViewModel)treeView1.SelectedItem;
+                dialog = new MEDialog(DialogType, gvm.getGraph());
+            }
+            else
+            {
+                dialog = new MEDialog(DialogType, null);
+            }
             Thread _thread = new Thread(new ThreadStart(dialog.Run));
             _thread.Start();
         }
@@ -264,6 +286,12 @@ namespace MetaCase.GraphBrowser
                 runUpdate = Launcher.DoInitialLaunch();
             }
             if (runUpdate) UpdateGraphView();
+        }
+
+        private void ButtonShowTypeName_Clicked(object sender, RoutedEventArgs e)
+        {
+            ShowGraphType = ButtonShowTypeName.IsChecked.Value;
+            this.treeView1.Items.Refresh();
         }
 
         private void treeView1_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
