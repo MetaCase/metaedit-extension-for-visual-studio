@@ -14,48 +14,26 @@
                 <TextBlock Text="{Binding Name}" Padding="2" />
             </StackPanel>
         </HierarchicalDataTemplate>
-        <Style x:Key="ToolBarButton" TargetType="{x:Type Button}">
+        <Style x:Key="ToolBarButton" TargetType="{x:Type Control}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
+                    <ControlTemplate TargetType="{x:Type Control}">
                         <Image Source="{Binding Path=(local:ToolBarButton.Image),
                             RelativeSource={RelativeSource FindAncestor,
-                            AncestorType={x:Type Button}}}" 
+                            AncestorType={x:Type Control}}}" 
                             Margin="2" Height="16" Width="16" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.2" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Yellow" />
+                                <Setter Property="Background" Value="Yellow" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style x:Key="ToolBarToggleButton" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Image Source="{Binding Path=(local:ToolBarButton.Image),
-                            RelativeSource={RelativeSource FindAncestor,
-                            AncestorType={x:Type ToggleButton}}}" 
-                            Margin="2" Height="16" Width="16" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.2" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Yellow" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -65,11 +43,11 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal"  Background="#BCC7D8">
             <Button Name="ButtonRunAutobuild" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/run_generator_icon_2.png"
-                    ToolTip="Run autobuild for the selected graph"
+                    ToolTip="Run Autobuild for the Selected Graph"
                     BorderThickness="0"  Click="ButtonRunAutobuild_Click" />
             <Button Name="ButtonGenerateFromList" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/select_generator_to_run_icon.png"
-                    ToolTip="Select the generator you want to run for the selected graph"
+                    ToolTip="Select Generator to Run"
                     BorderThickness="0" Margin="2" Click="ButtonGenerate_Click" />
             <Separator Margin="2">
                 <Separator.LayoutTransform>
@@ -78,11 +56,11 @@
             </Separator>
             <Button Name="ButtonOpenInMetaEdit" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/open_graph_in_metaedit_icon.png" 
-                    ToolTip="Open selected graph in MetaEdit+"
+                    ToolTip="Open Selected Graph in MetaEdit+"
                     BorderThickness="0" Margin="2" Click="ButtonOpen_Click" />
             <Button Name="ButtonCreateGraph" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/create_graph_icon.png"
-                    ToolTip="Create a new graph"
+                    ToolTip="Create a New Graph"
                     BorderThickness="0" Margin="2" Click="ButtonCreateGraph_Click" />
             <Separator Margin="2">
                 <Separator.LayoutTransform>
@@ -95,16 +73,16 @@
                     BorderThickness="0" Margin="2" Click="ButtonUpdate_Click" />
             <Button Name="ButtonOpenSettings" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/settings_icon.png"
-                    ToolTip="Open the launch parameter window"
+                    ToolTip="Open the Launch Parameter Window"
                     BorderThickness="0" Margin="2" Click="ButtonSettings_Click" />
             <Separator Margin="2">
                 <Separator.LayoutTransform>
                     <RotateTransform Angle="90" />
                 </Separator.LayoutTransform>
             </Separator>
-            <ToggleButton Name="ButtonShowTypeName" Style="{DynamicResource ToolBarToggleButton}"
+            <ToggleButton Name="ButtonShowTypeName" Style="{DynamicResource ToolBarButton}"
                     local:ToolBarButton.Image="Resources/folder_explore.png"
-                    ToolTip="Show/hide graph type"
+                    ToolTip="Show/Hide Graph Type"
                     BorderThickness="0" Margin="2" Click="ButtonShowTypeName_Clicked" Background="Transparent">
             </ToggleButton>
         </StackPanel>
@@ -156,15 +134,14 @@
                                     <Image Width="16" Height="16" Source="Resources/open_graph_in_metaedit_icon.png" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <Separator />
-                            <MenuItem Header="Create a New Graph" Click="ButtonCreateGraph_Click" >
-                                <MenuItem.Icon>
-                                    <Image Width="16" Height="16" Source="Resources/create_graph_icon.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
                             <MenuItem Header="Edit Graph Properties" Click="ButtonEditProperties_Click" >
                                 <MenuItem.Icon>
                                     <Image Width="16" Height="16" Source="Resources/edit_properties_icon.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Create a New Graph" Click="ButtonCreateGraph_Click" >
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="Resources/create_graph_icon.png" />
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
@@ -172,11 +149,20 @@
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}" >
                             <Setter Property="IsExpanded" Value="{Binding IsNodeExpanded, Mode=TwoWay}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="#DFEEFF"/>
+                                    <Setter Property="Background" Value="#DFEEFF" />
+                                    <Setter Property="BorderBrush" Value="#84ACDD"/>
                                 </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="IsSelectionActive" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="BorderBrush" Value="LightGray"/>
+                                </MultiTrigger>
                             </Style.Triggers>
                             <Style.Resources>
                                 <Style TargetType="Border">

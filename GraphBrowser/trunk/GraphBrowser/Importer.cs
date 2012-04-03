@@ -15,31 +15,37 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         public static void ImportProject(string applicationName)
         {
+            EnvDTE.DTE dte = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+            //Get visual studio version e.g. dte.FullName;
+            string slnPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + ".sln";
+            string prjPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
+
+            Engine engine = new Engine();
+
             try
             {
-                EnvDTE.DTE dte = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-                //Get visual studio version e.g. dte.FullName;
-                string slnPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + ".sln";
-                string prjPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
-
-                Engine engine = new Engine();
-
                 // Build a project file
                 bool success = engine.BuildProjectFile(prjPath);
+
 
                 // Run if build succeeded
                 if (success)
                 {
                     string exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
                     + "\\bin\\Debug\\" + applicationName + ".exe";
-                    System.Diagnostics.Process.Start(exe);
+                    if (File.Exists(exe))
+                        System.Diagnostics.Process.Start(exe);
                 }
-                // Open the solution in Visual Studio
-                dte.Solution.Open(slnPath);
+
             }
             catch (Exception)
             {
-                
+
+            }
+            finally
+            {
+                // Open the solution in Visual Studio
+                dte.Solution.Open(slnPath);
             }
         }
 
