@@ -11,6 +11,7 @@ namespace MetaCase.GraphBrowser
         private Graph graph;
 		private GraphViewModel parent;
         public bool IsNodeExpanded { get; set; }
+        public bool IsSelected { get; set; }
         public string Name
         {
             get { return this.ToString(); }

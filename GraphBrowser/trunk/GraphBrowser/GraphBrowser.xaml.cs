@@ -51,12 +51,11 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-        private bool IsCtrlPressed
+        private bool  IsCtrlPressed
         {
             get
             {
-                return Keyboard.IsKeyDown(Key.LeftCtrl)
-                    || Keyboard.IsKeyDown(Key.RightCtrl);
+                return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
             }
         }
 
@@ -80,7 +79,9 @@ namespace MetaCase.GraphBrowser
             Graph[] gs = GraphHandler.Init();
             root.populate(gs, new List<Graph>()); 
             treeView1.ItemsSource = root.getChildren();
-            treeView1.ContextMenu = Settings.GetSettings().is50 ? treeView1.Resources["50Menu"] as System.Windows.Controls.ContextMenu : treeView1.Resources["45Menu"] as System.Windows.Controls.ContextMenu;
+            treeView1.ContextMenu = Settings.GetSettings().is50 ? 
+                                        treeView1.Resources["50Menu"] as System.Windows.Controls.ContextMenu: 
+                                        treeView1.Resources["45Menu"] as System.Windows.Controls.ContextMenu;
             bool _api = this.IsAPI();
             this.SetToolBarButtonsEnabled(_api);
             this.setView(_api);
@@ -96,8 +97,12 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         private void setView(bool _api)
         {
-            GraphView.Visibility = _api ? Visibility.Visible : Visibility.Collapsed;
-            ErrorView.Visibility = !_api ? Visibility.Visible : Visibility.Collapsed;
+            GraphView.Visibility = _api ? 
+                                      Visibility.Visible:
+                                      Visibility.Collapsed;
+            ErrorView.Visibility = !_api ?
+                                      Visibility.Visible:
+                                      Visibility.Collapsed;
         }
 
         private bool IsAPI()
@@ -127,6 +132,11 @@ namespace MetaCase.GraphBrowser
             SetToolBarButtonsEnabled(this.IsAPI());
         }
 
+        /// <summary>
+        /// Sets the toolbar buttons enabled or disabled depending on the used MetaEdit+ version,
+        /// API connection state and treeview's selection.
+        /// </summary>
+        /// <param name="_api">API connection state, <code>true</code> if connected.</param>
         private void SetToolBarButtonsEnabled(bool _api)
         {
             bool _is50 = this.Is50();
@@ -137,7 +147,6 @@ namespace MetaCase.GraphBrowser
             ButtonRunAutobuild.IsEnabled = (_isAPI && _isSelection);
             ButtonOpenInMetaEdit.IsEnabled = (_isAPI && _isSelection);
             ButtonCreateGraph.IsEnabled = (_is50 && _isAPI);
-            //ButtonEditProperties.IsEnabled = (_is50 && _isAPI && _isSelection);
             ButtonUpdateList.IsEnabled = (true);
             ButtonOpenSettings.IsEnabled = (true);
         }
@@ -169,6 +178,11 @@ namespace MetaCase.GraphBrowser
             
         }
 
+        /// <summary>
+        /// Action for the "Run Autobuild" button. Runs Autobuild for the selected graph.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonRunAutobuild_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -185,6 +199,11 @@ namespace MetaCase.GraphBrowser
             
         }
 
+        /// <summary>
+        /// Run "Generate" action for the selected graph. Shows window containen all the possible generators.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonGenerate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -226,6 +245,11 @@ namespace MetaCase.GraphBrowser
             }
         }
 
+        /// <summary>
+        /// Treeview update action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
             this.Cursor = Cursors.Wait;
@@ -235,17 +259,32 @@ namespace MetaCase.GraphBrowser
             this.Cursor = Cursors.Arrow;
         }
 
+        /// <summary>
+        /// Open settings dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow.Show();
             SettingsWindow.Activate();
         }
 
+        /// <summary>
+        /// Opens create a graph -dialog in MetaEdit+
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonCreateGraph_Click(object sender, RoutedEventArgs e)
         {
             this.StartMEDialog(MEDialog.CREATE_NEW_GRAPH);
         }
 
+        /// <summary>
+        /// Open edit properties -dialog in MetaEdit+
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonEditProperties_Click(object sender, RoutedEventArgs e)
         {
             this.StartMEDialog(MEDialog.EDIT_GRAPH_PROPERTIES);
@@ -272,7 +311,11 @@ namespace MetaCase.GraphBrowser
             _thread.Start();
         }
 
-
+        /// <summary>
+        /// Launches MetaEdit+, or uses available API connection if found.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonStartMetaEdit_Click(object sender, RoutedEventArgs e)
         {
             bool runUpdate = true;
@@ -288,10 +331,18 @@ namespace MetaCase.GraphBrowser
             if (runUpdate) UpdateGraphView();
         }
 
+        /// <summary>
+        /// Toggles graph typename on/off.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonShowTypeName_Clicked(object sender, RoutedEventArgs e)
         {
+            // Read the boolean value
             ShowGraphType = ButtonShowTypeName.IsChecked.Value;
             this.treeView1.Items.Refresh();
+            // Set focus to treeview
+            this.treeView1.Focus();
         }
 
         private void treeView1_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -309,16 +360,11 @@ namespace MetaCase.GraphBrowser
         {
             if (IsCtrlPressed)
             {
-                var tv = sender as TreeView;
-
-                if (tv != null)
-                {
-                    // set the last tree view item selected variable which may be used elsewhere as there is no other way I have found to obtain the TreeViewItem container (may be null)
-                    TreeViewItem item = (TreeViewItem)(treeView1.ItemContainerGenerator.ContainerFromIndex(treeView1.Items.CurrentPosition));
-                    item.IsSelected = false;
-
-                    tv.Focus();
-                }
+                // set the last tree view item selected variable which may be used elsewhere as there is no other way I have found to obtain the TreeViewItem container (may be null)
+                // TreeViewItem item = (TreeViewItem)(treeView1.ItemContainerGenerator.ContainerFromIndex(treeView1.Items.CurrentPosition));
+                GraphViewModel SelectedGvm = (GraphViewModel)this.treeView1.SelectedItem;
+                SelectedGvm.IsSelected = false;
+                //this.treeView1.Focus();
             }
         }
     }

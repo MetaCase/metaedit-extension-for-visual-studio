@@ -5733,6 +5733,7 @@ namespace MetaEditAPI {
         [System.Web.Services.Protocols.SoapRpcMethodAttribute("http://metacase.com/MetaEditAPI.propertyDialog", RequestNamespace="http://metacase.com/wsdl/", ResponseNamespace="http://metacase.com/wsdl/")]
         [return: System.Xml.Serialization.SoapElementAttribute("result")]
         public bool propertyDialog(MEOop receiver) {
+
             object[] results = this.Invoke("propertyDialog", new object[] {
                         receiver});
             return ((bool)(results[0]));
