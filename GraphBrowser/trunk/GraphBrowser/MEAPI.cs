@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace MetaCase.GraphBrowser
 {
@@ -31,6 +32,14 @@ namespace MetaCase.GraphBrowser
         public void _SetTimeOut(int _timeout)
         {
             this.Timeout = _timeout;
+        }
+
+        [DllImport("user32.dll")]
+        static extern bool AllowSetForegroundWindow(int dwProcessId);
+
+        public static void AllowSetForegroundWindow() 
+        {
+            AllowSetForegroundWindow(-1);
         }
     }
 }

@@ -42,12 +42,14 @@ namespace MetaCase.GraphBrowser
 	    		    else {
 	    		        m = selectedGraph.GetMEType(); 
 	    		    }
+                    MEAPI.AllowSetForegroundWindow();
 	    		    port.createGraphDialog(m);
 	    	        break;
 	    	    case EDIT_GRAPH_PROPERTIES:
 	    	        // Opens "Properties" dialog for the selected graph in MetaEdit+
                     if (selectedGraph != null)
                     {
+                        MEAPI.AllowSetForegroundWindow();
                         port.propertyDialog(this.selectedGraph.ToMEOop());
                     }
 	    	        break;

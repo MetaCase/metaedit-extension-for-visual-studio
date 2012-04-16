@@ -171,6 +171,80 @@ namespace MetaCase.GraphBrowser
             VerifyField(new ProgramPathVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage);
         }
 
+        ///<summary>
+        ///Reads usernames and passwords or projects from manager.ab file depending on the section parameter.
+        ///</summary>
+        ///<param name="path">path to manager.ab file.</param>
+        ///<param name="section">
+        ///section if "areas" reads the project names. If "users" reads usernames and passwords and returns 
+        ///them as single string separated with ';'. (eg. "root;root")
+        ///</param>
+        ///<returns>
+        ///Array containing the strings.
+        ///</returns>
+        public static string[] ReadFromManagerAb(string path, string section)
+        {
+            List<string> list = new List<string>();
+
+            string line;
+            // if path is null or does not exist return.
+            if (!File.Exists(path.ToString())) return list.ToArray();
+            // Read the file and display it line by line.
+            using (StreamReader reader = new StreamReader(path.ToString()))
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Contains("[" + section + "]"))
+                    {
+                        while (!(line = reader.ReadLine()).StartsWith("["))
+                        {
+                            if (line.Length > 1)
+                            {
+                                switch (section)
+                                {
+                                    case "areas":
+                                        list.Add(ParseProjectFromLine(line));
+                                        break;
+                                    case "users":
+                                        list.Add(ParseNameAndPasswordFromLine(line));
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            list.RemoveAll(item => item == null);
+            return list.ToArray();
+        }
+
+        ///<summary>
+        ///Parses project name from manager.ab file line.
+        ///</summary>
+        ///<param name="line">line to read from manager.ab file</param>
+        ///<returns>Project name</returns>
+        private static string ParseProjectFromLine(string line)
+        {
+            string[] inValidProjects = { "Administration-Common", "Administration-System" };
+            string project = line.Split(new Char[] { ';' })[1];
+            for (int i = 0; i < inValidProjects.Length; i++)
+            {
+                if (project.Equals(inValidProjects[i])) return null;
+            }
+            return project;
+        }
+
+        ///<summary>
+        ///Parses name and password from manager.ab file line
+        ///</summary>
+        ///<param name="line">line to read from manager.ab file [users] section.</param>
+        ///<returns>name and password in string.</returns>
+        private static string ParseNameAndPasswordFromLine(string line)
+        {
+            string[] splitted = line.Split(new Char[] { ';' });
+            return splitted[1] + ";" + splitted[2];
+        }
+
         private void WorkingDirTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             VerifyField(new WorkingDirVerifier(), WorkingDirTextBox.Text, ref WorkingDirVerifierImage);
@@ -212,7 +286,7 @@ namespace MetaCase.GraphBrowser
 
         private void ProjectsSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectionWindow w = new SelectionWindow(new List<string>(GraphHandler.ReadFromManagerAb(managerAbPath, "areas")),"Select project(s) to open", true, true);
+            SelectionWindow w = new SelectionWindow(new List<string>(ReadFromManagerAb(managerAbPath, "areas")),"Select project(s) to open", true, true);
             w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             w.ShowDialog();
             string projects = "";

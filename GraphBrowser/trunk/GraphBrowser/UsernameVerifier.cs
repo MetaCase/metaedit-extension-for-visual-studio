@@ -22,7 +22,7 @@ namespace MetaCase.GraphBrowser
         {
             DatabaseVerifier v = new DatabaseVerifier(this.workDir);
             if (v.verify(this.database) <= 0) return 0;
-            string [] users = GraphHandler.ReadFromManagerAb(this.managerAbPath, "users");
+            string [] users = SettingsWindow.ReadFromManagerAb(this.managerAbPath, "users");
 			foreach (string user in users) {
                 if (input.Equals(user.Split(new Char[] { ';' })[0])) return 1;
 			}

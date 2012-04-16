@@ -28,18 +28,10 @@ namespace MetaCase.GraphBrowser
                     while ((strLine = reader.ReadLine()) != null)
                     {
                         strLine = strLine.Trim();
-                        if (strLine != "" && !strLine.StartsWith("#"))
+                        int EqualsIndex = strLine.IndexOf("=");
+                        if (!strLine.Equals("") && !strLine.StartsWith("#") && EqualsIndex != -1)
                         {
-                            // in case of when the value is empty
-                            if (strLine.EndsWith("="))
-                            {
-                                keyPair[1] = null;
-                            }
-                            else
-                            {
-                                keyPair = strLine.Split(new char[] { '=' }, 2);
-                            }
-                            values.Add(keyPair[0], keyPair[1]);
+                            values.Add(strLine.Substring(0, EqualsIndex), strLine.Substring(EqualsIndex+1));
                         }
                     }
                 }
