@@ -26,7 +26,7 @@ namespace MetaCase.GraphBrowser
                 meOops = port.allSimilarInstances(graphType);
 		    } catch (Exception e) { 
 			    DialogProvider.ShowMessageDialog("API error: " + e.Message, "API error");
-			    }
+			}
 		    foreach (MEOop m in meOops) {
 			    Graph g = Graph.MEOopToGraph(m);
 			    graphs.Add(g);
@@ -65,78 +65,6 @@ namespace MetaCase.GraphBrowser
 		    foreach(Graph child in g.GetChildren()) {
 			    BuildReachableGraphs(child, done);
 		    }
-	    }
-
-        ///<summary>
-        ///Reads usernames and passwords or projects from manager.ab file depending on the section parameter.
-        ///</summary>
-        ///<param name="path">path to manager.ab file.</param>
-        ///<param name="section">
-        ///section if "areas" reads the project names. If "users" reads usernames and passwords and returns 
-        ///them as single string separated with ';'. (eg. "root;root")
-        ///</param>
-        ///<returns>
-        ///Array containing the strings.
-        ///</returns>
-	    public static string [] ReadFromManagerAb(string path, string section) {
-		    List<string> list = new List<string>();
-
-            string line;
-            // if path is null or does not exist return.
-            if (!File.Exists(path.ToString())) return list.ToArray();
-            // Read the file and display it line by line.
-            using (StreamReader reader = new StreamReader(path.ToString()))
-            {
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.Contains("[" + section + "]"))
-                    {
-                        while (!(line = reader.ReadLine()).StartsWith("["))
-                        {
-                            if (line.Length > 1)
-                            {
-                                switch (section)
-                                {
-                                    case "areas":
-                                        list.Add(ParseProjectFromLine(line));
-                                        break;
-                                    case "users":
-                                        list.Add(ParseNameAndPasswordFromLine(line));
-                                        break;
-                                }
-                                //if (section == "areas") list.Add(ParseProjectFromLine(line));
-                                //if (section == "users") list.Add(ParseNameAndPasswordFromLine(line));
-                            }
-                        }
-                    }
-                }
-            }
-            list.RemoveAll(item => item == null);
-		    return list.ToArray();
-	    }
-
-        ///<summary>
-        ///Parses project name from manager.ab file line.
-        ///</summary>
-        ///<param name="line">line to read from manager.ab file</param>
-        ///<returns>Project name</returns>
-	    private static string ParseProjectFromLine(string line) {	
-		    string [] inValidProjects = {"Administration-Common", "Administration-System" };
-            string project = line.Split(new Char[] { ';' })[1];
-		    for (int i=0; i<inValidProjects.Length; i++) {
-			    if (project.Equals(inValidProjects[i])) return null;
-		    }
-		    return project;
-	    }
-
-        ///<summary>
-        ///Parses name and password from manager.ab file line
-        ///</summary>
-        ///<param name="line">line to read from manager.ab file [users] section.</param>
-        ///<returns>name and password in string.</returns>
-	    private static string ParseNameAndPasswordFromLine(string line) {
-            string[] splitted = line.Split(new Char[] { ';' });
-		    return splitted[1] + ";" + splitted[2];
 	    }
     }
 }

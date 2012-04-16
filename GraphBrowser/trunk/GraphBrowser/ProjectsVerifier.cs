@@ -27,7 +27,7 @@ namespace MetaCase.GraphBrowser
             }
             if (input.Equals("")) return 0;
             string[] projects = input.Split(new Char[] {';'});
-            string[] allProjects = GraphHandler.ReadFromManagerAb(managerAbPath, "areas");
+            string[] allProjects = SettingsWindow.ReadFromManagerAb(managerAbPath, "areas");
             List<string> projectsList = new List<string>(projects);
             List<string> allProjectsList = new List<string>(allProjects);
             if (projects.Length > 0)

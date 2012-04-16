@@ -21,6 +21,10 @@ namespace MetaCase.GraphBrowser
     public partial class GraphBrowser : UserControl
     {
         private SettingsWindow sWindow;
+
+        /// <summary>
+        /// Settings window instance. Uses only one instance at time.
+        /// </summary>
         public SettingsWindow SettingsWindow
         {
             get
@@ -39,6 +43,10 @@ namespace MetaCase.GraphBrowser
         }
 
         private static bool pShowGraphType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ShowGraphType 
         {
             get
@@ -59,6 +67,9 @@ namespace MetaCase.GraphBrowser
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public GraphBrowser()
         {
             InitializeComponent();
@@ -168,6 +179,7 @@ namespace MetaCase.GraphBrowser
                 if (treeView1.SelectedItem == null) return;
                 GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
                 MetaEditAPI.MetaEditAPI port = Launcher.Port;
+                MEAPI.AllowSetForegroundWindow();
                 port.open(gvm.getGraph().ToMEOop());
             }
             catch (Exception err)
@@ -189,7 +201,7 @@ namespace MetaCase.GraphBrowser
             {
                 GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
                 if (gvm == null) return;
-                gvm.getGraph().RunGenerator("Autobuild", true);
+                gvm.getGraph().ExecuteGenerator("Autobuild");
             }
             catch (Exception err)
             {
@@ -230,12 +242,12 @@ namespace MetaCase.GraphBrowser
                     if (sw.SelectedItems.Count > 0)
                     {
                         generator = sw.SelectedItems[0];
-                        if (generator.Length > 0) gvm.getGraph().RunGenerator(generator, false);
+                        if (generator.Length > 0) gvm.getGraph().ExecuteGenerator(generator);
                     }
                 }
                 else
                 {
-                    gvm.getGraph().RunGenerator("Autobuild", true);
+                    gvm.getGraph().ExecuteGenerator("Autobuild");
                 }
             }
             catch (Exception err)

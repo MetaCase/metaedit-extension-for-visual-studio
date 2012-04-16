@@ -15,12 +15,37 @@ namespace MetaCase.GraphBrowser
         Graph[] children = new Graph[0];
         static Hashtable ProjectTable = new Hashtable();
         static Hashtable TypeNameTable = new Hashtable();
+        
+        /// <summary>
+        /// Graph name
+        /// </summary>
         public string Name              { get; set; }
+
+        /// <summary>
+        /// Graph super type name
+        /// </summary>
         public string Type              { get; set; }
+
+        /// <summary>
+        /// Graph type name
+        /// </summary>
         public string TypeName          { get; set; }
+
+        /// <summary>
+        /// Graph area id
+        /// </summary>
         public int AreaID               { get; set; }
+
+        /// <summary>
+        /// Graph object id
+        /// </summary>
         public int ObjectID             { get; set; }
+
+        /// <summary>
+        /// Boolean value for children graphs
+        /// </summary>
         public bool isChild             { get; set; }
+
         private bool CompileAndExecute  { get; set; }
 
         /// <summary>
@@ -81,11 +106,18 @@ namespace MetaCase.GraphBrowser
 		    return graph;
 	    }
 
+        /// <summary>
+        /// Getter for type name table
+        /// </summary>
+        /// <returns>TypeNameTable</returns>
         public static Hashtable GetTypeNameTable()
         {
             return TypeNameTable;
         }
 
+        /// <summary>
+        /// Set TypeNameTable empty table
+        /// </summary>
         public static void ResetTypeNameTable()
         {
             TypeNameTable = new Hashtable();
@@ -122,6 +154,10 @@ namespace MetaCase.GraphBrowser
 		    return type;
 	    }
 	
+        /// <summary>
+        /// Graph ToString method
+        /// </summary>
+        /// <returns>Graph name</returns>
 	    public override string ToString() {
 		    return this.Name;
 	    }
@@ -152,37 +188,18 @@ namespace MetaCase.GraphBrowser
         /// to import project with same name as the graph to workspace. Used for MetaEdit+ 5.0 API
         ///</summary>
         ///<param name="generator">generator name of the generator to be run.</param>
-	    public void RunGenerator(string generator, bool autobuild) {
+        ///<param name="autobuild"></param>
+	    public void ExecuteGenerator(string generator) {
             this.WritePluginIniFile();
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
-            bool RunSuccess = true;
             
             // Run generator
-            if (autobuild) this.RunAutobuild(port); // Since this method doesn't return anything the RunSuccess value can not be used in every case and is not reliable.
+            this.RunGenerator(port, generator); // Since this method doesn't return anything the RunSuccess value can not be used in every case and is not reliable.
                                                     // But at least at some cases we get result that sets the RunSuccess false and then are the following tasks not executed.
-            else RunSuccess = this.RunGenerator(port, generator);
-            
-            if (RunSuccess)
-            {
-                this.RemoveIniFile(Settings.GetSettings().WorkingDir);
-                this.ImportProject();
-            }
+            this.ReadAndRemoveIniFile(Settings.GetSettings().WorkingDir);
+            this.ImportProject();
 	    }
-        
 
-        /// <summary>
-        /// Runs Autobuild generator for selected graph. This method is used for MetaEdit+ 4.5 API.
-        /// </summary>
-        /// <param name="port">Connection to MetaEdit+ API server</param>
-        public void RunAutobuild(MetaEditAPI.MetaEditAPI port)
-        {
-            MetaEditAPI.MENull meNull = new MetaEditAPI.MENull();
-		    try {
-			    port.forName(meNull, this.Name, this.TypeName, "Autobuild");
-		    } catch (Exception e) { 
-			    DialogProvider.ShowMessageDialog("API error: " + e.Message, "API error");
-		    }
-	    }
 
         /// <summary>
         /// Runs the named generator
@@ -190,11 +207,31 @@ namespace MetaCase.GraphBrowser
         /// <param name="port">Connection to MetaEdit+ API server.</param>
         /// <param name="generator">Name of the generator</param>
         /// <returns>return value from MetaEdit+ API server.</returns>
-        public bool RunGenerator(MetaEditAPI.MetaEditAPI port, string generator)
+        public void RunGenerator(MetaEditAPI.MetaEditAPI port, String generator)
         {
-            return port.forGraphRun(this.ToMEOop(), generator);
-        }
+            if (Settings.GetSettings().is50)
+            {
+                MEAPI.AllowSetForegroundWindow();
+                port.forGraphRun(this.ToMEOop(), generator);
+            }
+            else
+            {
+                MetaEditAPI.MENull meNull = new MetaEditAPI.MENull();
+                try
+                {
+                    MEAPI.AllowSetForegroundWindow();
+                    port.forName(meNull, this.Name, this.TypeName, "Autobuild");
+                }
+                catch (Exception e)
+                {
+                    DialogProvider.ShowMessageDialog("API error: " + e.Message, "API error");
+                }
+            } 
+	    }
 
+        /// <summary>
+        /// Calls for project import method
+        /// </summary>
         public void ImportProject()
         {
             // Try to import generated project.
@@ -220,7 +257,7 @@ namespace MetaCase.GraphBrowser
         /// Removes the written INI file.
         /// </summary>
         /// <param name="path">Path to the file.</param>
-        private void RemoveIniFile(string path)
+        private void ReadAndRemoveIniFile(string path)
         {
             IniParser h = new IniParser(path + "\\plugin.ini");
             if (h.GetSetting("runGenerated").Equals("true")) this.CompileAndExecute = true;

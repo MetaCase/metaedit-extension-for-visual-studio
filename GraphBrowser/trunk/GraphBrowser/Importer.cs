@@ -11,7 +11,7 @@ namespace MetaCase.GraphBrowser
     class Importer
     {
         /// <summary>
-        /// Imports solution, opens, builds and runs it. 
+        /// Imports solution, builds, runs and opens it. 
         /// </summary>
         public static void ImportProject(string applicationName)
         {
@@ -27,7 +27,6 @@ namespace MetaCase.GraphBrowser
                 // Build a project file
                 bool success = engine.BuildProjectFile(prjPath);
 
-
                 // Run if build succeeded
                 if (success)
                 {
@@ -36,12 +35,13 @@ namespace MetaCase.GraphBrowser
                     if (File.Exists(exe))
                         System.Diagnostics.Process.Start(exe);
                 }
-
             }
+
             catch (Exception)
             {
 
             }
+
             finally
             {
                 // Open the solution in Visual Studio
@@ -52,14 +52,15 @@ namespace MetaCase.GraphBrowser
         /// <summary>
         /// Writes ini file for MetaEdit+ generator.
         /// </summary>
+        /// <param name="path"></param>
+        /// <param name="generatorName"></param>
         public static void WritePluginIniFile(string path, string generatorName)
         {
             IniParser ip = new IniParser(path + "//plugin.ini");
             ip.FlushValues();
             ip.AddSetting("IDE", "visualstudio");
+            // The generator name will be the name of the generated project.
             ip.AddSetting("workspace", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + generatorName);
-            // If running the Autobuild generator set "runGenerated" to "true"
-            ip.AddSetting("runGenerated", generatorName.Equals("Autobuild") ? "true" : "false");
             ip.SaveSettings();
         }
 

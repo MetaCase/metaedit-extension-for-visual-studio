@@ -20,7 +20,7 @@ namespace MetaCase.GraphBrowser
         {
             string sysadmin = "sysadmin;109859928";
 			string user = "user;128988713";
-			string [] users = GraphHandler.ReadFromManagerAb(managerAbPath, "users");
+            string[] users = SettingsWindow.ReadFromManagerAb(managerAbPath, "users");
 			if (username.Equals("user") && input.Equals("user")) {
 				foreach(string s in users) {
 					if ( s.Equals(user)) return 1;

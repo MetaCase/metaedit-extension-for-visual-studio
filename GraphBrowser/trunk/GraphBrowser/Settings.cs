@@ -10,6 +10,9 @@ namespace MetaCase.GraphBrowser
 {
     public class Settings
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string ProgramPath   { get; set; }
         public string WorkingDir    { get; set; }
         public string Database      { get; set; }
