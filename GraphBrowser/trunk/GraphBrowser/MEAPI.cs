@@ -37,6 +37,11 @@ namespace MetaCase.GraphBrowser
         [DllImport("user32.dll")]
         static extern bool AllowSetForegroundWindow(int dwProcessId);
 
+        /// <summary>
+        /// Let other programs raise their window over Visual Studio,
+        /// e.g. when MetaEdit+ opens a diagram or dialog we don't want it obscured.
+        /// Only remains in force until the user clicks in a non-VS, non-MetaEdit+ window.
+        /// </summary>
         public static void AllowSetForegroundWindow() 
         {
             AllowSetForegroundWindow(-1);

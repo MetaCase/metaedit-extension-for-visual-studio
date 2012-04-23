@@ -31,6 +31,8 @@ namespace MetaCase.GraphBrowser
        ///</summary>
        public void Run() {
 	        MetaEditAPI.MetaEditAPI port = Launcher.Port;
+
+            Object o;
 	        switch (this.dialogType) {
 	    	    case CREATE_NEW_GRAPH:
 	    	        // Opens "Create Graph" dialog in MetaEdit+
@@ -43,14 +45,21 @@ namespace MetaCase.GraphBrowser
 	    		        m = selectedGraph.GetMEType(); 
 	    		    }
                     MEAPI.AllowSetForegroundWindow();
-	    		    port.createGraphDialog(m);
+	    		    o = port.createGraphDialog(m);
+                    if (o is MEAny)
+                    {
+                        // update graph view in UI process
+                    }
 	    	        break;
 	    	    case EDIT_GRAPH_PROPERTIES:
 	    	        // Opens "Properties" dialog for the selected graph in MetaEdit+
                     if (selectedGraph != null)
                     {
                         MEAPI.AllowSetForegroundWindow();
-                        port.propertyDialog(this.selectedGraph.ToMEOop());
+                        if (port.propertyDialog(this.selectedGraph.ToMEOop()))
+                        {
+                            // update graph view in UI process
+                        }
                     }
 	    	        break;
 	        }

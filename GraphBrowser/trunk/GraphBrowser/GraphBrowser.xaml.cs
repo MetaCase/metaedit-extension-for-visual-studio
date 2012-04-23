@@ -86,7 +86,7 @@ namespace MetaCase.GraphBrowser
         {
             GraphViewModel root = new GraphViewModel();
             root.IsNodeExpanded = true;
-            Graph.ResetTypeNameTable();
+            Graph.ResetCaches();
             Graph[] gs = GraphHandler.Init();
             root.populate(gs, new List<Graph>()); 
             treeView1.ItemsSource = root.getChildren();

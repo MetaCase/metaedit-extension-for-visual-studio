@@ -8,7 +8,6 @@ namespace MetaCase.GraphBrowser
     {
         private Hashtable values = new Hashtable();
         private string iniFilePath;
-        public string key { get; set; }
 
         /// <summary>
         /// Opens the INI file at the given path and enumerates the values in the IniParser.
@@ -71,7 +70,6 @@ namespace MetaCase.GraphBrowser
         /// <summary>
         /// Adds or replaces a setting to the table to be saved with a null value.
         /// </summary>
-        /// <param name="sectionName">Section to add under.</param>
         /// <param name="settingName">Key name to add.</param>
         public void AddSetting(string settingName)
         {
@@ -81,7 +79,6 @@ namespace MetaCase.GraphBrowser
         /// <summary>
         /// Remove a setting.
         /// </summary>
-        /// <param name="sectionName">Section to add under.</param>
         /// <param name="settingName">Key name to add.</param>
         public void DeleteSetting(string settingName)
         {

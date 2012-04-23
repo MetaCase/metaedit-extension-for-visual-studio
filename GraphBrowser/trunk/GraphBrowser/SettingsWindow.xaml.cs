@@ -64,7 +64,7 @@ namespace MetaCase.GraphBrowser
             s.SaveSettings();
         }
 
-        public bool VerifyAllFields()
+        private bool VerifyAllFields()
         {
             bool allOk = true;
             if (!VerifyField(new ProgramPathVerifier(), ProgramTextBox.Text, ref ProgramVerifierImage)) allOk = false;
@@ -142,13 +142,16 @@ namespace MetaCase.GraphBrowser
             return (verified > 0);
         }
 
+        /// <summary>
+        /// Calculates and returns the path of the repository root file, manager.ab
+        /// </summary>
         public string GetManagerAbPath()
         {
             SetManagerAbPath();
             return this.managerAbPath;
         }
 
-        public void SetManagerAbPath()
+        private void SetManagerAbPath()
         {
             string path = WorkingDirTextBox.Text + "\\" + DatabaseTextBox.Text + "\\" + "manager.ab";
             if (File.Exists(path))

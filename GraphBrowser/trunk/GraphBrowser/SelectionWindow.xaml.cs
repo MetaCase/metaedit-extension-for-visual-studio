@@ -19,6 +19,9 @@ namespace MetaCase.GraphBrowser
     /// </summary>
     public partial class SelectionWindow : Window
     {
+        /// <summary>
+        /// The current selections in the list widget, each a string
+        /// </summary>
         public List<string> SelectedItems = new List<string>();
         private Button SelectAllButton;
 
@@ -49,7 +52,7 @@ namespace MetaCase.GraphBrowser
             if (MultiSelection) this.ItemsListBox.SelectionMode = SelectionMode.Multiple;
         }
 
-        public void SelectAllButton_Click(object sender, RoutedEventArgs e)
+        private void SelectAllButton_Click(object sender, RoutedEventArgs e)
         {
             this.ItemsListBox.SelectAll();
             this.ItemsListBox.SelectedIndex = 0;
