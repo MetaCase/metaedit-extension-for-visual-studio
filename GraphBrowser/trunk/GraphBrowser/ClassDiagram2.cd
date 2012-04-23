@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MetaCase.GraphBrowser.DialogProvider" Collapsed="true">
+    <Position X="11.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>DialogProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.Graph" Collapsed="true">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAA0BAABAAAAAEQNQAIAAAUAAAAAwBCAIQAAIAACCAA=</HashCode>
+      <FileName>Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.GraphBrowser" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQAAAwEAQAAAAwAAAEAEiAgAABBBAQCBAAIABAAEAEA=</HashCode>
+      <FileName>GraphBrowser.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.GraphHandler" Collapsed="true">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAgAAAAACAAAAAAA=</HashCode>
+      <FileName>GraphHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.GraphViewModel" Collapsed="true">
+    <Position X="4.75" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAAQAAAAAAAAEIREABAAAAQACAAAAAAAAEAACAhAAAI=</HashCode>
+      <FileName>GraphViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.Importer" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Importer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.IniParser" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAgAAAAAAAAADAgACAAAAAAAAAEAAA=</HashCode>
+      <FileName>IniParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.Launcher" Collapsed="true">
+    <Position X="3.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgAAAAEAAAECACCCAAEAAAAQAAAARA=</HashCode>
+      <FileName>Launcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.MEAPI" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MEAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.MEDialog" Collapsed="true">
+    <Position X="11.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAQAAAAAAEAAAAAAAAAAAQAAAAI=</HashCode>
+      <FileName>MEDialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.MyToolWindow" Collapsed="true">
+    <Position X="1.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyToolWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.SelectionWindow" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAACAACAgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SelectionWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.Settings" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAEAgAAUAAAAAgAQCQAIAACRAACQACAAAAEACAAQA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.SettingsWindow" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAARAAQAAABAIAiBEAARAAAQgACAAABABAEiAQAAAA=</HashCode>
+      <FileName>SettingsWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaCase.GraphBrowser.ToolBarButton" Collapsed="true">
+    <Position X="3" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ToolBarButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MetaCase.GraphBrowser.Verifier" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Verifier.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -13,7 +13,7 @@ namespace MetaCase.GraphBrowser
         private static Boolean needStopAPI      = false;
         private static Boolean isInitialized    = false;        
         public static bool connectionAlive      { get; set; }
-        public static Settings settings 
+        private static Settings settings 
         {
             get 
             { 

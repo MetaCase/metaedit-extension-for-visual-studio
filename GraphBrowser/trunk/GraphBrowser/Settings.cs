@@ -44,8 +44,8 @@ namespace MetaCase.GraphBrowser
 
         public static Settings GetSettings()
         {
-            if (singleton == null) return new Settings();
-            else return singleton;
+            if (singleton == null) singleton = new Settings();
+            return singleton;
         }
 
         public void SaveSettings()
@@ -127,7 +127,7 @@ namespace MetaCase.GraphBrowser
             }
         }
 
-       	public void CalculateValues() 
+       	private void CalculateValues() 
         {
 		    this.Database = "demo";
 		    this.Username = "user";

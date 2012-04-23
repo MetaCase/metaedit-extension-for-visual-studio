@@ -13,8 +13,8 @@ namespace MetaCase.GraphBrowser
     public class Graph
     {
         Graph[] children = new Graph[0];
-        static Hashtable ProjectTable = new Hashtable();
-        static Hashtable TypeNameTable = new Hashtable();
+        private static Hashtable ProjectTable = new Hashtable();
+        private static Hashtable TypeNameTable = new Hashtable();
         
         /// <summary>
         /// Graph name
@@ -22,12 +22,12 @@ namespace MetaCase.GraphBrowser
         public string Name              { get; set; }
 
         /// <summary>
-        /// Graph super type name
+        /// Graph type's internal name, e.g. Graph_WatchApplication_user_10232123
         /// </summary>
         public string Type              { get; set; }
 
         /// <summary>
-        /// Graph type name
+        /// Graph type's user-visible name, e.g. Watch Application
         /// </summary>
         public string TypeName          { get; set; }
 
@@ -42,21 +42,19 @@ namespace MetaCase.GraphBrowser
         public int ObjectID             { get; set; }
 
         /// <summary>
-        /// Boolean value for children graphs
+        /// Is this graph known to be a subgraph of another graph?
         /// </summary>
         public bool isChild             { get; set; }
 
-        private bool CompileAndExecute  { get; set; }
-
         /// <summary>
-        /// Constuctor
+        /// Constructor - PRIVATE: use static MEOopToGraph instead
         /// </summary>
         /// <param name="name">Name of the graph</param>
         /// <param name="type">Type of the graph</param>
         /// <param name="typeName">Internal name of the graph type</param>
         /// <param name="areaID">Graphs area Id</param>
         /// <param name="objectID">Graphs object Id</param>
-       	public Graph(string name, string type, string typeName, int areaID, int objectID) 
+       	private Graph(string name, string type, string typeName, int areaID, int objectID) 
         {
 		    this.Name = name;
 		    this.Type = type;
@@ -66,7 +64,7 @@ namespace MetaCase.GraphBrowser
 	    }
 
         /// <summary>
-        /// Creates graph from MEOop
+        /// Creates graph from MEOop, or returns it from cache if already there
         /// </summary>
         /// <param name="m">The MEOop object</param>
         /// <returns>Graph object</returns>
@@ -82,44 +80,27 @@ namespace MetaCase.GraphBrowser
 			graph = (Graph) graphTable[m.objectID];
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
 
-            MetaEditAPI.METype _graphType = port.type(m);
-            string _typeName;
-            if (GetTypeNameTable().ContainsKey(_graphType.name))
-            {
-                _typeName = (string)GetTypeNameTable()[_graphType.name];
-            }
-            else
-            {
-                _typeName = port.typeName(_graphType);
-                GetTypeNameTable().Add(_graphType.name, _typeName);
-            }
-
 		    if (graph == null) {
-		        graph = new Graph(port.userPrintString(m), _graphType.name, _typeName, m.areaID, m.objectID);
+                MetaEditAPI.METype _graphType = port.type(m);
+                string _typeName = (string) TypeNameTable[_graphType.name];
+                if (_typeName == null)
+                {
+                    _typeName = port.typeName(_graphType);
+                    TypeNameTable.Add(_graphType.name, _typeName);
+                }
+
+                graph = new Graph(port.userPrintString(m), _graphType.name, _typeName, m.areaID, m.objectID);
                 graphTable.Add(m.objectID, graph);
-		    }
-		    else {
-                graph.Name = port.userPrintString(m);
-                graph.Type = _graphType.name;
-                graph.TypeName = _typeName;
 		    }
 		    return graph;
 	    }
 
         /// <summary>
-        /// Getter for type name table
+        /// Resets all cached graph and type information from MetaEdit+
         /// </summary>
-        /// <returns>TypeNameTable</returns>
-        public static Hashtable GetTypeNameTable()
+        public static void ResetCaches()
         {
-            return TypeNameTable;
-        }
-
-        /// <summary>
-        /// Set TypeNameTable empty table
-        /// </summary>
-        public static void ResetTypeNameTable()
-        {
+            ProjectTable = new Hashtable();
             TypeNameTable = new Hashtable();
         }
 
@@ -185,19 +166,17 @@ namespace MetaCase.GraphBrowser
 
         ///<summary>
         /// Runs generator for caller Graph. After calling ME+ to run generator, tries
-        /// to import project with same name as the graph to workspace. Used for MetaEdit+ 5.0 API
+        /// to import project with same name as the graph to workspace. 
         ///</summary>
         ///<param name="generator">generator name of the generator to be run.</param>
-        ///<param name="autobuild"></param>
 	    public void ExecuteGenerator(string generator) {
             this.WritePluginIniFile();
             MetaEditAPI.MetaEditAPI port = Launcher.Port;
             
             // Run generator
-            this.RunGenerator(port, generator); // Since this method doesn't return anything the RunSuccess value can not be used in every case and is not reliable.
-                                                    // But at least at some cases we get result that sets the RunSuccess false and then are the following tasks not executed.
+            bool RunSuccess = this.RunGenerator(port, generator); // true if successful or unknown
             this.ReadAndRemoveIniFile(Settings.GetSettings().WorkingDir);
-            this.ImportProject();
+            if (RunSuccess) this.ImportProject();
 	    }
 
 
@@ -206,27 +185,29 @@ namespace MetaCase.GraphBrowser
         /// </summary>
         /// <param name="port">Connection to MetaEdit+ API server.</param>
         /// <param name="generator">Name of the generator</param>
-        /// <returns>return value from MetaEdit+ API server.</returns>
-        public void RunGenerator(MetaEditAPI.MetaEditAPI port, String generator)
+        /// <returns>Was the generation successful (unknown=true, e.g. for 4.5)</returns>
+        public bool RunGenerator(MetaEditAPI.MetaEditAPI port, String generator)
         {
-            if (Settings.GetSettings().is50)
+            bool success = true;
+            MEAPI.AllowSetForegroundWindow();
+            try
             {
-                MEAPI.AllowSetForegroundWindow();
-                port.forGraphRun(this.ToMEOop(), generator);
+                if (Settings.GetSettings().is50)
+                {
+                    success = port.forGraphRun(this.ToMEOop(), generator);
+                }
+                else
+                {
+                    MetaEditAPI.MENull meNull = new MetaEditAPI.MENull();
+                    port.forName(meNull, this.Name, this.TypeName, generator);
+                }
             }
-            else
+            catch (Exception e)
             {
-                MetaEditAPI.MENull meNull = new MetaEditAPI.MENull();
-                try
-                {
-                    MEAPI.AllowSetForegroundWindow();
-                    port.forName(meNull, this.Name, this.TypeName, "Autobuild");
-                }
-                catch (Exception e)
-                {
-                    DialogProvider.ShowMessageDialog("API error: " + e.Message, "API error");
-                }
-            } 
+                DialogProvider.ShowMessageDialog("API error: " + e.Message, "API error");
+                success = false;
+            }
+            return success;
 	    }
 
         /// <summary>
@@ -260,7 +241,6 @@ namespace MetaCase.GraphBrowser
         private void ReadAndRemoveIniFile(string path)
         {
             IniParser h = new IniParser(path + "\\plugin.ini");
-            if (h.GetSetting("runGenerated").Equals("true")) this.CompileAndExecute = true;
             Importer.RemoveIniFile(Settings.GetSettings().WorkingDir);
         }
 

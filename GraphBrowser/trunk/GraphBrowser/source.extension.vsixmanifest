@@ -3,11 +3,12 @@
   <Identifier Id="ef5741cb-f689-4ec5-9277-1178d6522749">
     <Name>MetaEdit+ extension for Visual Studio</Name>
     <Author>MetaCase</Author>
-    <Version>1.0.1</Version>
-    <Description xml:space="preserve">MetaEdit+ Graph Browser that integrates MetaEdit+ and Visual Studio. Allows user to explore models and use basic MetaEdit+ commands in Visual Studio. Imports generated Visual Studio solution to Visual Studio.</Description>
+    <Version>1.0.2</Version>
+    <Description xml:space="preserve">MetaEdit+ Graph Browser that integrates MetaEdit+ and Visual Studio. Allows user to explore models and use core MetaEdit+ commands in Visual Studio. Imports generated Visual Studio solution into Visual Studio.</Description>
     <Locale>1033</Locale>
-    <MoreInfoUrl>http://www.metacase.com</MoreInfoUrl>
+    <MoreInfoUrl>http://www.metacase.com/news/VisualStudioExtensionForMetaEdit.html</MoreInfoUrl>
     <License>LICENSE.TXT</License>
+    <GettingStartedGuide>http://graphbrowser.codeplex.com/</GettingStartedGuide>
     <Icon>plus50.ico</Icon>
     <PreviewImage>visual_studio_3.PNG</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
