@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Build.BuildEngine;
+using Microsoft.VisualStudio.Shell;
 using EnvDTE;
 using System.IO;
 
@@ -10,15 +11,26 @@ namespace MetaCase.GraphBrowser
 {
     class Importer
     {
+        public static DTE getDTE()
+        {
+            return Package.GetGlobalService(typeof(DTE)) as DTE;
+        }
+
+        public static string defaultProjectPath()
+        {
+            EnvDTE.DTE dte = getDTE();
+            return (string)(dte.get_Properties("Environment", "ProjectsAndSolution").Item("ProjectsLocation").Value) + "\\";
+        }
+        
         /// <summary>
         /// Imports solution, builds, runs and opens it. 
         /// </summary>
         public static void ImportProject(string applicationName)
         {
-            EnvDTE.DTE dte = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-            //Get visual studio version e.g. dte.FullName;
-            string slnPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + ".sln";
-            string prjPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
+            EnvDTE.DTE dte = getDTE();
+            string defPrjPath = defaultProjectPath();
+            string slnPath = defPrjPath + applicationName + "\\" + applicationName + ".sln";
+            string prjPath = defPrjPath + applicationName + "\\" + applicationName + "\\" + applicationName + ".csproj";
 
             Engine engine = new Engine();
 
@@ -30,8 +42,7 @@ namespace MetaCase.GraphBrowser
                 // Run if build succeeded
                 if (success)
                 {
-                    string exe = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + applicationName + "\\" + applicationName
-                    + "\\bin\\Debug\\" + applicationName + ".exe";
+                    string exe = defPrjPath + applicationName + "\\" + applicationName + "\\bin\\Debug\\" + applicationName + ".exe";
                     if (File.Exists(exe))
                         System.Diagnostics.Process.Start(exe);
                 }
@@ -60,7 +71,7 @@ namespace MetaCase.GraphBrowser
             ip.FlushValues();
             ip.AddSetting("IDE", "visualstudio");
             // The generator name will be the name of the generated project.
-            ip.AddSetting("workspace", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Visual Studio 2010\\Projects\\" + generatorName);
+            ip.AddSetting("workspace", defaultProjectPath() + generatorName);
             ip.SaveSettings();
         }
 
