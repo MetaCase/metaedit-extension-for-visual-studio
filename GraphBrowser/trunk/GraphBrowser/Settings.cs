@@ -153,9 +153,23 @@ namespace MetaCase.GraphBrowser
             if (variables.Contains("ProgramFiles(x86)")) tempProgramPath = (string)variables["ProgramFiles(x86)"];
             else tempProgramPath = (string)variables["ProgramFiles"];
 	        
-	        this.WorkingDir = protoWorkingDir + "5.0";
+	        this.WorkingDir = protoWorkingDir + "5.1";
 
-            this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0\\mep50.exe";
+            this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.1\\mep51.exe";
+
+            if (!File.Exists(this.ProgramPath))
+            {
+                // Try with MetaEdit+ 5.1 evaluation version.
+                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.1 Evaluation\\mep51eval.exe";
+            }
+
+            if (!File.Exists(this.ProgramPath))
+            {
+                // No MetaEdit+ 5.1 found, make the working directory for version 5.0
+                this.WorkingDir = protoWorkingDir + "5.0";
+                // Try with MetaEdit+ 5.0
+                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0\\mep50.exe";
+            }
 
 	        if (!File.Exists(this.ProgramPath)) {
 	    	    // Try with MetaEdit+ 5.0 evaluation version.
