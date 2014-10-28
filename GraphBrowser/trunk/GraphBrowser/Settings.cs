@@ -90,7 +90,7 @@ namespace MetaCase.GraphBrowser
                 this.Port        = tempPort;
                 this.Logging     = reader.GetSetting("logging").Equals("true");
 
-                if (this.ProgramPath.Contains("50")) this.is50 = true;
+                if (this.ProgramPath.Contains("50") || this.ProgramPath.Contains("51")) this.is50 = true;
                 else this.is50 = false;
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace MetaCase.GraphBrowser
                 writer.AddSetting("logging", this.Logging.ToString());
                 writer.SaveSettings();
 
-                if (this.ProgramPath.Contains("50")) this.is50 = true;
+                if (this.ProgramPath.Contains("50") || this.ProgramPath.Contains("51")) this.is50 = true;
                 else this.is50 = false;
             }
             catch (Exception ex)
