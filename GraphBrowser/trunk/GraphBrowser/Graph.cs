@@ -10,7 +10,7 @@ namespace MetaCase.GraphBrowser
     /// <summary>
     /// Graph class represents MetaEdit+ graphs.
     /// </summary>
-    public class Graph
+    public class Graph : IComparable
     {
         Graph[] children = new Graph[0];
         private static Hashtable ProjectTable = new Hashtable();
@@ -244,6 +244,20 @@ namespace MetaCase.GraphBrowser
             Importer.RemoveIniFile(Settings.GetSettings().WorkingDir);
         }
 
+        public int CompareTo(object obj)
+        {
+            int result = 0;
+            if (obj is Graph)
+            {
+                result = this.Name.CompareTo((obj as Graph).Name);
+                if (result == 0)
+                {
+                    result = this.TypeName.CompareTo((obj as Graph).TypeName);
+                }
+            }
+            return result;
+        }
+
         /// <summary>
         /// Init graphs children recursively calling method for every children. Except 
         /// those that are already initialized.
@@ -262,7 +276,7 @@ namespace MetaCase.GraphBrowser
 				    g.SetIsChild(true);
 				    g.InitChildren(port, done); 
 			    }
-			    this.SetChildren(graphs);
+                this.SetChildren(graphs);
 		     }
 	    }
     }

@@ -84,10 +84,13 @@ namespace MetaCase.GraphBrowser
 				foreach (Graph g in graphs) {
 					GraphViewModel gvm = new GraphViewModel(g);
 					this.addChild(gvm);
-					if (g.GetChildren() != null && g.GetChildren().Count() > 0) {
-						gvm.populate(g.GetChildren(), stack);
+                    Graph[] children = g.GetChildren();
+					if (children != null && children.Count() > 0) {
+                        Array.Sort(children);
+						gvm.populate(children, stack);
 					}
 				}
+                stack.RemoveAt(stack.Count() - 1);
 			}
 		}
     }
