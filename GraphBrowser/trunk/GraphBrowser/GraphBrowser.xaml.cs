@@ -160,6 +160,7 @@ namespace MetaCase.GraphBrowser
             ButtonCreateGraph.IsEnabled = (_is50 && _isAPI);
             ButtonUpdateList.IsEnabled = (true);
             ButtonOpenSettings.IsEnabled = (true);
+            ButtonShowTypeName.IsEnabled = _isAPI;
         }
 
         private void correctErrorSituation()
