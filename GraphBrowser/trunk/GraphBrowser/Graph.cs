@@ -192,7 +192,7 @@ namespace MetaCase.GraphBrowser
             MEAPI.AllowSetForegroundWindow();
             try
             {
-                if (Settings.GetSettings().is50)
+                if (Settings.GetSettings().Version.IsEqualOrGreaterThan("5.0"))
                 {
                     success = port.forGraphRun(this.ToMEOop(), generator);
                 }

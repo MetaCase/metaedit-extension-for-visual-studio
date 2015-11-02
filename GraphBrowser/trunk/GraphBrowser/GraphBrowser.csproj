@@ -138,6 +138,7 @@
     <Compile Include="Launcher.cs" />
     <Compile Include="MEAPI.cs" />
     <Compile Include="MEDialog.cs" />
+    <Compile Include="MEVersion.cs" />
     <Compile Include="MyToolWindow.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="PasswordVerifier.cs" />
