@@ -184,7 +184,7 @@ namespace MetaCase.GraphBrowser
                     isClient = dir.Contains("Client");
                     if (version.IsEqualWith(Version))
                     {
-                        if (pathAddendum != "" && !isEval && !isClient && checkExe(version, programFilesPath, "", ""))
+                        if (!isEval && !isClient && checkExe(version, programFilesPath, "", ""))
                         {
                             pathAddendum = "";
                             exeAddendum = "";
