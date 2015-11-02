@@ -90,7 +90,7 @@ namespace MetaCase.GraphBrowser
             Graph[] gs = GraphHandler.Init();
             root.populate(gs, new List<Graph>()); 
             treeView1.ItemsSource = root.getChildren();
-            treeView1.ContextMenu = Settings.GetSettings().is50 ? 
+            treeView1.ContextMenu = this.Is50OrLater() ? 
                                         treeView1.Resources["50Menu"] as System.Windows.Controls.ContextMenu: 
                                         treeView1.Resources["45Menu"] as System.Windows.Controls.ContextMenu;
             bool _api = this.IsAPI();
@@ -121,9 +121,9 @@ namespace MetaCase.GraphBrowser
             return Launcher.IsApiOK();
         }
 
-        private bool Is50()
+        private bool Is50OrLater()
         {
-            return Settings.GetSettings().is50;
+            return Settings.GetSettings().Version.IsEqualOrGreaterThan("5.0");
         }
 
         private void UpdateGraphView()
@@ -150,14 +150,14 @@ namespace MetaCase.GraphBrowser
         /// <param name="_api">API connection state, <code>true</code> if connected.</param>
         private void SetToolBarButtonsEnabled(bool _api)
         {
-            bool _is50 = this.Is50();
+            bool _is50OrLater = this.Is50OrLater();
             bool _isAPI = _api;
             bool _isSelection = (treeView1.SelectedItem != null);
 
-            ButtonGenerateFromList.IsEnabled = (_isAPI && _isSelection && _is50);
+            ButtonGenerateFromList.IsEnabled = (_isAPI && _isSelection && _is50OrLater);
             ButtonRunAutobuild.IsEnabled = (_isAPI && _isSelection);
             ButtonOpenInMetaEdit.IsEnabled = (_isAPI && _isSelection);
-            ButtonCreateGraph.IsEnabled = (_is50 && _isAPI);
+            ButtonCreateGraph.IsEnabled = (_is50OrLater && _isAPI);
             ButtonUpdateList.IsEnabled = (true);
             ButtonOpenSettings.IsEnabled = (true);
             ButtonShowTypeName.IsEnabled = _isAPI;
@@ -224,7 +224,7 @@ namespace MetaCase.GraphBrowser
                 GraphViewModel gvm = (GraphViewModel)treeView1.SelectedItem;
                 if (gvm == null) return;
                 Settings s = Settings.GetSettings();
-                if (s.is50)
+                if (s.Version.IsEqualOrGreaterThan("5.0"))             
                 {
                     string[] _generators = Launcher.Port.generatorNames(gvm.getGraph().GetMEType()).Split(new Char[] { '\r' });
                     List<string> generatorList = new List<string>();

@@ -26,7 +26,7 @@ namespace MetaCase.GraphBrowser
         public string Host          { get; set; }
         public int Port             { get; set; }
         public bool Logging         { get; set; }
-        public bool is50            { get; set; }
+        public MEVersion Version    { get; set; }
         public bool Initialized     { get; set; }
         private static List<KeyValuePair<string, string>> UnknownIniKeys = new List<KeyValuePair<string, string>>();
         public static Settings singleton;
@@ -70,6 +70,14 @@ namespace MetaCase.GraphBrowser
             return File.Exists(this.merFilePath());
         }
 
+        private MEVersion ParseVersion(string path)
+        {
+            string versionString = path.Substring(path.IndexOf("MetaEdit+", 0) + 10);
+            char[] splitChars = {'.', ' ', '\\'};
+            string[] tokens = versionString.Split(splitChars);
+            return new MEVersion(versionString = tokens[0] + "." + tokens[1]);
+        }
+
         /// <summary>
         /// Reads settings from mer file.
         /// </summary>
@@ -89,9 +97,7 @@ namespace MetaCase.GraphBrowser
                 int.TryParse(reader.GetSetting("port"), out tempPort);
                 this.Port        = tempPort;
                 this.Logging     = reader.GetSetting("logging").Equals("true");
-
-                if (this.ProgramPath.Contains("50") || this.ProgramPath.Contains("51")) this.is50 = true;
-                else this.is50 = false;
+                this.Version     = this.ParseVersion(this.ProgramPath);
             }
             catch (Exception ex)
             {
@@ -126,13 +132,23 @@ namespace MetaCase.GraphBrowser
                 writer.AddSetting("logging", this.Logging.ToString());
                 writer.SaveSettings();
 
-                if (this.ProgramPath.Contains("50") || this.ProgramPath.Contains("51")) this.is50 = true;
-                else this.is50 = false;
+                this.Version = this.ParseVersion(this.ProgramPath);
             }
             catch (Exception ex)
             {
                 DialogProvider.ShowMessageDialog("Error writing .mer file. " + ex.Message, "Error writing .mer file");
             }
+        }
+
+        private string ComposeProgramPath(MEVersion version, string programFilesPath, string pathAddendum, string exeAddendum)
+        {
+            return programFilesPath + "\\MetaEdit+ " + version.VersionString() + pathAddendum + "\\mep" + version.ShortVersionString() + exeAddendum + ".exe";
+        }
+
+        private bool checkExe(MEVersion version, string programFilesPath, string pathAddendum, string exeAddendum)
+        {
+            string filePath = this.ComposeProgramPath(version, programFilesPath, pathAddendum, exeAddendum);
+            return File.Exists(filePath);
         }
 
        	private void CalculateValues() 
@@ -144,51 +160,67 @@ namespace MetaCase.GraphBrowser
 		    this.Port = 6390;
 		    this.Host = "localhost";
 		    this.Logging = false;
+            this.Version = new MEVersion("0.0");
 
-            string protoWorkingDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "\\MetaEdit+ ";
-		    string tempProgramPath = "";
+            string programFilesPath = "";
 		
 		    // Search for Program File (x86) folder from env. variable.
             IDictionary variables = System.Environment.GetEnvironmentVariables();  
-            if (variables.Contains("ProgramFiles(x86)")) tempProgramPath = (string)variables["ProgramFiles(x86)"];
-            else tempProgramPath = (string)variables["ProgramFiles"];
-	        
-	        this.WorkingDir = protoWorkingDir + "5.1";
+            if (variables.Contains("ProgramFiles(x86)")) programFilesPath = (string)variables["ProgramFiles(x86)"];
+            else programFilesPath = (string)variables["ProgramFiles"];
 
-            this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.1\\mep51.exe";
+            string[] programFilesDirectories = Directory.GetDirectories(programFilesPath);
+            bool isEval = false;
+            bool isClient = false;
+            string pathAddendum = "";
+            string exeAddendum = "";
 
-            if (!File.Exists(this.ProgramPath))
+            foreach (string dir in programFilesDirectories)
             {
-                // Try with MetaEdit+ 5.1 evaluation version.
-                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.1 Evaluation\\mep51eval.exe";
+                if(dir.Contains("MetaEdit+") && !dir.Contains("Server"))
+                {
+                    MEVersion version = this.ParseVersion(dir);
+                    isEval = dir.Contains("Evaluation");
+                    isClient = dir.Contains("Client");
+                    if (version.IsEqualWith(Version))
+                    {
+                        if (pathAddendum != "" && !isEval && !isClient && checkExe(version, programFilesPath, "", ""))
+                        {
+                            pathAddendum = "";
+                            exeAddendum = "";
+                        }
+                        if (pathAddendum == " Client" && isEval  && checkExe(version, programFilesPath, " Evaluation", "eval"))
+                        {
+                            pathAddendum = " Evaluation";
+                            exeAddendum = "eval";
+                        }
+                    }
+                    if (version.IsGreaterThan(this.Version))
+                    { 
+                        string tempPathAddendum = "";
+                        string tempExeAddendum = "";
+                        if (isEval)
+                        {
+                            tempPathAddendum = " Evaluation";
+                            tempExeAddendum = "eval";
+                        }
+                        if (isClient)
+                        {
+                            tempPathAddendum = " Client";
+                            tempExeAddendum = "m";
+                        }
+                        if(checkExe(version, programFilesPath, tempPathAddendum, tempExeAddendum))
+                        {
+                            this.Version = version;
+                            pathAddendum = tempPathAddendum;
+                            exeAddendum = tempExeAddendum;
+                        }
+                    }
+                }
             }
 
-            if (!File.Exists(this.ProgramPath))
-            {
-                // No MetaEdit+ 5.1 found, make the working directory for version 5.0
-                this.WorkingDir = protoWorkingDir + "5.0";
-                // Try with MetaEdit+ 5.0
-                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0\\mep50.exe";
-            }
-
-	        if (!File.Exists(this.ProgramPath)) {
-	    	    // Try with MetaEdit+ 5.0 evaluation version.
-                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 5.0 Evaluation\\mep50eval.exe";
-	        }
-
-            if (!File.Exists(this.ProgramPath))
-            {
-                // No MetaEdit+ 5.0 found, make the working directory for version 4.5
-                this.WorkingDir = protoWorkingDir + "4.5";
-	    	    // Try with MetaEdit+ 4.5
-                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 4.5\\mep45.exe";    	    
-	        }
-	    
-	        // if no mep45.exe found it MUST be the 4.5 evaluation version ;)
-            if (!File.Exists(this.ProgramPath))
-            {
-                this.ProgramPath = tempProgramPath + "\\MetaEdit+ 4.5 Evaluation\\mep45eval.exe";
-	        }
-	    }
+            this.WorkingDir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "\\MetaEdit+ " + this.Version.VersionString();
+            this.ProgramPath = this.ComposeProgramPath(this.Version, programFilesPath, pathAddendum, exeAddendum);
+        }
     }
 }
