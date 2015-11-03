@@ -75,7 +75,7 @@ namespace MetaCase.GraphBrowser
             string versionString = path.Substring(path.IndexOf("MetaEdit+", 0) + 10);
             char[] splitChars = {'.', ' ', '\\'};
             string[] tokens = versionString.Split(splitChars);
-            return new MEVersion(versionString = tokens[0] + "." + tokens[1]);
+            return new MEVersion(tokens[0] + "." + tokens[1]);
         }
 
         /// <summary>
@@ -147,8 +147,7 @@ namespace MetaCase.GraphBrowser
 
         private bool checkExe(MEVersion version, string programFilesPath, string pathAddendum, string exeAddendum)
         {
-            string filePath = this.ComposeProgramPath(version, programFilesPath, pathAddendum, exeAddendum);
-            return File.Exists(filePath);
+            return File.Exists(this.ComposeProgramPath(version, programFilesPath, pathAddendum, exeAddendum));
         }
 
        	private void CalculateValues() 
