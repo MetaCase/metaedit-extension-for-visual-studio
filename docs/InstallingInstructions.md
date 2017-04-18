@@ -2,7 +2,7 @@
 
 The extension is made for Visual Studio versions supporting extensions (2012 Ultimate and Professional editions, or 2013 or later Community or Express Editions). If you don't have a compatible Visual Studio version installed, you may download and install the Visual Studio Community edition from [here](https://www.visualstudio.com/downloads/).
 
-**Note: you may need to install the Visual Studio SDK in addition to your Visual Studio installation for opening and modifying the Graph Browser solution. Please check your Visual Studio version and install the SDK if needed.**
+**Note: if you want to open and modify the Graph Browser extension, rather than just use it, you may also need to install the Visual Studio SDK (or in 2017: Workloads | Other Toolsets | Visual Studio Extension Development) in addition to your Visual Studio installation. Please check your Visual Studio version and install the appropriate components.**
 
 # Install MetaEdit+
 
