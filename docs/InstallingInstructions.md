@@ -10,4 +10,4 @@ Download and install [MetaEdit+](http://www.metacase.com/download/). (Basic plug
 
 # Install the extension
 
-Download the extension installer (.vsix) file from this site. After downloading double click it to install the extension (re)start Visual Studio and start using the Graph Browser extension.
+Download the [MetaEdit+ Extension for Visual Studio](https://marketplace.visualstudio.com/items?itemName=MetaCase.MetaEditextensionforVisualStudio) installer (.vsix file) from the Visual Studio Gallery. After downloading double click it to install the extension, (re)start Visual Studio and start using the Graph Browser extension.
