@@ -4,11 +4,11 @@ When you have Visual Studio, MetaEdit+ and the extension [installed](InstallingI
 
 ![](GettingStarted_visual_studio_show_view_resized.png)
 
-The Graph Browser extension tries to connect to the MetaEdit+ API server at startup. If it doesn't find any available connection, it will offer to launch MetaEdit+, start the API server, and login to the repository. This needs some paths and other parameters, which are stored in a 'default.mer' file that is saved in the root of the Visual Studio Projects folder in users My Documenst folder.
+The Graph Browser extension tries to connect to the MetaEdit+ API server at startup. If it doesn't find any available connection, it will offer to launch MetaEdit+, start the API server, and login to the repository. This needs some paths and other parameters, which are stored in a 'default.mer' file that is saved in the root of the Visual Studio Projects folder in the user's Documents folder.
 
 ![](GettingStarted_visual_studio_edit_parameters_resized.png)
 
-When running the extension for the first time there is no 'default.mer' file. In this case the extension tries to find and suggest the correct paths needed for launching MetaEdit+. It shows them to user who can edit and accept them by clicking 'Open MetaEdit+'. Accepting them will open MetaEdit+. If the plugin doesn't show any models after starting MetaEdit+ and its API, try clicking the 'Update Graph List' icon on the plugin's toolbar.
+When running the extension for the first time there is no 'default.mer' file. In this case the extension tries to find and suggest the correct paths needed for launching MetaEdit+. It shows them to the user who can edit them and accept them by clicking 'Open MetaEdit+'. Accepting them will open MetaEdit+. If the plugin doesn't show any models after starting MetaEdit+ and its API, try clicking the 'Update Graph List' icon on the plugin's toolbar.
 
 ![](GettingStarted_visual_studio_extension_update_button.png)
 
